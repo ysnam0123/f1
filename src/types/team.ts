@@ -1,0 +1,16 @@
+import { StaticImageData } from 'next/image';
+
+export interface Driver {
+  name: string;
+  number: number;
+  image: StaticImageData;
+}
+
+export interface Team {
+  name: string;
+  colorFrom: string; // 그라데이션 시작
+  colorTo: string; // 그라데이션 끝
+  logo: StaticImageData;
+  car: StaticImageData;
+  drivers: Driver[];
+}
