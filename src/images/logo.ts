@@ -1,13 +1,13 @@
-import alpine from '/public/team/alpine.png';
-import aston from '/public/team/aston1.png';
-import benz from '/public/team/benz.png';
-import ferrari from '/public/team/ferarri.png';
-import haas from '/public/team/haas.png';
-import sauber from '/public/team/kick-sauber.svg';
-import mcLaren from '/public/team/McLaren.png';
-import redBullRacing from '/public/team/redbull-racing.png';
-import redBull from '/public/team/redBull2.png';
-import williams from '/public/team/williams.png';
+import alpine from '/public/teamLogo/alpinelogo.png';
+import aston from '/public/teamLogo/astonmartinlogo.png';
+import benz from '/public/teamLogo/mercedeslogo.png';
+import ferrari from '/public/teamLogo/ferrarilogo.png';
+import haas from '/public/teamLogo/haaslogo.png';
+import sauber from '/public/teamLogo/kicksauberlogo.png';
+import mcLaren from '/public/teamLogo/McLarenlogo.png';
+import redBullRacing from '/public/teamLogo/redbullracinglogo.png';
+import redBull from '/public/teamLogo/racingbullslogo.png';
+import williams from '/public/teamLogo/williamslogo.png';
 
 export const Logos = {
   Alpine: alpine,
