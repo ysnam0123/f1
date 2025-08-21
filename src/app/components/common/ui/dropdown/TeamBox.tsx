@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 export default function TeamBox({
   className,
-
   onMouseLeave,
 }: {
   className?: string;
@@ -21,17 +20,17 @@ export default function TeamBox({
         {teams.map((team) => (
           <div
             key={team.name}
-            className="flex flex-col items-center py-5 px-3  w-[200px] h-[250px] bg-gray-300 rounded-[10px] cursor-pointer"
+            className="flex flex-col items-center py-5 px-3  w-[180px] h-[220px] bg-gray-300 rounded-[10px] cursor-pointer"
             style={{
               backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
             }}
           >
+            <h1 className="font-medium text-[24px] mb-3">{team.name}</h1>
             <Image
               src={team.logoImg}
               alt="logo"
-              className="h-[50px] object-contain mb-2"
+              className="h-[80px] object-contain"
             />
-            <h1 className="font-medium text-[24px]">{team.name}</h1>
           </div>
         ))}
       </div>
