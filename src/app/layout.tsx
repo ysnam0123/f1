@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Header from './components/common/ui/Header';
+import Footer from './components/common/ui/Footer';
+import Provider from './Provider';
 
 export const metadata: Metadata = {
   title: 'F1 project',
@@ -17,10 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="max-w-[1440px] mx-auto bg-[#0B0B0B] text-[#ffffff]">
-        <Header />
-
-        {children}
+      <body className="bg-[#0B0B0B] text-[#ffffff]">
+        <Provider>
+          <Header />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

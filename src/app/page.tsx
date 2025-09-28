@@ -1,23 +1,25 @@
-import HighLights from './components/common/home/HighLights';
-import News from './components/common/home/News';
-import Ranks from './components/common/home/Ranks';
-import Schedule from './components/common/home/Schedule';
+import DriverCards from './components/home/DriverCards';
+import HighLights from './components/home/HighLights';
+import News from './components/home/News';
+import Ranks from './components/home/Ranks';
+import Results from './components/home/Results';
+import Schedule from './components/home/Schedule';
 
 export default function page() {
   return (
     <>
-      <div className=" px-[70px] py-10">
-        <div className="flex gap-21 mb-8">
-          <div className="flex flex-col justify-between max-w-[820px] min-h-[585px] gap-[30px]">
-            {/* schedule */}
-            <Schedule />
-            {/* highlights */}
-            <HighLights />
-          </div>
+      <div className="mb-[30px]">
+        <Schedule />
+      </div>
+      <div className="max-w-[1440px] mx-auto flex flex-col gap-10 items-center ">
+        <Results />
+        <div>
+          <HighLights />
+        </div>
+        <div className="">
           <Ranks />
         </div>
-        {/* news */}
-        <News />
+        <DriverCards />
       </div>
     </>
   );

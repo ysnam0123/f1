@@ -12,7 +12,7 @@ export default function TeamBox({
 }) {
   return (
     <div
-      className="absolute left-0 top-[100px] w-screen min-h-[600px] px-[50px] py-10 bg-[#1a1a1a] z-100 flex justify-center select-none"
+      className="absolute left-0 top-[90px] w-screen min-h-[600px] px-[50px] py-10 bg-[#1a1a1a] z-100 flex justify-center select-none"
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-5">
