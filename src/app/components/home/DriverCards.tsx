@@ -85,7 +85,7 @@ export default function DriverCards() {
                         src={displayImg}
                         alt={displayName}
                         width={160}
-                        height={100}
+                        height={160}
                       />
                     </div>
                     <p className="text-[20px] font-semibold">{displayName}</p>

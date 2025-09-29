@@ -55,3 +55,22 @@ export const teamLogoMapping: Record<string, string> = {
   'Red Bull Racing': '/teamLogo/redbullracinglogo.png',
   Williams: '/teamLogo/williamslogo.png',
 };
+
+interface Driver {
+  name: string;
+  driverNumber: number;
+  team: Team;
+  teamLogo: string;
+  img: string;
+  country: string;
+  acronym: string;
+  first_name: string;
+  last_name: string;
+}
+interface Team {
+  name: string;
+  color: string;
+  color2: string;
+  logo: string;
+  bigLogo: string;
+}
