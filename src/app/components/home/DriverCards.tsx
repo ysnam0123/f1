@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 
 export default function DriverCards() {
+  const nothing = true;
   const { data, isPending, isError } = useDriverData();
   const customTeamOrder = data
     ? [...data].sort((a, b) => {
