@@ -34,7 +34,6 @@ export default function HighLights() {
                   width={video.snippet.thumbnails.medium.width}
                   height={video.snippet.thumbnails.medium.height}
                 />
-                ㅇㅇ
                 <p className="line-clamp-2">{video.snippet.title}</p>
               </a>
             ))}
