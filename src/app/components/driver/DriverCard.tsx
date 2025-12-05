@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function DriverCard() {
   return (
-    <div className="relative h-[236px] w-[236px] overflow-hidden rounded-br-2xl">
+    <div className="relative h-[236px] w-[256px] overflow-hidden rounded-br-2xl">
       <Image
         src="/cardBg.png"
         alt="bg"

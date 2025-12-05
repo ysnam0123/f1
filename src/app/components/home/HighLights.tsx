@@ -19,7 +19,7 @@ export default function HighLights() {
     <>
       <div className="select-none">
         <h1 className="mb-3 text-[25px] font-bold">공식 하이라이트</h1>
-        <div className="flex min-h-[250px] w-[1300px] gap-[20px] rounded-[20px] bg-[#1a1a1a] p-[52px]">
+        <div className="flex min-h-[250px] w-full justify-between rounded-[20px] bg-[#1a1a1a] p-[52px]">
           {videos &&
             videos.map((video) => (
               <a

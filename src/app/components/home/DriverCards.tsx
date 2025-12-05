@@ -30,7 +30,7 @@ export default function DriverCards() {
       const sorted = [...data].sort((a, b) =>
         a.team_name.localeCompare(b.team_name),
       );
-      console.log(sorted);
+      console.log('sorted:', sorted);
     }
   }, [data]);
 
@@ -82,7 +82,7 @@ export default function DriverCards() {
                     </div>
                     <div className="">
                       <Image
-                        src={displayImg}
+                        src={driver.headshot_url}
                         alt={displayName}
                         width={160}
                         height={160}
