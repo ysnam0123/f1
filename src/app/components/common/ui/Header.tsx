@@ -13,7 +13,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <>
-      <div className="px-[70px] flex gap-[70px] items-center py-[10px]  select-none ">
+      <div className="flex items-center gap-[70px] px-[70px] py-[10px] select-none">
         <Image
           src={f1}
           alt="f1"
@@ -24,15 +24,18 @@ export default function Header() {
             setOpenTeam(false);
           }}
         />
-        <ul className="flex gap-14 ">
-          <li className="cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]">
+        <ul className="flex gap-14">
+          <li
+            onClick={() => router.push('/season')}
+            className="cursor-pointer border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
+          >
             2025 시즌
           </li>
-          <li className="cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]">
+          <li className="cursor-pointer border-b-2 border-transparent py-[25px] hover:border-[#ffffff]">
             순위
           </li>
           <li
-            className="flex gap-0 cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]"
+            className="flex cursor-pointer gap-0 border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
             onClick={() => router.push('/team')}
             onMouseEnter={() => {
               setOpenDriver(false);
@@ -43,7 +46,7 @@ export default function Header() {
             <ChevronDown />
           </li>
           <li
-            className="flex gap-0 cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]"
+            className="flex cursor-pointer gap-0 border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
             onMouseEnter={() => {
               setOpenDriver(true);
               setOpenTeam(false);
@@ -52,10 +55,10 @@ export default function Header() {
             <span>드라이버</span>
             <ChevronDown />
           </li>
-          <li className="cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]">
+          <li className="cursor-pointer border-b-2 border-transparent py-[25px] hover:border-[#ffffff]">
             서킷
           </li>
-          <li className="cursor-pointer border-b-2 border-transparent hover:border-[#ffffff] py-[25px]">
+          <li className="cursor-pointer border-b-2 border-transparent py-[25px] hover:border-[#ffffff]">
             f1 알아보기
           </li>
         </ul>
