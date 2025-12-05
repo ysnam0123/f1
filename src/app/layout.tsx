@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className="bg-[#0B0B0B] text-[#ffffff]">
         <Provider>
           <Header />
-          {children}
+          <div className="">{children}</div>
           <Footer />
         </Provider>
       </body>

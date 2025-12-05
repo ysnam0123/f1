@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <>
-      <div className="w-full mt-5 bg-[#202020] min-h-[300px]">
+      <div className="mt-50 min-h-[300px] w-full bg-[#202020]">
         <p>남윤서</p>
       </div>
     </>

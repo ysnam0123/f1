@@ -8,3 +8,13 @@
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* 커스텀 유틸리티 */
+@layer utilities {
+  .mobile {
+    @apply block sm:hidden;
+  }
+  .desktop {
+    @apply hidden sm:block;
+  }
+}

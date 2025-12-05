@@ -37,13 +37,15 @@ export default function Ranks() {
             팀 순위
           </button>
         </div>
-        <div className="flex h-full w-[885px] flex-col justify-center rounded-[15px] bg-[#1A1A1A] px-[30px] py-7 text-[12px] select-none">
+        <div className="flex h-full w-full max-w-[885px] flex-col justify-center rounded-[15px] bg-[#1A1A1A] px-[30px] py-7 text-[12px] select-none">
           {driverRank && (
             <>
-              <div className="mb-10 flex justify-between">
-                <DriverCard />
-                <DriverCard />
-                <DriverCard />
+              <div className="desktop">
+                <div className="mb-10 flex justify-between gap-10">
+                  <DriverCard />
+                  <DriverCard />
+                  <DriverCard />
+                </div>
               </div>
               <div className="mb-3 grid grid-cols-5 border-b-2 border-[#FFD700] px-[10px] pb-1 text-center text-[18px] font-semibold">
                 <div>순위</div>

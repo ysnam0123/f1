@@ -1,3 +1,5 @@
+'use client';
+import { useEffect } from 'react';
 import DriverCards from './components/home/DriverCards';
 import HighLights from './components/home/HighLights';
 import LatestResult from './components/home/LatestResult';
@@ -5,16 +7,20 @@ import News from './components/home/News';
 import Ranks from './components/home/Ranks';
 import Results from './components/home/Results';
 import Schedule from './components/home/Schedule';
+import { latestRaceResult, latestRaceSession } from './api/f1/Meetings';
 
-export default function page() {
+export default function Page() {
+  useEffect(() => {
+    latestRaceSession('latest');
+    latestRaceResult();
+  }, []);
   return (
     <>
-      <div className="mb-[30px]">
-        <Schedule />
-      </div>
+      <Schedule />
+
       <div className="mx-auto flex max-w-[1300px] flex-col items-center gap-10">
         {/* <Results /> */}
-        <div className="flex min-h-[670px] gap-[50px]">
+        <div className="flex min-h-[670px] w-full flex-col gap-[50px] md:flex-row">
           <Ranks />
           <LatestResult />
         </div>
@@ -22,7 +28,7 @@ export default function page() {
           <HighLights />
         </div>
 
-        <DriverCards />
+        {/* <DriverCards /> */}
       </div>
     </>
   );
