@@ -36,7 +36,10 @@ export default function Header() {
           </li>
           <li
             className="flex cursor-pointer gap-0 border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
-            onClick={() => router.push('/team')}
+            onClick={() => {
+              router.push('/team');
+              setOpenTeam(false);
+            }}
             onMouseEnter={() => {
               setOpenDriver(false);
               setOpenTeam(true);
@@ -47,6 +50,7 @@ export default function Header() {
           </li>
           <li
             className="flex cursor-pointer gap-0 border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
+            onClick={() => setOpenDriver(false)}
             onMouseEnter={() => {
               setOpenDriver(true);
               setOpenTeam(false);

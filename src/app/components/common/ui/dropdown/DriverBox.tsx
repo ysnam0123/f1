@@ -1,6 +1,7 @@
 // import { Team as TeamType } from '@/types/team';
 import { teams } from '@/data/teams';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
   className,
@@ -10,18 +11,20 @@ export default function TeamBox({
 
   onMouseLeave: () => void;
 }) {
+  const router = useRouter();
   return (
     <>
       <div
-        className="absolute left-0 top-[90px] w-screen min-h-[400px] px-[50px] py-10 bg-[#1a1a1a] z-100  select-none"
+        className="absolute top-[90px] left-0 z-100 min-h-[400px] w-screen bg-[#1a1a1a] px-[50px] py-10 select-none"
         onMouseLeave={onMouseLeave}
       >
-        <div className="grid grid-cols-4 gap-x-4 gap-y-6 mx-auto max-w-[1440px] ">
+        <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-x-4 gap-y-6">
           {teams.map((team) =>
             team.drivers.map((driver) => (
               <div
+                onClick={() => router.push('/driver')}
                 key={driver.name}
-                className="px-1 py-2 min-h-8 flex items-center gap-5 rounded-[8px] cursor-pointer"
+                className="flex min-h-8 cursor-pointer items-center gap-5 rounded-[8px] px-1 py-2"
                 style={{
                   transition: 'background-color 0.2s',
                 }}
@@ -33,7 +36,7 @@ export default function TeamBox({
                 }}
               >
                 <div
-                  className=" w-10 h-10 rounded-full cursor-pointer"
+                  className="h-10 w-10 cursor-pointer rounded-full"
                   style={{
                     backgroundColor: `${team.logoBg}`,
                     backgroundImage: `url(${driver.image.src})`,
@@ -41,11 +44,11 @@ export default function TeamBox({
                     backgroundPosition: 'center',
                   }}
                 ></div>
-                <h1 className="text-white text-[18px] font-semibold">
+                <h1 className="text-[18px] font-semibold text-white">
                   {driver.name}
                 </h1>
               </div>
-            ))
+            )),
           )}
         </div>
       </div>
