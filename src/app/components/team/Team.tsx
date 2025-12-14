@@ -8,19 +8,19 @@ interface TeamProps {
 export default function Team({ team }: TeamProps) {
   return (
     <>
-      <div className="flex flex-col gap-3 select-none">
+      <div className="flex w-full flex-col gap-3 select-none">
         <div className="flex items-center gap-2">
           <div
-            className="flex items-center justify-center p-[4px] rounded-full w-10 h-10"
+            className="flex h-10 w-10 items-center justify-center rounded-full p-[4px]"
             style={{ backgroundColor: `${team.logoBg}` }}
           >
             <Image src={team.logo} alt="logo" />
           </div>
-          <h1 className="font-bold text-[24px]">{team.name}</h1>
+          <h1 className="text-[24px] font-bold">{team.name}</h1>
         </div>
 
         <div
-          className={`flex flex-col justify-between items-center w-[520px] h-[300px] bg-gradient-to-b py-5 px-[27px] rounded-[8px] transition-all duration-300 hover:scale-105 cursor-pointer`}
+          className={`flex h-[300px] w-full cursor-pointer flex-col items-center justify-between rounded-[8px] bg-gradient-to-b px-[27px] py-5 transition-all duration-300 hover:scale-105`}
           style={{
             backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
           }}
@@ -41,18 +41,18 @@ export default function Team({ team }: TeamProps) {
             <div className="flex gap-5">
               <div className="flex gap-10">
                 {team.drivers.map((driver) => (
-                  <div key={driver.number} className="flex gap-1 items-center">
+                  <div key={driver.number} className="flex items-center gap-1">
                     <div className="flex flex-col">
                       <p>{driver.name}</p>
                       <div className="flex items-center gap-1">
-                        <div className="bg-gray-300 rounded-full w-[20px] h-[20px]"></div>
+                        <div className="h-[20px] w-[20px] rounded-full bg-gray-300"></div>
                         <p className="text-[16px] font-bold">{driver.number}</p>
                       </div>
                     </div>
                     <Image
                       src={driver.image}
                       alt={driver.name}
-                      className="w-16 h-16"
+                      className="h-16 w-16"
                     />
                   </div>
                 ))}
@@ -62,7 +62,7 @@ export default function Team({ team }: TeamProps) {
           <Image
             src={team.car}
             alt="mcLarenCar"
-            className="w-[465px] h-[139px]"
+            className="h-[139px] w-[465px]"
           />
         </div>
       </div>
