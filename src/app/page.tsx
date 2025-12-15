@@ -1,11 +1,9 @@
 'use client';
 import { useEffect } from 'react';
-import DriverCards from './components/home/DriverCards';
+// import DriverCards from './components/home/DriverCards';
 import HighLights from './components/home/HighLights';
 import LatestResult from './components/home/LatestResult';
-import News from './components/home/News';
 import Ranks from './components/home/Ranks';
-import Results from './components/home/Results';
 import Schedule from './components/home/Schedule';
 import { latestRaceResult, latestRaceSession } from './api/f1/Meetings';
 
