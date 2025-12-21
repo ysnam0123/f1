@@ -3,7 +3,6 @@
 import DriverDetail from '@/app/components/driver/DriverDetail';
 import DriverHero from '@/app/components/driver/DriverHeroSec';
 import { teams } from '@/data/teams';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 export default function Page() {

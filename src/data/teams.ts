@@ -18,6 +18,7 @@ export const teams: Team[] = [
       {
         name: 'Lando Norris',
         krName: '랜도 노리스',
+        nationality: '영국',
         driverSlug: 'lando-norris',
         number: 4,
         image: Drivers.Lando,
@@ -25,6 +26,7 @@ export const teams: Team[] = [
       {
         name: 'Oscar Piastri',
         krName: '오스카 피아스트리',
+        nationality: '호주',
         driverSlug: 'oscar-piastri',
         number: 81,
         image: Drivers.Oscar,
@@ -44,6 +46,7 @@ export const teams: Team[] = [
       {
         name: 'Charles Leclerc',
         krName: '샤를 르클레르',
+        nationality: '모나코',
         driverSlug: 'charles-leclerc',
         number: 16,
         image: Drivers.Leclerc,
@@ -51,6 +54,7 @@ export const teams: Team[] = [
       {
         name: 'Lewis Hamilton',
         krName: '루이스 해밀턴',
+        nationality: '영국',
         driverSlug: 'lewis-hamilton',
         number: 44,
         image: Drivers.Lewis,
@@ -70,6 +74,7 @@ export const teams: Team[] = [
       {
         name: 'George Russell',
         krName: '조지 러셀',
+        nationality: '영국',
         driverSlug: 'george-russell',
         number: 63,
         image: Drivers.Russell,
@@ -77,6 +82,7 @@ export const teams: Team[] = [
       {
         name: 'Kimi Antonelli',
         krName: '키미 안토넬리',
+        nationality: '이탈리아',
         driverSlug: 'kimi-antonelli',
         number: 12,
         image: Drivers.Kimi,
@@ -96,6 +102,7 @@ export const teams: Team[] = [
       {
         name: 'Max Verstappen',
         krName: '막스 베르스타펜',
+        nationality: '네덜란드',
         driverSlug: 'max-verstappen',
         number: 1,
         image: Drivers.Max,
@@ -103,6 +110,7 @@ export const teams: Team[] = [
       {
         name: 'Yuki Tsunoda',
         krName: '츠노다 유키',
+        nationality: '일본',
         driverSlug: 'yuki-tsunoda',
         number: 22,
         image: Drivers.Yuki,
@@ -122,6 +130,7 @@ export const teams: Team[] = [
       {
         name: 'Alex Albon',
         krName: '알렉산더 알본',
+        nationality: '태국',
         driverSlug: 'alex-albon',
         number: 23,
         image: Drivers.Albon,
@@ -129,6 +138,7 @@ export const teams: Team[] = [
       {
         name: 'Carlos Sainz Jr.',
         krName: '카를로스 사인츠',
+        nationality: '스페인',
         driverSlug: 'carlos-sainz',
         number: 55,
         image: Drivers.Sainz,
@@ -148,6 +158,7 @@ export const teams: Team[] = [
       {
         name: 'Fernando Alonso',
         krName: '페르난도 알론소',
+        nationality: '스페인',
         driverSlug: 'fernando-alonso',
         number: 14,
         image: Drivers.Alonso,
@@ -155,6 +166,7 @@ export const teams: Team[] = [
       {
         name: 'Lance Stroll',
         krName: '랜스 스트롤',
+        nationality: '캐나다',
         driverSlug: 'lance-stroll',
         number: 18,
         image: Drivers.Lance,
@@ -174,6 +186,7 @@ export const teams: Team[] = [
       {
         name: 'Nico Hülkenberg',
         krName: '니코 휠켄베르크',
+        nationality: '독일',
         driverSlug: 'nico-hulkenberg',
         number: 27,
         image: Drivers.Hulkenberg,
@@ -181,6 +194,7 @@ export const teams: Team[] = [
       {
         name: 'Gabriel Bortoleto',
         krName: '가브리엘 보르톨레토',
+        nationality: '브라질',
         driverSlug: 'gabriel-bortoleto',
         number: 5,
         image: Drivers.Bortoleto,
@@ -200,6 +214,7 @@ export const teams: Team[] = [
       {
         name: 'Liam Lawson',
         krName: '리암 로슨',
+        nationality: '뉴질랜드',
         driverSlug: 'liam-lawson',
         number: 30,
         image: Drivers.Lawson,
@@ -207,6 +222,7 @@ export const teams: Team[] = [
       {
         name: 'Isack Hadjar',
         krName: '이삭 하자르',
+        nationality: '프랑스',
         driverSlug: 'isack-hadjar',
         number: 6,
         image: Drivers.Isac,
@@ -226,6 +242,7 @@ export const teams: Team[] = [
       {
         name: 'Esteban Ocon',
         krName: '에스테반 오콘',
+        nationality: '프랑스',
         driverSlug: 'esteban-ocon',
         number: 31,
         image: Drivers.Ocon,
@@ -233,6 +250,7 @@ export const teams: Team[] = [
       {
         name: 'Oliver Bearman',
         krName: '올리버 베어먼',
+        nationality: '영국',
         driverSlug: 'oliver-bearman',
         number: 87,
         image: Drivers.Bearman,
@@ -252,6 +270,7 @@ export const teams: Team[] = [
       {
         name: 'Pierre Gasly',
         krName: '피에르 가슬리',
+        nationality: '프랑스',
         driverSlug: 'pierre-gasly',
         number: 10,
         image: Drivers.Gasly,
@@ -259,6 +278,7 @@ export const teams: Team[] = [
       {
         name: 'Jack Doohan',
         krName: '잭 두한',
+        nationality: '호주',
         driverSlug: 'jack-doohan',
         number: 7,
         image: Drivers.Colapinto,

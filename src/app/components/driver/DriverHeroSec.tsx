@@ -1,3 +1,4 @@
+import { flags } from '@/images/flags';
 import { Team } from '@/types/team';
 import Image from 'next/image';
 
@@ -30,9 +31,9 @@ export default function DriverHero({ driver, team }: Props) {
             {driver.name}
           </p>
           <div className="flex text-[20px]">
-            <div className="flex gap-[6px] border-r-1 border-white pr-2.5">
-              {/* <Image */}
-              <p>모나코</p>
+            <div className="flex gap-2 border-r-1 border-white pr-2.5">
+              <Image src={flags.아르헨티나} alt="flag" width={43} height={26} />
+              <p>{driver.nationality}</p>
             </div>
             <p className="pl-2.5">{driver.number}</p>
           </div>

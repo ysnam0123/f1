@@ -4,6 +4,7 @@ export interface Driver {
   name: string;
   krName: string;
   driverSlug: string;
+  nationality: string;
   number: number;
   image: StaticImageData;
 }
