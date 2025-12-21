@@ -1,14 +1,20 @@
+'use client';
 import { Team as TeamType } from '@/types/team';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface TeamProps {
   team: TeamType;
 }
 
 export default function Team({ team }: TeamProps) {
+  const router = useRouter();
   return (
     <>
-      <div className="flex w-full flex-col gap-3 select-none">
+      <div
+        onClick={() => router.push(`/team/${team.slug}`)}
+        className="flex w-full flex-col gap-3 select-none"
+      >
         <div className="flex items-center gap-2">
           <div
             className="flex h-10 w-10 items-center justify-center rounded-full p-[4px]"

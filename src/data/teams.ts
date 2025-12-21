@@ -7,6 +7,7 @@ import type { Team } from '@/types/team';
 export const teams: Team[] = [
   {
     name: 'McLaren',
+    slug: 'mcLaren',
     colorFrom: '#FF8700',
     colorTo: '#995100',
     logo: Logos.McLaren,
@@ -20,6 +21,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Ferrari',
+    slug: 'ferrari',
     colorFrom: '#DC0000',
     colorTo: '#760000',
     logo: Logos.Ferrari,
@@ -33,6 +35,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Mercedes',
+    slug: 'mercedes',
     colorFrom: '#00D2BE',
     colorTo: '#006C62',
     logo: Logos.Mercedes,
@@ -46,6 +49,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Red Bull Racing',
+    slug: 'red-bull-racing',
     colorFrom: '#3671C6',
     colorTo: '#1A3760',
     logo: Logos.RedBull,
@@ -59,6 +63,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Williams',
+    slug: 'williams',
     colorFrom: '#1E41FF',
     colorTo: '#122799',
     logo: Logos.Williams,
@@ -72,6 +77,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Aston Martin',
+    slug: 'aston-martin',
     colorFrom: '#00D5BC',
     colorTo: '#006F62',
     logo: Logos.AstonMartin,
@@ -85,6 +91,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Sauber',
+    slug: 'sauber',
     colorFrom: '#07E207',
     colorTo: '#2D7C2D',
     logo: Logos.Sauber,
@@ -99,6 +106,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Racing Bulls',
+    slug: 'racing-bulls',
     colorFrom: '#3671C6',
     colorTo: '#1A3760',
     logo: Logos.RedBullRacing,
@@ -114,6 +122,7 @@ export const teams: Team[] = [
 
   {
     name: 'Haas',
+    slug: 'haas',
     colorFrom: '#B6BABD',
     colorTo: '#545657',
     logo: Logos.Haas,
@@ -128,6 +137,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Alpine',
+    slug: 'alpine',
     colorFrom: '#2173B8',
     colorTo: '#0F3352',
     logo: Logos.Alpine,

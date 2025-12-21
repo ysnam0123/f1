@@ -3,7 +3,7 @@ import { teams } from '@/data/teams';
 export default function page() {
   return (
     <>
-      <div className="flex flex-col px-[70px] py-10 select-none">
+      <div className="mx-auto flex max-w-[1300px] flex-col px-[70px] py-10 select-none">
         <h1 className="mb-[50px] text-[30px] font-bold">2025 시즌</h1>
         <div className="">
           <div className="grid grid-cols-2 gap-10">

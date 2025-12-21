@@ -13,7 +13,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <>
-      <div className="flex items-center gap-[70px] px-[70px] py-[10px] select-none">
+      <div className="mb-[50px] flex items-center gap-[70px] px-[70px] py-[10px] select-none">
         <Image
           src={f1}
           alt="f1"
