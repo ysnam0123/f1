@@ -13,7 +13,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <>
-      <div className="mb-[50px] flex items-center gap-[70px] px-[70px] py-[10px] select-none">
+      <div className="mb-[30px] flex items-center gap-[70px] px-[70px] py-[10px] select-none">
         <Image
           src={f1}
           alt="f1"
@@ -50,7 +50,10 @@ export default function Header() {
           </li>
           <li
             className="flex cursor-pointer gap-0 border-b-2 border-transparent py-[25px] hover:border-[#ffffff]"
-            onClick={() => setOpenDriver(false)}
+            onClick={() => {
+              router.push('/driver');
+              setOpenDriver(false);
+            }}
             onMouseEnter={() => {
               setOpenDriver(true);
               setOpenTeam(false);

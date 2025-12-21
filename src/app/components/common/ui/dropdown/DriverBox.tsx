@@ -22,7 +22,7 @@ export default function TeamBox({
           {teams.map((team) =>
             team.drivers.map((driver) => (
               <div
-                onClick={() => router.push('/driver')}
+                onClick={() => router.push(`/driver/${driver.driverSlug}`)}
                 key={driver.name}
                 className="flex min-h-8 cursor-pointer items-center gap-5 rounded-[8px] px-1 py-2"
                 style={{

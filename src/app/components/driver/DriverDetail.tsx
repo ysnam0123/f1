@@ -1,0 +1,22 @@
+import StatBox from './StatBox';
+
+export default function DriverDetail() {
+  return (
+    <>
+      <section className="min-h-250 w-full rounded-[30px] bg-[#1C1C25] px-10 py-[30px] select-none">
+        <h1
+          className="mb-[50px] text-[40px]"
+          style={{ fontFamily: 'PartialSans' }}
+        >
+          STATSTICS
+        </h1>
+        <div className="grid grid-cols-4">
+          <StatBox title="시즌 순위" value="5th" />
+          <StatBox title="시즌 포인트" value="224" />
+          <StatBox title="시즌 순위" value="5th" />
+          <StatBox title="시즌 순위" value="5th" />
+        </div>
+      </section>
+    </>
+  );
+}

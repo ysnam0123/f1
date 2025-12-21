@@ -1,6 +1,5 @@
 'use client';
 
-import DriverCard from '@/app/components/driver/DriverCard';
 import { teams } from '@/data/teams';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -25,14 +24,12 @@ export default function Page() {
               width={750}
               height={224}
             />
-            <div className="flex flex-col items-center justify-center">
-              <Image
-                src={`/teamLogo/redbullracinglogo.png`}
-                alt="logo"
-                width={200}
-                height={100}
-              />
-              <p className="text-[30px]" style={{ fontFamily: 'PartialSans' }}>
+            <div className="flex shrink-0 flex-col items-center justify-center">
+              <Image src={team.logo} alt={'logo'} width={150} height={150} />
+              <p
+                className="text-center text-[30px] text-[#f1f1f1]"
+                style={{ fontFamily: 'PartialSans' }}
+              >
                 {team.name}
               </p>
             </div>

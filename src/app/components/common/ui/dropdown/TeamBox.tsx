@@ -1,18 +1,20 @@
+'use client';
 // import { Team as TeamType } from '@/types/team';
 import { teams } from '@/data/teams';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
   className,
   onMouseLeave,
 }: {
   className?: string;
-
   onMouseLeave: () => void;
 }) {
+  const router = useRouter();
   return (
     <div
-      className="absolute left-0 top-[90px] w-screen min-h-[600px] px-[50px] py-10 bg-[#1a1a1a] z-100 flex justify-center select-none"
+      className="absolute top-[90px] left-0 z-100 flex min-h-[600px] w-screen justify-center bg-[#1a1a1a] px-[50px] py-10 select-none"
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-5">
@@ -20,12 +22,13 @@ export default function TeamBox({
         {teams.map((team) => (
           <div
             key={team.name}
-            className="flex flex-col items-center py-5 px-3  w-[180px] h-[220px] bg-gray-300 rounded-[10px] cursor-pointer"
+            onClick={() => router.push(`/team/${team.slug}`)}
+            className="flex h-[220px] w-[180px] cursor-pointer flex-col items-center rounded-[10px] bg-gray-300 px-3 py-5"
             style={{
               backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
             }}
           >
-            <h1 className="font-medium text-[24px] mb-3">{team.name}</h1>
+            <h1 className="mb-3 text-[24px] font-medium">{team.name}</h1>
             <Image
               src={team.logoImg}
               alt="logo"

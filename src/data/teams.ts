@@ -15,8 +15,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.McLaren,
     car: Cars.McLaren,
     drivers: [
-      { name: 'Lando Norris', number: 4, image: Drivers.Lando },
-      { name: 'Oscar Piastri', number: 81, image: Drivers.Oscar },
+      {
+        name: 'Lando Norris',
+        krName: '랜도 노리스',
+        driverSlug: 'lando-norris',
+        number: 4,
+        image: Drivers.Lando,
+      },
+      {
+        name: 'Oscar Piastri',
+        krName: '오스카 피아스트리',
+        driverSlug: 'oscar-piastri',
+        number: 81,
+        image: Drivers.Oscar,
+      },
     ],
   },
   {
@@ -29,8 +41,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.Ferrari,
     car: Cars.Ferrari,
     drivers: [
-      { name: 'Charles Leclerc', number: 16, image: Drivers.Leclerc },
-      { name: 'Lewis Hamilton', number: 44, image: Drivers.Lewis },
+      {
+        name: 'Charles Leclerc',
+        krName: '샤를 르클레르',
+        driverSlug: 'charles-leclerc',
+        number: 16,
+        image: Drivers.Leclerc,
+      },
+      {
+        name: 'Lewis Hamilton',
+        krName: '루이스 해밀턴',
+        driverSlug: 'lewis-hamilton',
+        number: 44,
+        image: Drivers.Lewis,
+      },
     ],
   },
   {
@@ -43,8 +67,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.Mercedes,
     car: Cars.Mercedes,
     drivers: [
-      { name: 'George Russell', number: 63, image: Drivers.Russell },
-      { name: 'Kimi Antonelli', number: 12, image: Drivers.Kimi },
+      {
+        name: 'George Russell',
+        krName: '조지 러셀',
+        driverSlug: 'george-russell',
+        number: 63,
+        image: Drivers.Russell,
+      },
+      {
+        name: 'Kimi Antonelli',
+        krName: '키미 안토넬리',
+        driverSlug: 'kimi-antonelli',
+        number: 12,
+        image: Drivers.Kimi,
+      },
     ],
   },
   {
@@ -57,8 +93,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.RedBull,
     car: Cars.RedBull,
     drivers: [
-      { name: 'Max Verstappen', number: 1, image: Drivers.Max },
-      { name: 'Yuki Tsunoda', number: 22, image: Drivers.Yuki },
+      {
+        name: 'Max Verstappen',
+        krName: '막스 베르스타펜',
+        driverSlug: 'max-verstappen',
+        number: 1,
+        image: Drivers.Max,
+      },
+      {
+        name: 'Yuki Tsunoda',
+        krName: '츠노다 유키',
+        driverSlug: 'yuki-tsunoda',
+        number: 22,
+        image: Drivers.Yuki,
+      },
     ],
   },
   {
@@ -71,8 +119,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.Williams,
     car: Cars.Williams,
     drivers: [
-      { name: 'Alex Albon', number: 23, image: Drivers.Albon },
-      { name: 'Carlos Sainz Jr.', number: 55, image: Drivers.Sainz },
+      {
+        name: 'Alex Albon',
+        krName: '알렉산더 알본',
+        driverSlug: 'alex-albon',
+        number: 23,
+        image: Drivers.Albon,
+      },
+      {
+        name: 'Carlos Sainz Jr.',
+        krName: '카를로스 사인츠',
+        driverSlug: 'carlos-sainz',
+        number: 55,
+        image: Drivers.Sainz,
+      },
     ],
   },
   {
@@ -85,23 +145,46 @@ export const teams: Team[] = [
     logoImg: LogoImgs.AstonMartin,
     car: Cars.AstonMartin,
     drivers: [
-      { name: 'Fernando Alonso', number: 14, image: Drivers.Alonso },
-      { name: 'Lance Stroll', number: 18, image: Drivers.Lance },
+      {
+        name: 'Fernando Alonso',
+        krName: '페르난도 알론소',
+        driverSlug: 'fernando-alonso',
+        number: 14,
+        image: Drivers.Alonso,
+      },
+      {
+        name: 'Lance Stroll',
+        krName: '랜스 스트롤',
+        driverSlug: 'lance-stroll',
+        number: 18,
+        image: Drivers.Lance,
+      },
     ],
   },
   {
     name: 'Sauber',
-    slug: 'sauber',
+    slug: 'kick-sauber',
     colorFrom: '#07E207',
     colorTo: '#2D7C2D',
     logo: Logos.Sauber,
     logoBg: '#016300',
     logoImg: LogoImgs.Sauber,
-
     car: Cars.KickSauber,
     drivers: [
-      { name: 'Nico Hülkenberg', number: 27, image: Drivers.Hulkenberg },
-      { name: 'Gabriel Bortoleto', number: 5, image: Drivers.Bortoleto },
+      {
+        name: 'Nico Hülkenberg',
+        krName: '니코 휠켄베르크',
+        driverSlug: 'nico-hulkenberg',
+        number: 27,
+        image: Drivers.Hulkenberg,
+      },
+      {
+        name: 'Gabriel Bortoleto',
+        krName: '가브리엘 보르톨레토',
+        driverSlug: 'gabriel-bortoleto',
+        number: 5,
+        image: Drivers.Bortoleto,
+      },
     ],
   },
   {
@@ -111,15 +194,25 @@ export const teams: Team[] = [
     colorTo: '#1A3760',
     logo: Logos.RedBullRacing,
     logoBg: '#2345AB',
-
     logoImg: LogoImgs.RedBullRacing,
     car: Cars.RacingBulls,
     drivers: [
-      { name: 'Liam Lawson', number: 30, image: Drivers.Lawson },
-      { name: 'Isack Hadjar', number: 6, image: Drivers.Isac },
+      {
+        name: 'Liam Lawson',
+        krName: '리암 로슨',
+        driverSlug: 'liam-lawson',
+        number: 30,
+        image: Drivers.Lawson,
+      },
+      {
+        name: 'Isack Hadjar',
+        krName: '이삭 하자르',
+        driverSlug: 'isack-hadjar',
+        number: 6,
+        image: Drivers.Isac,
+      },
     ],
   },
-
   {
     name: 'Haas',
     slug: 'haas',
@@ -128,11 +221,22 @@ export const teams: Team[] = [
     logo: Logos.Haas,
     logoBg: '#4D5052',
     logoImg: LogoImgs.Haas,
-
     car: Cars.Haas,
     drivers: [
-      { name: 'Esteban Ocon', number: 31, image: Drivers.Ocon },
-      { name: 'Oliver Bearman', number: 87, image: Drivers.Bearman },
+      {
+        name: 'Esteban Ocon',
+        krName: '에스테반 오콘',
+        driverSlug: 'esteban-ocon',
+        number: 31,
+        image: Drivers.Ocon,
+      },
+      {
+        name: 'Oliver Bearman',
+        krName: '올리버 베어먼',
+        driverSlug: 'oliver-bearman',
+        number: 87,
+        image: Drivers.Bearman,
+      },
     ],
   },
   {
@@ -145,8 +249,20 @@ export const teams: Team[] = [
     logoImg: LogoImgs.Alpine,
     car: Cars.Alpine,
     drivers: [
-      { name: 'Pierre Gasly', number: 10, image: Drivers.Gasly },
-      { name: 'Jack Doohan', number: 7, image: Drivers.Colapinto },
+      {
+        name: 'Pierre Gasly',
+        krName: '피에르 가슬리',
+        driverSlug: 'pierre-gasly',
+        number: 10,
+        image: Drivers.Gasly,
+      },
+      {
+        name: 'Jack Doohan',
+        krName: '잭 두한',
+        driverSlug: 'jack-doohan',
+        number: 7,
+        image: Drivers.Colapinto,
+      },
     ],
   },
 ];

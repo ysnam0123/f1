@@ -2,6 +2,8 @@ import { StaticImageData } from 'next/image';
 
 export interface Driver {
   name: string;
+  krName: string;
+  driverSlug: string;
   number: number;
   image: StaticImageData;
 }
