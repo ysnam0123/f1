@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function DriverHero({ driver, team }: Props) {
+  const nationality = flags[driver.nationality];
   return (
     <>
       <div
@@ -20,8 +21,8 @@ export default function DriverHero({ driver, team }: Props) {
           <Image
             src={team.logoImg}
             alt="driver"
-            width={150}
-            height={100}
+            width={120}
+            height={80}
             className="mb-5"
           />
           <p
@@ -32,7 +33,7 @@ export default function DriverHero({ driver, team }: Props) {
           </p>
           <div className="flex text-[20px]">
             <div className="flex gap-2 border-r-1 border-white pr-2.5">
-              <Image src={flags.아르헨티나} alt="flag" width={43} height={26} />
+              <Image src={nationality} alt="flag" width={43} height={26} />
               <p>{driver.nationality}</p>
             </div>
             <p className="pl-2.5">{driver.number}</p>

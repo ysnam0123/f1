@@ -1,4 +1,5 @@
 import argentina from '/public/flag/argentina.svg';
+import australia from '/public/flag/australia.svg';
 import austria from '/public/flag/austria.svg';
 import azerbaijan from '/public/flag/azerbaijan.svg';
 import bahrain from '/public/flag/bahrain.svg';
@@ -21,9 +22,11 @@ import thailand from '/public/flag/thailand.svg';
 import uae from '/public/flag/uae.svg';
 import uk from '/public/flag/uk.svg';
 import usa from '/public/flag/usa.svg';
+import newzealand from '/public/flag/newzealand.svg';
 
 export const flags = {
   아르헨티나: argentina,
+  호주: australia,
   오스트리아: austria,
   아제르바이잔: azerbaijan,
   바레인: bahrain,
@@ -46,4 +49,5 @@ export const flags = {
   아랍에미리트: uae,
   영국: uk,
   미국: usa,
+  뉴질랜드: newzealand,
 };

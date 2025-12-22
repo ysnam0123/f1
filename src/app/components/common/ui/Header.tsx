@@ -70,7 +70,12 @@ export default function Header() {
           </li>
         </ul>
         {openTeam && <TeamBox onMouseLeave={() => setOpenTeam(false)} />}
-        {openDriver && <DriverBox onMouseLeave={() => setOpenDriver(false)} />}
+        {openDriver && (
+          <DriverBox
+            onMouseLeave={() => setOpenDriver(false)}
+            onClick={() => setOpenDriver(false)}
+          />
+        )}
       </div>
     </>
   );

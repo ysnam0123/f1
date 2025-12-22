@@ -1,10 +1,12 @@
+import { flags } from '@/images/flags';
 import { StaticImageData } from 'next/image';
 
+export type Nationality = keyof typeof flags;
 export interface Driver {
   name: string;
   krName: string;
   driverSlug: string;
-  nationality: string;
+  nationality: Nationality;
   number: number;
   image: StaticImageData;
 }

@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 export default function TeamBox({
   className,
   onMouseLeave,
+  onClick,
 }: {
   className?: string;
-
+  onClick: () => void;
   onMouseLeave: () => void;
 }) {
   const router = useRouter();
@@ -22,7 +23,10 @@ export default function TeamBox({
           {teams.map((team) =>
             team.drivers.map((driver) => (
               <div
-                onClick={() => router.push(`/driver/${driver.driverSlug}`)}
+                onClick={() => {
+                  onClick();
+                  router.push(`/driver/${driver.driverSlug}`);
+                }}
                 key={driver.name}
                 className="flex min-h-8 cursor-pointer items-center gap-5 rounded-[8px] px-1 py-2"
                 style={{
