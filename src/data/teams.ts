@@ -7,7 +7,7 @@ import type { Team } from '@/types/team';
 export const teams: Team[] = [
   {
     name: 'McLaren',
-    slug: 'mcLaren',
+    slug: 'mclaren',
     colorFrom: '#FF8700',
     colorTo: '#995100',
     logo: Logos.McLaren,
