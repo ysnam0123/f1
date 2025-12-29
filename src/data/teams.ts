@@ -96,7 +96,7 @@ export const teams: Team[] = [
     colorTo: '#1A3760',
     logo: Logos.RedBull,
     logoBg: '#003282',
-    logoImg: LogoImgs.RedBull,
+    logoImg: LogoImgs.RedBullRacing,
     car: Cars.RedBull,
     drivers: [
       {
@@ -208,7 +208,7 @@ export const teams: Team[] = [
     colorTo: '#1A3760',
     logo: Logos.RedBullRacing,
     logoBg: '#2345AB',
-    logoImg: LogoImgs.RedBullRacing,
+    logoImg: LogoImgs.RacingBulls,
     car: Cars.RacingBulls,
     drivers: [
       {

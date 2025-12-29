@@ -1,15 +1,24 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 const config: Config = {
+  darkMode: 'class',
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       fontFamily: {
-        ria: ['RiaSans', 'sans-serif'], // 메인 타이틀용
-        partial: ['PartialSans', 'sans-serif'], // 포인트 / 한글 강조
-        pretendard: ['PretendardVariable', 'sans-serif'], // 기본 본문
+        ria: ['RiaSans', 'sans-serif'],
+        partial: ['PartialSans', 'sans-serif'],
+        pretendard: ['PretendardVariable', 'sans-serif'],
+        paperlogy: ['Paperlogy', 'sans-serif'],
       },
     },
   },
+  plugins: [animate],
 };
 
 export default config;

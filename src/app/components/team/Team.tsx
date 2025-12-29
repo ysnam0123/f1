@@ -13,53 +13,32 @@ export default function Team({ team }: TeamProps) {
     <>
       <div
         onClick={() => router.push(`/team/${team.slug}`)}
-        className="flex w-full flex-col gap-3 select-none"
+        className="flex w-full flex-col gap-5 select-none"
       >
         <div className="flex items-center gap-2">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-full p-[4px]"
-            style={{ backgroundColor: `${team.logoBg}` }}
-          >
-            <Image src={team.logo} alt="logo" />
-          </div>
-          <h1 className="text-[24px] font-bold">{team.name}</h1>
+          <h1 className="font-partial text-[30px] font-bold">{team.name}</h1>
         </div>
-
-        <div
-          className={`flex h-[300px] w-full cursor-pointer flex-col items-center justify-between rounded-[8px] bg-gradient-to-b px-[27px] py-5 transition-all duration-300 hover:scale-105`}
-          style={{
-            backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
-          }}
-        >
-          <div className="flex items-center">
-            {/* <div className="flex items-center">
-            <h1 className="font-bold text-[28px] mr-3">{team.name}</h1>
-            <div className="flex items-center justify-center bg-gray-300 w-10 h-10 rounded-full p-1">
-              <Image src={team.logo} alt="logo" />
-            </div>
-          </div> */}
-            {/* <Image
-            src={team.logo}
-            alt="logo"
-            className="w-[154px] h-[47px] mr-10"
-          /> */}
-
-            <div className="flex gap-5">
-              <div className="flex gap-10">
+        <div className="group relative flex min-h-82.5 w-full cursor-pointer flex-col items-center justify-between rounded-xl border border-[#F4F4F4] bg-none px-6.75 py-4.5 transition-transform duration-300 hover:scale-105">
+          <div
+            className="absolute inset-0 z-10 cursor-pointer rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
+            }}
+          />
+          <div className="z-20 flex items-center">
+            <div className="flex gap-20">
+              <Image src={team.logoImg} alt="logo" width={120} height={120} />
+              <div className="flex gap-12.5">
                 {team.drivers.map((driver) => (
                   <div key={driver.number} className="flex items-center gap-1">
-                    <div className="flex flex-col">
-                      <p>{driver.name}</p>
-                      <div className="flex items-center gap-1">
-                        <div className="h-[20px] w-[20px] rounded-full bg-gray-300"></div>
-                        <p className="text-[16px] font-bold">{driver.number}</p>
-                      </div>
+                    <div className="flex flex-col items-center gap-3.75">
+                      <Image
+                        src={driver.image}
+                        alt={driver.name}
+                        className="h-25 w-25"
+                      />
+                      <p className="text-[16px] font-bold">{driver.name}</p>
                     </div>
-                    <Image
-                      src={driver.image}
-                      alt={driver.name}
-                      className="h-16 w-16"
-                    />
                   </div>
                 ))}
               </div>
@@ -68,7 +47,7 @@ export default function Team({ team }: TeamProps) {
           <Image
             src={team.car}
             alt="mcLarenCar"
-            className="h-[139px] w-[465px]"
+            className="z-20 h-34.75 w-116.25"
           />
         </div>
       </div>

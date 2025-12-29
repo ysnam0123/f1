@@ -16,7 +16,7 @@ export default function TeamBox({
   return (
     <>
       <div
-        className="absolute top-[90px] left-0 z-100 min-h-[400px] w-screen bg-[#1a1a1a] px-[50px] py-10 select-none"
+        className="absolute top-[130px] left-0 z-100 min-h-[400px] w-screen bg-[#1a1a1a] px-[50px] py-10 select-none"
         onMouseLeave={onMouseLeave}
       >
         <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-x-4 gap-y-6">

@@ -14,7 +14,7 @@ export default function TeamBox({
   const router = useRouter();
   return (
     <div
-      className="absolute top-[90px] left-0 z-100 flex min-h-[600px] w-screen justify-center bg-[#1a1a1a] px-[50px] py-10 select-none"
+      className="absolute top-[130px] left-0 z-100 flex min-h-[600px] w-screen justify-center bg-[#1a1a1a] px-[50px] py-10 select-none"
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-5">
