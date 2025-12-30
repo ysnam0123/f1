@@ -13,6 +13,7 @@ export interface Driver {
 
 export interface Team {
   name: string;
+  krName: string;
   slug: string;
   colorFrom: string; // 그라데이션 시작
   colorTo: string; // 그라데이션 끝

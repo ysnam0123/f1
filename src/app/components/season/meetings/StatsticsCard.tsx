@@ -13,8 +13,8 @@ export default function StatsticsCard({ title }: { title: string }) {
   const icon = iconArr.find((item) => item.title === title);
   return (
     <>
-      <div className="min-h-55 w-[358px] rounded-[40px] bg-[#1A1A1A] px-[30px] py-[25px]">
-        <div className="mb-[50px] flex items-center gap-0">
+      <div className="min-h-55 w-89.5 rounded-[40px] bg-[#1A1A1A] px-7.5 py-6.25">
+        <div className="mb-12.5 flex items-center gap-0">
           {icon && <Image src={icon?.icon} alt="icon" width={40} height={40} />}
           <h1
             className="text-[20px]"

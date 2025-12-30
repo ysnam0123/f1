@@ -7,6 +7,7 @@ import type { Team } from '@/types/team';
 export const teams: Team[] = [
   {
     name: 'McLaren',
+    krName: '맥라렌',
     slug: 'mclaren',
     colorFrom: '#FF8700',
     colorTo: '#995100',
@@ -35,6 +36,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Ferrari',
+    krName: '페라리',
     slug: 'ferrari',
     colorFrom: '#DC0000',
     colorTo: '#760000',
@@ -63,6 +65,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Mercedes',
+    krName: '메르세데스',
     slug: 'mercedes',
     colorFrom: '#00D2BE',
     colorTo: '#006C62',
@@ -91,6 +94,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Red Bull Racing',
+    krName: '레드불 레이싱',
     slug: 'red-bull-racing',
     colorFrom: '#3671C6',
     colorTo: '#1A3760',
@@ -119,6 +123,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Williams',
+    krName: '윌리엄스',
     slug: 'williams',
     colorFrom: '#1E41FF',
     colorTo: '#122799',
@@ -147,6 +152,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Aston Martin',
+    krName: '애스턴 마틴',
     slug: 'aston-martin',
     colorFrom: '#00D5BC',
     colorTo: '#006F62',
@@ -175,6 +181,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Sauber',
+    krName: '킥 자우버',
     slug: 'kick-sauber',
     colorFrom: '#07E207',
     colorTo: '#2D7C2D',
@@ -203,6 +210,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Racing Bulls',
+    krName: '레이싱 불스',
     slug: 'racing-bulls',
     colorFrom: '#3671C6',
     colorTo: '#1A3760',
@@ -231,6 +239,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Haas',
+    krName: '하스',
     slug: 'haas',
     colorFrom: '#B6BABD',
     colorTo: '#545657',
@@ -259,6 +268,7 @@ export const teams: Team[] = [
   },
   {
     name: 'Alpine',
+    krName: '알핀',
     slug: 'alpine',
     colorFrom: '#2173B8',
     colorTo: '#0F3352',

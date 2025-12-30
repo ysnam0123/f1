@@ -11,7 +11,7 @@ export default function page() {
   console.log('result:', result);
   return (
     <>
-      <div className="mx-auto max-w-[1260px]">
+      <div className="mx-auto max-w-315">
         <section className="grid grid-cols-4 gap-5">
           {result.map((data) => (
             <DriverListCard

@@ -42,7 +42,7 @@ export default function Header() {
               onClick={() => router.push('/season')}
               className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]"
             >
-              2025 시즌
+              시즌
             </li>
             <li className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]">
               순위
