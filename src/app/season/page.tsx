@@ -2,18 +2,38 @@
 import { ChevronDown } from 'lucide-react';
 import GrandPrixCard from '../components/season/GrandPrixCard';
 import SeasonHeroBox from '../components/season/SeasonHeroBox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnimatedContent from '@/components/AnimatedContent';
+import { supabase } from '@/supabase/client';
+import { Meeting } from '@/types/meeting';
+import { fetchResult } from '../api/meeting/sessionResult';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [selectedYear, setSelectedYear] = useState<'2025' | '2026'>('2025');
+
+  useEffect(() => {
+    const fetchMeetings = async () => {
+      const { data, error } = await supabase
+        .from('meetings')
+        .select('*')
+        .eq('year', selectedYear);
+      if (error) {
+        console.error(error);
+        return;
+      }
+      setMeetings(data);
+    };
+    fetchMeetings();
+  }, [selectedYear]);
 
   return (
     <>
       <main className="min-h-screen">
         <SeasonHeroBox />
         <section className="mx-auto w-full max-w-350">
+          {/* 시즌 변경 버튼*/}
           <div className="relative">
             <button
               onClick={() => setOpened(!opened)}
@@ -54,33 +74,42 @@ export default function Page() {
             )}
           </div>
           <div className="grid grid-cols-3 gap-10">
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
-            <GrandPrixCard />
+            {meetings.map((meeting) => (
+              <GrandPrixCard key={meeting.meeting_key} meetingInfo={meeting} />
+            ))}
           </div>
         </section>
       </main>
     </>
   );
 }
+
+// useEffect(() => {
+//   const insert2025meeting = async () => {
+//     const meetings = await meetingData();
+
+//     const { data:serverData, error } = await supabase
+//       .from('meetings')
+//       .upsert(meetings, { onConflict: 'meeting_key' })
+//       .select();
+//     console.log('data:', serverData);
+//     console.log('error:', error);
+//   };
+//   insert2025meeting();
+// }, []);
+
+// 세션 결과 저장 완료
+
+// useEffect(() => {
+//   const fetchSessionResult = async () => {
+//     const results = await fetchResult(1276);
+//     const { data: serverData, error } = await supabase
+//       .from('session_results')
+//       .upsert(results, { onConflict: 'session_key,driver_number' })
+//       .select();
+
+//     console.log('data:', serverData);
+//     console.log('error:', error);
+//   };
+//   fetchSessionResult();
+// }, []);

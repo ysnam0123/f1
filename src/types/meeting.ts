@@ -1,3 +1,6 @@
+export interface CardProps {
+  meetingInfo: Meeting;
+}
 export interface Meeting {
   meeting_key: number;
   circuit_key: number;
@@ -12,4 +15,5 @@ export interface Meeting {
   gmt_offset: string;
   date_start: string;
   year: number;
+  round: number;
 }

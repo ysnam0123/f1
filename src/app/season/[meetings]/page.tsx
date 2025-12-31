@@ -1,11 +1,32 @@
+'use client';
 import PodiumCard from '@/app/components/season/meetings/PodiumCard';
 import StatsticsCard from '@/app/components/season/meetings/StatsticsCard';
 import SeasonHeroBox from '@/app/components/season/SeasonHeroBox';
+import { supabase } from '@/supabase/client';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function page() {
+export default function Page() {
+  const params = useParams<{ meeting_key: string }>();
+  const meetingKey = Number(params.meeting_key);
+  const [meetingInfo, setMeetingInfo] = useState([]);
+
+  useEffect(() => {
+    const fetchMeetingInfo = async () => {
+      const { data: meeting } = await supabase
+        .from('meetings')
+        .select('*')
+        .eq('meeting_key', meetingKey)
+        .single();
+      setMeetingInfo(meeting);
+    };
+    fetchMeetingInfo();
+  }, [meetingKey]);
   return (
     <>
+      {!meetingInfo && <></>}
+      {/* {meetingInfo && ()} */}
       <SeasonHeroBox />
       <section className="mx-auto max-w-285">
         <div className="mb-12.5 grid grid-cols-3 gap-7.5">
@@ -27,7 +48,6 @@ export default function page() {
             </thead>
             <tbody>
               <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-                {/* hover:bg-[#202020] */}
                 <td className="py-4">4</td>
                 <td className="px-4 py-4 font-bold">랜도 노리스</td>
                 <td className="px-4 py-4">McLaren</td>
@@ -38,7 +58,6 @@ export default function page() {
             </tbody>
             <tbody>
               <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-                {/* hover:bg-[#202020] */}
                 <td className="py-4">4</td>
                 <td className="px-4 py-4 font-bold">랜도 노리스</td>
                 <td className="px-4 py-4">McLaren</td>
@@ -49,7 +68,6 @@ export default function page() {
             </tbody>
             <tbody>
               <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-                {/* hover:bg-[#202020] */}
                 <td className="py-4">4</td>
                 <td className="px-4 py-4 font-bold">랜도 노리스</td>
                 <td className="px-4 py-4">McLaren</td>
@@ -60,7 +78,6 @@ export default function page() {
             </tbody>
             <tbody>
               <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-                {/* hover:bg-[#202020] */}
                 <td className="py-4">4</td>
                 <td className="px-4 py-4 font-bold">랜도 노리스</td>
                 <td className="px-4 py-4">McLaren</td>
@@ -85,14 +102,14 @@ export default function page() {
           <StatsticsCard title="Retirements" />
           <StatsticsCard title="포지션 상승 TOP 3" />
         </div>
-        <div className="">
+        <div className="flex gap-8.25">
           <div className="min-h-175 w-187.25 rounded-[40px] bg-[#1A1A1A] px-17.5 py-4.5">
-            <table className="w-full border border-white">
-              <thead className="mb-3 text-[24px]">
+            <table className="w-full select-none">
+              <thead className="mb-3 border-b border-[#c0c0c0] text-[24px] text-[#8B8B8B]">
                 <tr>
-                  <th className="w-[40%]">팀</th>
-                  <th className="w-[30%] text-center">피트스탑</th>
-                  <th className="w-[30%] text-center">포인트</th>
+                  <th className="w-[40%] py-2">팀</th>
+                  <th className="w-[30%] py-2 text-center">피트스탑</th>
+                  <th className="w-[30%] py-2 text-center">포인트</th>
                 </tr>
               </thead>
               <tbody>
@@ -112,7 +129,98 @@ export default function page() {
                 <tr className="text-[20px]">
                   <td className="flex items-center justify-center gap-15 py-3">
                     <Image
-                      src="/smallLogos/alpine.svg"
+                      src="/smallLogos/astonMartin.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
+                      alt="logo"
+                      width={85}
+                      height={50}
+                    />
+                    <p className="max-w-35 truncate">알핀</p>
+                  </td>
+                  <td className="py-3 text-center">3회</td>
+                  <td className="py-3 text-center font-semibold">20</td>
+                </tr>
+                <tr className="text-[20px]">
+                  <td className="flex items-center justify-center gap-15 py-3">
+                    <Image
+                      src="/smallLogos/redBullRacing.svg"
                       alt="logo"
                       width={85}
                       height={50}
@@ -138,6 +246,7 @@ export default function page() {
               </tbody>
             </table>
           </div>
+          <div className="min-h-175 w-89.5 rounded-[40px] bg-[#1A1A1A] px-17.5 py-4.5"></div>
         </div>
       </section>
     </>

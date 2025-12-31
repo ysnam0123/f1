@@ -1,12 +1,12 @@
 'use client';
 import { useEffect } from 'react';
-// import DriverCards from './components/home/DriverCards';
 import HighLights from './components/home/HighLights';
 import LatestResult from './components/home/LatestResult';
 import Ranks from './components/home/Ranks';
 import Schedule from './components/home/Schedule';
-import { latestRaceResult, latestRaceSession } from './api/f1/Meetings';
+
 import { supabase } from '@/supabase/client';
+import { latestRaceResult, sessionResult } from './api/meeting/sessionResult';
 
 export default function Page() {
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Page() {
         .upsert(teamsData, {
           onConflict: 'name',
         })
-        .select(); // returning 역할
+        .select();
 
       console.log('data:', data);
       console.log('error:', error);
@@ -34,16 +34,16 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    latestRaceSession('latest');
+    sessionResult('latest');
     latestRaceResult();
   }, []);
   return (
     <>
       <Schedule />
 
-      <div className="mx-auto flex max-w-[1300px] flex-col items-center gap-10">
+      <div className="mx-auto flex max-w-325 flex-col items-center gap-10">
         {/* <Results /> */}
-        <div className="flex min-h-[670px] w-full flex-col gap-[50px] md:flex-row">
+        <div className="flex min-h-167.5 w-full flex-col gap-12.5 md:flex-row">
           <Ranks />
           <LatestResult />
         </div>

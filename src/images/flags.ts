@@ -22,7 +22,9 @@ import thailand from '/public/flag/thailand.svg';
 import uae from '/public/flag/uae.svg';
 import uk from '/public/flag/uk.svg';
 import usa from '/public/flag/usa.svg';
+import china from '/public/flag/china.svg';
 import newzealand from '/public/flag/newzealand.svg';
+import { StaticImageData } from 'next/image';
 
 export const flags = {
   아르헨티나: argentina,
@@ -50,4 +52,34 @@ export const flags = {
   영국: uk,
   미국: usa,
   뉴질랜드: newzealand,
+  중국: china,
+};
+
+export const country_code_flags: Record<string, StaticImageData> = {
+  BRN: bahrain,
+  AUS: australia,
+  CHN: china,
+  JPN: japan,
+  KSA: saudi,
+  AUT: austria,
+  AZE: azerbaijan,
+  BEL: belgium,
+  BRA: brazil,
+  CAN: canada,
+  HUN: hungary,
+  ITA: italy,
+  MEX: mexico,
+  MON: monaco,
+  NED: netherlands,
+  QAT: qatar,
+  SGP: singapore,
+  ESP: spain,
+  UAE: uae,
+  GBR: uk,
+  USA: usa,
+  // 아르헨티나: argentina,
+  // 프랑스: france,
+  // 독일: germany,
+  // 태국: thailand,
+  // 뉴질랜드: newzealand,
 };
