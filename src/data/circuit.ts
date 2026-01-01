@@ -25,7 +25,7 @@ import abuDhabiYasMarina from '/public/circuit/abu_dhabi_yas_marina.svg';
 import spainMadrid from '/public/circuit/spain_madrid.svg';
 import { StaticImageData } from 'next/image';
 
-interface Circuit {
+export interface Circuit {
   circuit_key: number;
   circuit_short_name: string;
   country_code: string;

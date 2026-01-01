@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import AnimatedContent from '@/components/AnimatedContent';
 import { supabase } from '@/supabase/client';
 import { Meeting } from '@/types/meeting';
-import { fetchResult } from '../api/meeting/sessionResult';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
@@ -31,7 +30,7 @@ export default function Page() {
   return (
     <>
       <main className="min-h-screen">
-        <SeasonHeroBox />
+        {/* <SeasonHeroBox /> */}
         <section className="mx-auto w-full max-w-350">
           {/* 시즌 변경 버튼*/}
           <div className="relative">
@@ -109,6 +108,21 @@ export default function Page() {
 //       .select();
 
 //     console.log('data:', serverData);
+//     console.log('error:', error);
+//   };
+//   fetchSessionResult();
+// }, []);
+
+// 각 세션 정보 저장하기
+// useEffect(() => {
+//   const fetchSessionResult = async () => {
+//     const results = await fetchSession(1277);
+//     const { data, error } = await supabase
+//       .from('sessions')
+//       .upsert(results, { onConflict: 'session_key' })
+//       .select();
+
+//     console.log('data:', data);
 //     console.log('error:', error);
 //   };
 //   fetchSessionResult();

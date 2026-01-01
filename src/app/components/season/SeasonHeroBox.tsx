@@ -1,10 +1,24 @@
+import { Circuit } from '@/data/circuit';
+import { country_code_flags } from '@/images/flags';
+import { Meeting } from '@/types/meeting';
 import Image from 'next/image';
-
-export default function SeasonHeroBox() {
+interface CircuitData {
+  circuitInfo?: Circuit | null;
+  meetingInfo?: Meeting;
+}
+export default function SeasonHeroBox({
+  circuitInfo,
+  meetingInfo,
+}: CircuitData) {
+  if (!meetingInfo || !circuitInfo) {
+    return null;
+  }
+  const flagSrc = country_code_flags[meetingInfo!.country_code];
+  const circuitSrc = circuitInfo!.circuit_img;
   return (
     <>
-      <div className="relative mb-12.5 h-70 select-none">
-        <div className="absolute inset-0 z-0 h-70 w-screen">
+      <section className="relative mb-12.5 h-100 select-none">
+        <div className="absolute inset-0 z-0 h-100 w-screen">
           <Image
             src="/circuit/zandvoort2.svg"
             alt="bg"
@@ -14,20 +28,42 @@ export default function SeasonHeroBox() {
           />
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
-        <div className="absolute top-10 left-17.5 w-full">
-          <h1 className="mb-10 text-[45px] font-bold">
-            2025 FIA 포뮬러 1 월드 챔피언쉽™ 
-          </h1>
-          <div className="mr-17.5 flex w-full justify-between">
-            <div className="mr-auto">
-              <h3 className="text-[25px] font-semibold">
-                다음 일정 {'>'} 라운드 15
-              </h3>
-              <h2 className="text-[40px] font-bold">네덜란드</h2>
+        <div className="absolute top-5 left-17.5 w-full max-w-360">
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-1">
+                <Image src={flagSrc} alt="flag" width={40} height={40} />
+                <h2 className="text-[20px] font-bold">
+                  {meetingInfo?.meeting_name}
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-[30px] font-bold">
+                  {meetingInfo?.meeting_official_name}
+                  {/* | 2025 FIA 포뮬러 1 월드 챔피언쉽™  */}
+                </h1>
+              </div>
+              <p className="text-[20px] font-semibold">
+                <span className="mr-0.5">{meetingInfo?.round}</span>
+                <span>- 라운드</span>
+              </p>
             </div>
+            {circuitSrc && (
+              <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]">
+                <h1 className="text-[22px] font-semibold">
+                  {circuitInfo.circuit_short_name}
+                </h1>
+                <Image
+                  src={circuitSrc}
+                  alt="circuit"
+                  width={300}
+                  height={300}
+                />
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

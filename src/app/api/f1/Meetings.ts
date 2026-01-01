@@ -11,17 +11,30 @@ export const meetingData = async (): Promise<Meeting[]> => {
   return response.data;
 };
 
-// 세션 불러오기
-export const sessionData = async (meeting: number) => {
-  const response = await axiosInstance.get('/sessions', {
-    params: { meeting_key: meeting },
-  });
-  return response.data;
-};
-
 // export function useMeetingData() {
 //   return useQuery({
 //     queryKey: ['meeting_key'],
 //     queryFn: meetingData,
 //   });
 // }
+
+// useEffect(() => {
+//   const fetchRelatedSessions = async () => {
+//     const { data, error } = await supabase
+//       .from('meetings')
+//       .select(`
+//         meeting_key,
+//         sessions (
+//           session_key,
+//           session_name,
+//           session_type
+//         )
+//       `)
+//       .eq('meeting_key', meetingKey)
+//       .single();
+
+//     console.log(data);
+//   };
+
+//   fetchRelatedSessions();
+// }, [meetingKey]);
