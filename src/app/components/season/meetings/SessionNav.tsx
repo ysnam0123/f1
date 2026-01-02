@@ -1,6 +1,6 @@
 'use client';
 
-type SessionType =
+export type SessionType =
   | 'Practice 1'
   | 'Practice 2'
   | 'Practice 3'

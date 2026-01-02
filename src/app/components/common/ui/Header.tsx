@@ -75,10 +75,16 @@ export default function Header() {
               <span>드라이버</span>
               <ChevronDown />
             </li>
-            <li className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]">
+            <li
+              onClick={() => router.push('/circuit')}
+              className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]"
+            >
               서킷
             </li>
-            <li className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]">
+            <li
+              onClick={() => router.push('/')}
+              className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]"
+            >
               f1 알아보기
             </li>
           </ul>

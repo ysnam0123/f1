@@ -11,18 +11,15 @@ import {
   useSessionData,
   useSessionResultData,
 } from '@/hooks/Session';
-import SessionNav from '@/app/components/season/meetings/SessionNav';
+import SessionNav, {
+  SessionType,
+} from '@/app/components/season/meetings/SessionNav';
+import { driverData, fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
+import { supabase } from '@/supabase/client';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
   const meetingKey = Number(params.meeting_key);
-  type SessionType =
-    | 'Practice 1'
-    | 'Practice 2'
-    | 'Practice 3'
-    | 'Qualifying'
-    | 'Race';
-
   const sessionTabs: { label: string; value: SessionType }[] = [
     { label: '프랙티스 1', value: 'Practice 1' },
     { label: '프랙티스 2', value: 'Practice 2' },
@@ -38,13 +35,10 @@ export default function Page() {
 
   const { data: meetingInfo, isLoading: meetingLoading } =
     useMeetingData(meetingKey);
-
   const { data: sessions = [], isPending: sessionLoading } =
     useSessionData(meetingKey);
-
-  const { data: sessionResults = [], isLoading } = useSessionResultData(
-    selectedSessionKey!,
-  );
+  const { data: sessionResults = [], isLoading: sessionResultLoading } =
+    useSessionResultData(selectedSessionKey!);
 
   const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
 
@@ -67,12 +61,29 @@ export default function Page() {
     }
     console.log(findSession);
   }, [isSelected, sessions]);
+
+  useEffect(() => {
+    if (!meetingKey) return;
+    const upsertDriverData = async () => {
+      const drivers = await fetchDriversWithMeetingKey(meetingKey);
+      const uniqueDrivers = Array.from(
+        new Map(drivers.map((d) => [d.driver_number, d])).values(),
+      );
+
+      const { error } = await supabase.from('drivers').upsert(uniqueDrivers, {
+        onConflict: 'driver_number',
+      });
+      if (error) {
+        console.error('드라이버 저장 실패:', error);
+      }
+    };
+    upsertDriverData();
+  }, [meetingKey]);
+
   return (
     <>
-      {meetingLoading && <></>}
       {meetingInfo && (
         <>
-          {/* <Loading /> */}
           <SeasonHeroBox meetingInfo={meetingInfo} circuitInfo={circuitInfo} />
           <section className="mx-auto max-w-285">
             <SessionNav
@@ -80,10 +91,19 @@ export default function Page() {
               isSelected={isSelected}
               setIsSelectedAction={setIsSelected}
             />
+
+            {meetingLoading ||
+              (sessionLoading && (
+                <>
+                  <div className="flex h-100 items-center justify-center">
+                    <Loading className="h-100 w-100" />
+                  </div>
+                </>
+              ))}
             {isSelected === 'Race' ? (
               <RaceResultSection />
             ) : (
-              <SessionResultSection />
+              <SessionResultSection sessionResults={sessionResults} />
             )}
           </section>
         </>

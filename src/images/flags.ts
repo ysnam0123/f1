@@ -24,6 +24,8 @@ import uk from '/public/flag/uk.svg';
 import usa from '/public/flag/usa.svg';
 import china from '/public/flag/china.svg';
 import newzealand from '/public/flag/newzealand.svg';
+import estonia from '/public/flag/estonia.svg';
+import denmark from '/public/flag/denmark.svg';
 import { StaticImageData } from 'next/image';
 
 export const flags = {
@@ -53,6 +55,8 @@ export const flags = {
   미국: usa,
   뉴질랜드: newzealand,
   중국: china,
+  에스토니아: estonia,
+  덴마크: denmark,
 };
 
 export const country_code_flags: Record<string, StaticImageData> = {
@@ -77,9 +81,11 @@ export const country_code_flags: Record<string, StaticImageData> = {
   UAE: uae,
   GBR: uk,
   USA: usa,
-  // 아르헨티나: argentina,
-  // 프랑스: france,
-  // 독일: germany,
-  // 태국: thailand,
-  // 뉴질랜드: newzealand,
+  ARG: argentina,
+  FRA: france,
+  DEU: germany,
+  THA: thailand,
+  NZL: newzealand,
+  EST: estonia,
+  DNK: denmark,
 };

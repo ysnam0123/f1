@@ -30,7 +30,7 @@ export interface Circuit {
   circuit_short_name: string;
   country_code: string;
   country_name: string;
-  circuit_img: StaticImageData;
+  circuit_img: string;
   laps: number;
   first_grand_prix: number;
   circuit_length: number;

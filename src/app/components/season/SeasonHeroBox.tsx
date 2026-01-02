@@ -28,40 +28,32 @@ export default function SeasonHeroBox({
           />
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
-        <div className="absolute top-5 left-17.5 w-full max-w-360">
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-1">
-                <Image src={flagSrc} alt="flag" width={40} height={40} />
-                <h2 className="text-[20px] font-bold">
-                  {meetingInfo?.meeting_name}
-                </h2>
-              </div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-[30px] font-bold">
-                  {meetingInfo?.meeting_official_name}
-                  {/* | 2025 FIA 포뮬러 1 월드 챔피언쉽™  */}
-                </h1>
-              </div>
-              <p className="text-[20px] font-semibold">
-                <span className="mr-0.5">{meetingInfo?.round}</span>
-                <span>- 라운드</span>
-              </p>
+        <div className="absolute top-5 left-1/2 flex w-full max-w-360 -translate-x-1/2 justify-between">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1">
+              <Image src={flagSrc} alt="flag" width={40} height={40} />
+              <h2 className="text-[20px] font-bold">
+                {meetingInfo?.meeting_name}
+              </h2>
             </div>
-            {circuitSrc && (
-              <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]">
-                <h1 className="text-[22px] font-semibold">
-                  {circuitInfo.circuit_short_name}
-                </h1>
-                <Image
-                  src={circuitSrc}
-                  alt="circuit"
-                  width={300}
-                  height={300}
-                />
-              </div>
-            )}
+            <div className="mb-3 flex items-center gap-2">
+              <h1 className="text-[30px] font-bold">
+                {meetingInfo?.meeting_official_name}
+              </h1>
+            </div>
+            <p className="text-[20px] font-semibold">
+              <span>라운드 </span>
+              <span className="mr-0.5">{meetingInfo?.round}</span>
+            </p>
           </div>
+          {circuitSrc && (
+            <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]">
+              <h1 className="text-[22px] font-semibold">
+                {circuitInfo.circuit_short_name}
+              </h1>
+              <Image src={circuitSrc} alt="circuit" width={300} height={300} />
+            </div>
+          )}
         </div>
       </section>
     </>

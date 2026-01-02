@@ -15,6 +15,17 @@ interface Driver {
   headshot_url: string;
   country_code: string;
 }
+
+export const fetchDriversWithMeetingKey = async (
+  meetingKey: number,
+): Promise<Driver[]> => {
+  const response = await axiosInstance.get('/drivers', {
+    params: { meeting_key: meetingKey },
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 export const driversData = async (): Promise<Driver[]> => {
   const response = await axiosInstance.get('/drivers', {
     params: { session_key: 'latest' },
