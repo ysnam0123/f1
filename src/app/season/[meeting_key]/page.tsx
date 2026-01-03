@@ -1,6 +1,6 @@
 'use client';
 import SeasonHeroBox from '@/app/components/season/SeasonHeroBox';
-import { Circuit, circuit } from '@/data/circuit';
+import { Circuit } from '@/data/circuit';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import RaceResultSection from '@/app/components/season/meetings/RaceResultSection';
@@ -11,103 +11,183 @@ import {
   useSessionData,
   useSessionResultData,
 } from '@/hooks/Session';
-import SessionNav, {
-  SessionType,
-} from '@/app/components/season/meetings/SessionNav';
-import { driverData, fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
+import SessionNav from '@/app/components/season/meetings/SessionNav'; // SessionType,
+import { fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
 import { supabase } from '@/supabase/client';
+import { fetchSession } from '@/app/api/meeting/Sessions';
+import { fetchResult } from '@/app/api/meeting/sessionResult';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
   const meetingKey = Number(params.meeting_key);
-  const sessionTabs: { label: string; value: SessionType }[] = [
-    { label: '프랙티스 1', value: 'Practice 1' },
-    { label: '프랙티스 2', value: 'Practice 2' },
-    { label: '프랙티스 3', value: 'Practice 3' },
-    { label: '퀄리파잉', value: 'Qualifying' },
-    { label: '레이스', value: 'Race' },
-  ];
-  const [isSelected, setIsSelected] = useState<SessionType>('Practice 1');
+
+  // 1차 완료
+  const { data: meetingInfo, isLoading: meetingLoading } =
+    useMeetingData(meetingKey);
+  const { data: sessions = [], isPending: sessionLoading } =
+    useSessionData(meetingKey);
+
+  const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
+  useEffect(() => {
+    if (!meetingInfo?.circuit_key) return;
+    const fetchCurcuitInfo = async () => {
+      const { data, error } = await supabase
+        .from('circuits')
+        .select('*')
+        .eq('circuit_key', meetingInfo?.circuit_key)
+        .single();
+
+      if (error) {
+        console.error('서킷 정보 불러오기 실패:', error);
+        return;
+      }
+      console.log('서킷 불러오기:', data);
+      setCircuitInfo(data);
+    };
+    fetchCurcuitInfo();
+  }, [meetingInfo]);
+
+  // 아직 완료안됨
+  const [isSelected, setIsSelected] = useState<string | null>(null);
+  useEffect(() => {
+    if (!sessions.length) return;
+    if (isSelected) return;
+
+    setIsSelected(sessions[0].session_name);
+    setSelectedSessionKey(sessions[0].session_key);
+  }, [sessions, isSelected]);
 
   const [selectedSessionKey, setSelectedSessionKey] = useState<number | null>(
     null,
   );
 
-  const { data: meetingInfo, isLoading: meetingLoading } =
-    useMeetingData(meetingKey);
-  const { data: sessions = [], isPending: sessionLoading } =
-    useSessionData(meetingKey);
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
-    useSessionResultData(selectedSessionKey!);
+    useSessionResultData(selectedSessionKey);
 
-  const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
-
-  // 관련 서킷 불러오기
-  useEffect(() => {
-    if (!meetingInfo) return;
-
-    const circuitData =
-      circuit.find((c) => c.circuit_key === meetingInfo.circuit_key) ?? null;
-
-    setCircuitInfo(circuitData);
-  }, [meetingInfo]);
-
+  // 현재 선택된 세션 찾기
   useEffect(() => {
     const findSession = sessions.find(
       (session) => session.session_name === isSelected,
     );
     if (findSession) {
       setSelectedSessionKey(findSession.session_key);
+      const sr = async () => {
+        const { data: sessionRanks, error } = await supabase
+          .from('v_meeting_results')
+          .select('*')
+          .eq('session_key', findSession?.session_key)
+          .order('position');
+        console.log('정제된 순위정보:', sessionRanks);
+      };
+      sr();
     }
-    console.log(findSession);
   }, [isSelected, sessions]);
 
-  useEffect(() => {
-    if (!meetingKey) return;
-    const upsertDriverData = async () => {
-      const drivers = await fetchDriversWithMeetingKey(meetingKey);
-      const uniqueDrivers = Array.from(
-        new Map(drivers.map((d) => [d.driver_number, d])).values(),
-      );
-
-      const { error } = await supabase.from('drivers').upsert(uniqueDrivers, {
-        onConflict: 'driver_number',
-      });
-      if (error) {
-        console.error('드라이버 저장 실패:', error);
-      }
-    };
-    upsertDriverData();
-  }, [meetingKey]);
+  // 테스트용
+  if (sessions) {
+    console.log(sessions);
+  }
 
   return (
     <>
-      {meetingInfo && (
-        <>
-          <SeasonHeroBox meetingInfo={meetingInfo} circuitInfo={circuitInfo} />
-          <section className="mx-auto max-w-285">
+      <>
+        <SeasonHeroBox meetingInfo={meetingInfo} circuitInfo={circuitInfo} />
+        <section className="mx-auto max-w-285">
+          {isSelected && (
             <SessionNav
-              sessionTabs={sessionTabs}
+              sessionTabs={sessions}
               isSelected={isSelected}
               setIsSelectedAction={setIsSelected}
             />
+          )}
 
-            {meetingLoading ||
-              (sessionLoading && (
-                <>
-                  <div className="flex h-100 items-center justify-center">
-                    <Loading className="h-100 w-100" />
-                  </div>
-                </>
-              ))}
-            {isSelected === 'Race' ? (
-              <RaceResultSection />
-            ) : (
-              <SessionResultSection sessionResults={sessionResults} />
-            )}
-          </section>
-        </>
-      )}
+          {isSelected === 'Race' ? (
+            <RaceResultSection />
+          ) : (
+            selectedSessionKey && (
+              <SessionResultSection
+                isPending={sessionResultLoading}
+                sessionResults={sessionResults}
+              />
+            )
+          )}
+        </section>
+      </>
     </>
   );
 }
+
+// 현재 선택된 세션 찾기
+// useEffect(() => {
+//   const findSession = sessions.find(
+//     (session) => session.session_name === isSelected,
+//   );
+//   if (findSession) {
+//     setSelectedSessionKey(findSession.session_key);
+//   }
+//   console.log('현재 선택된 세션 찾기:', findSession);
+// }, [isSelected, sessions]);
+
+// // 세션 정보 저장
+// useEffect(() => {
+//   const fetchSessions = async () => {
+//     const results = await fetchSession(meetingKey);
+//     const { data, error } = await supabase
+//       .from('sessions')
+//       .upsert(results, { onConflict: 'session_key' })
+//       .select();
+//     console.log('data:', data);
+//     console.log('error:', error);
+//   };
+//   fetchSessions();
+// }, []);
+
+// 세션 결과 저장
+// useEffect(() => {
+//   const fetchSessionResult = async () => {
+//     const results = await fetchResult(meetingKey);
+//     const { data: serverData, error } = await supabase
+//       .from('session_results')
+//       .upsert(results, { onConflict: 'session_key,driver_number' })
+//       .select();
+
+//     console.log('data:', serverData);
+//     console.log('error:', error);
+//   };
+//   fetchSessionResult();
+// }, []);
+
+// if (meetingLoading || sessionLoading) {
+//   return (
+//     <div className="flex h-100 items-center justify-center">
+//       <Loading className="h-100 w-100" />
+//     </div>
+//   );
+// }
+
+// 드라이버 데이터 저장
+// useEffect(() => {
+//   if (!meetingKey) return;
+//   const upsertDriverData = async () => {
+//     const drivers = await fetchDriversWithMeetingKey(meetingKey);
+//     const uniqueDrivers = Array.from(
+//       new Map(drivers.map((d) => [d.driver_number, d])).values(),
+//     );
+
+//     const { error } = await supabase.from('drivers').upsert(uniqueDrivers, {
+//       onConflict: 'meeting_key,driver_number',
+//     });
+//     if (error) {
+//       console.error('드라이버 저장 실패:', error);
+//     }
+//   };
+//   upsertDriverData();
+// }, [meetingKey]);
+
+// if (meetingLoading || sessionLoading) {
+//   return (
+//     <div className="flex h-100 items-center justify-center">
+//       <Loading className="h-100 w-100" />
+//     </div>
+//   );
+// }

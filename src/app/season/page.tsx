@@ -6,24 +6,39 @@ import { useEffect, useState } from 'react';
 import AnimatedContent from '@/components/AnimatedContent';
 import { supabase } from '@/supabase/client';
 import { Meeting } from '@/types/meeting';
+import { meetingData } from '../api/meeting/Meetings';
+import { useYearStore } from '@/store/YearStore';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
   const [meetings, setMeetings] = useState<Meeting[]>([]);
-  const [selectedYear, setSelectedYear] = useState<'2025' | '2026'>('2025');
+  // const [selectedYear, setSelectedYear] = useState('2025');
+  const selectedYear = useYearStore((s) => s.selectedYear);
+  const setSelectedYear = useYearStore((s) => s.setSelectedYear);
+  const years = [2023, 2024, 2025, 2026];
 
+  // meeting 불러오기
   useEffect(() => {
     const fetchMeetings = async () => {
       const { data, error } = await supabase
         .from('meetings')
         .select('*')
-        .eq('year', selectedYear);
-      if (error) {
-        console.error(error);
-        return;
+        .eq('year', selectedYear)
+        .order('date_start', { ascending: true });
+      if (error) return;
+      if (data.length === 0) {
+        const meetingsFromApi = await meetingData(selectedYear);
+
+        await supabase
+          .from('meetings')
+          .upsert(meetingsFromApi, { onConflict: 'meeting_key' });
+
+        setMeetings(meetingsFromApi);
+      } else {
+        setMeetings(data);
       }
-      setMeetings(data);
     };
+
     fetchMeetings();
   }, [selectedYear]);
 
@@ -57,17 +72,18 @@ export default function Page() {
                 className="absolute top-full"
               >
                 <ul className="w-36 rounded-[10px] border border-white bg-black text-center text-[20px] font-bold">
-                  <li
-                    onClick={() => {
-                      setSelectedYear(
-                        selectedYear === '2025' ? '2026' : '2025',
-                      );
-                      setOpened(false);
-                    }}
-                    className="flex h-12.5 cursor-pointer items-center justify-center hover:bg-[#464646]"
-                  >
-                    {selectedYear === '2025' ? '2026' : '2025'}
-                  </li>
+                  {years.map((year) => (
+                    <li
+                      key={year}
+                      onClick={() => {
+                        setSelectedYear(year);
+                        setOpened(false);
+                      }}
+                      className="flex h-12.5 cursor-pointer items-center justify-center hover:bg-[#464646]"
+                    >
+                      {year}
+                    </li>
+                  ))}
                 </ul>
               </AnimatedContent>
             )}
@@ -97,8 +113,21 @@ export default function Page() {
 //   insert2025meeting();
 // }, []);
 
-// 세션 결과 저장 완료
+// 세션 정보 저장
+// useEffect(() => {
+//   const fetchSessions = async () => {
+//     const results = await fetchSession(1277);
+//     const { data, error } = await supabase
+//       .from('sessions')
+//       .upsert(results, { onConflict: 'session_key' })
+//       .select();
+//     console.log('data:', data);
+//     console.log('error:', error);
+//   };
+//   fetchSessions();
+// }, []);
 
+// 세션 결과 저장
 // useEffect(() => {
 //   const fetchSessionResult = async () => {
 //     const results = await fetchResult(1276);
@@ -108,21 +137,6 @@ export default function Page() {
 //       .select();
 
 //     console.log('data:', serverData);
-//     console.log('error:', error);
-//   };
-//   fetchSessionResult();
-// }, []);
-
-// 각 세션 정보 저장하기
-// useEffect(() => {
-//   const fetchSessionResult = async () => {
-//     const results = await fetchSession(1277);
-//     const { data, error } = await supabase
-//       .from('sessions')
-//       .upsert(results, { onConflict: 'session_key' })
-//       .select();
-
-//     console.log('data:', data);
 //     console.log('error:', error);
 //   };
 //   fetchSessionResult();

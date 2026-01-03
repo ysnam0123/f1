@@ -14,7 +14,7 @@ export default function SeasonHeroBox({
     return null;
   }
   const flagSrc = country_code_flags[meetingInfo!.country_code];
-  const circuitSrc = circuitInfo!.circuit_img;
+  const circuitSrc = circuitInfo.circuit_img;
   return (
     <>
       <section className="relative mb-12.5 h-100 select-none">

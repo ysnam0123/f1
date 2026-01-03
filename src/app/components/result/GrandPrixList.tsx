@@ -1,5 +1,5 @@
 'use client';
-import { useMeetingData } from '@/app/api/f1/Meetings';
+import { useMeetingData } from '@/app/api/meeting/Meetings';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 

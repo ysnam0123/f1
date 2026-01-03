@@ -1,4 +1,8 @@
 'use client';
+
+import { findDriverInfo } from '@/finder/driverInfoFinder';
+import { useEffect } from 'react';
+
 export default function Page() {
   // useEffect(() => {
   //   const updateCircuitTable = async () => {
@@ -12,6 +16,10 @@ export default function Page() {
   //   };
   //   updateCircuitTable();
   // }, []);
+
+  useEffect(() => {
+    findDriverInfo(1141, 55);
+  }, []);
   return (
     <>
       <h1>page Component</h1>

@@ -5,7 +5,10 @@ export default function page() {
   return (
     <>
       <div className="mx-auto flex max-w-325 flex-col select-none">
-        <h1 className="font-paperlogy mb-12.5 text-[30px] font-bold">
+        <h1
+          style={{ fontFamily: 'paperlogy' }}
+          className="mb-10 text-[30px] font-bold"
+        >
           2025 Season
         </h1>
         <div className="">

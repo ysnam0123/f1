@@ -1,11 +1,11 @@
 import { Meeting } from '@/types/meeting';
-import { axiosInstance } from './axiosInstance';
+import { axiosInstance } from '../f1/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 
 // 2025 그랑프리 불러오기
-export const meetingData = async (): Promise<Meeting[]> => {
+export const meetingData = async (year: number): Promise<Meeting[]> => {
   const response = await axiosInstance.get('/meetings', {
-    params: { year: 2025 },
+    params: { year: year },
   });
   console.log('response:', response);
   return response.data;

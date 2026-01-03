@@ -1,85 +1,95 @@
+'use client';
 import { teams } from '@/data/teams';
-import { SessionResult } from '@/types/meeting';
+import { SessionResult, SortedSessionResult } from '@/types/meeting';
 import Image from 'next/image';
+import DriverProfile from './DriverProfile';
+import DefaultDriverProfile from './DefaultDriverProfile';
+import { useRouter } from 'next/navigation';
 
 interface SessionResults {
-  sessionResults: SessionResult[];
+  sessionResults: SortedSessionResult[];
+  isPending: boolean;
 }
 
 export default function SessionResultSection({
   sessionResults,
+  isPending,
 }: SessionResults) {
-  const sortedByPosition = [...sessionResults].sort((a, b) => {
-    if (a.position == null) return 1;
-    if (b.position == null) return -1;
-    return a.position - b.position;
-  });
-  const mappedResults = sortedByPosition.map((result) => {
-    // some : 하위 배열에 조건을 만족하는 요소가 존재하는지 boolean으로 판단
-    const team = teams.find((team) =>
-      team.drivers.some((driver) => driver.number === result.driver_number),
-    );
-    const driver = team?.drivers.find(
-      (driver) => driver.number === result.driver_number,
-    );
-    return {
-      ...result,
-      teamName: team?.name,
-      teamKrName: team?.krName,
-      teamColorFrom: team?.colorFrom,
-      teamLogo: team?.logo,
-      driverName: driver?.name,
-      driverKrName: driver?.krName,
-      driverImage: driver?.image,
-    };
-  });
+  const router = useRouter();
   return (
     <>
-      <table className="w-full table-fixed border-collapse select-none">
-        <thead>
-          <tr className="border-b border-white text-[20px] text-[#8B8B8B]">
-            <th className="w-25 shrink-0 px-4 py-4">등수</th>
-            <th className="max-w-70 px-4 py-4 text-left">이름</th>
-            <th className="max-w-70 px-4 py-4 text-left">팀</th>
-            <th className="w-20 px-4 py-4">Laps</th>
-            <th className="w-28 px-4 py-4">시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mappedResults.map((result) => (
-            <tr
-              key={result.driver_number}
-              className="border-b border-[#2A2A2A] text-[16px]"
-            >
-              <td className="px-4 py-4 text-center">{result.position}</td>
-              <td className="px-4 py-4 font-bold">
-                <div className="flex justify-start gap-2">
-                  <div>{result.driver_number}</div>
-                  <div className="truncate">{result.driverKrName}</div>
-                </div>
-              </td>
-              <td className="px-4 py-4">
-                <div className="flex items-center justify-start gap-2">
-                  <div
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-                    style={{ backgroundColor: result.teamColorFrom }}
-                  >
-                    <Image
-                      src={result.teamLogo!}
-                      alt="teamLogo"
-                      width={20}
-                      height={20}
-                    />
-                  </div>
-                  <div>{result.teamKrName}</div>
-                </div>
-              </td>
-              <td className="px-4 py-4 text-center">{result.number_of_laps}</td>
-              <td className="py-4 text-center">+ {result.gap_to_leader}</td>
+      {!isPending && (
+        <table className="w-full table-fixed border-collapse select-none">
+          <thead>
+            <tr className="border-b border-white text-[20px] text-[#8B8B8B]">
+              <th className="w-25 shrink-0 px-4 py-8">등수</th>
+              <th className="max-w-70 px-4 py-8 text-left">이름</th>
+              <th className="max-w-70 px-4 py-8 text-left">팀</th>
+              <th className="w-20 px-4 py-8">Laps</th>
+              <th className="w-28 px-4 py-8">시간</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sessionResults.map((result) => (
+              <tr
+                key={result.driver_number}
+                className="border-b border-[#2A2A2A]"
+              >
+                <td
+                  style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
+                  className="font- px-4 py-8 text-center text-[22px]"
+                >
+                  {result.position}
+                </td>
+                <td className="px-4 py-8 font-bold">
+                  <div className="flex items-center justify-start gap-3 text-[20px]">
+                    {result.headshot_url ? (
+                      <DriverProfile
+                        headshot={result.headshot_url}
+                        teamColor={result.team_colour}
+                      />
+                    ) : (
+                      <DefaultDriverProfile />
+                    )}
+
+                    <div className="truncate">{result.kr_name}</div>
+                    <div>{result.driver_number}</div>
+                  </div>
+                </td>
+                <td className="px-4 py-8">
+                  <div
+                    className="group flex cursor-pointer items-center gap-2 text-[18px]"
+                    onClick={() => router.push(`/team/${result.team_slug}`)}
+                  >
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110"
+                      style={{ backgroundColor: result.team_colour }}
+                    >
+                      <Image
+                        src={result.white_logo}
+                        alt="teamLogo"
+                        width={30}
+                        height={30}
+                      />
+                    </div>
+
+                    <span className="relative">
+                      {result.team_kr_name}
+                      <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                    </span>
+                  </div>
+                </td>
+                <td className="px-4 py-8 text-center text-[22px]">
+                  {result.number_of_laps}
+                </td>
+                <td className="py-8 text-center text-[20px]">
+                  + {result.gap_to_leader}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 }

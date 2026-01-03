@@ -52,3 +52,30 @@ export interface SessionResult {
   meeting_key: number;
   session_key: number;
 }
+
+export interface SortedSessionResult {
+  meeting_key: number;
+  session_key: number;
+  number_of_laps: number;
+  points: number | null;
+  position: number | null;
+  result_id: string;
+  dnf: boolean;
+  dns: boolean;
+  dsq: boolean;
+  duration: string;
+  gap_to_leader: string;
+  driver_number: number;
+  country_code: string;
+  country_kr_name: string;
+  full_name: string;
+  kr_name: string;
+  flag: string;
+  headshot_url: string;
+  team_colour: string;
+  team_kr_name: string;
+  team_name: string;
+  team_slug: string;
+  main_logo: string;
+  white_logo: string;
+}
