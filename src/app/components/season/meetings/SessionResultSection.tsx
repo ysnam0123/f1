@@ -33,7 +33,7 @@ export default function SessionResultSection({
             {sessionResults.map((result) => (
               <tr
                 key={result.driver_number}
-                className="border-b border-[#2A2A2A]"
+                className="border-b border-[#2A2A2A] hover:bg-[#1a1a1a]"
               >
                 <td
                   style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
@@ -42,18 +42,21 @@ export default function SessionResultSection({
                   {result.position}
                 </td>
                 <td className="px-4 py-8 font-bold">
-                  <div className="flex items-center justify-start gap-3 text-[20px]">
+                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[20px]">
                     {result.headshot_url ? (
                       <DriverProfile
+                        className="duration-200 group-hover:scale-110"
                         headshot={result.headshot_url}
                         teamColor={result.team_colour}
                       />
                     ) : (
                       <DefaultDriverProfile />
                     )}
-
-                    <div className="truncate">{result.kr_name}</div>
-                    <div>{result.driver_number}</div>
+                    <div className="relative flex gap-3">
+                      <div className="truncate">{result.kr_name}</div>
+                      <div>{result.driver_number}</div>
+                      <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                    </div>
                   </div>
                 </td>
                 <td className="px-4 py-8">
@@ -62,7 +65,7 @@ export default function SessionResultSection({
                     onClick={() => router.push(`/team/${result.team_slug}`)}
                   >
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-110"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110"
                       style={{ backgroundColor: result.team_colour }}
                     >
                       <Image
