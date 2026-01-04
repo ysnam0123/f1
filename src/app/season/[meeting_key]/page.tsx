@@ -12,8 +12,8 @@ import {
   useSessionResultData,
 } from '@/hooks/Session';
 import SessionNav from '@/app/components/season/meetings/SessionNav'; // SessionType,
-import { fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
 import { supabase } from '@/supabase/client';
+import { fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
 import { fetchSession } from '@/app/api/meeting/Sessions';
 import { fetchResult } from '@/app/api/meeting/sessionResult';
 
@@ -77,6 +77,9 @@ export default function Page() {
           .select('*')
           .eq('session_key', findSession?.session_key)
           .order('position');
+        if (error) {
+          console.error('순위 불러오기 실패:', error);
+        }
         console.log('정제된 순위정보:', sessionRanks);
       };
       sr();
@@ -86,6 +89,10 @@ export default function Page() {
   // 테스트용
   if (sessions) {
     console.log(sessions);
+    const raceSession = sessions.find(
+      (session) => session.session_name === 'Race',
+    );
+    console.log('raceSession:', raceSession?.session_key);
   }
 
   return (
@@ -102,7 +109,10 @@ export default function Page() {
           )}
 
           {isSelected === 'Race' ? (
-            <RaceResultSection />
+            <RaceResultSection
+              isPending={sessionResultLoading}
+              sessionResults={sessionResults}
+            />
           ) : (
             selectedSessionKey && (
               <SessionResultSection

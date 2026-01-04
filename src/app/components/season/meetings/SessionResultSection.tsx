@@ -1,32 +1,33 @@
 'use client';
-import { teams } from '@/data/teams';
-import { SessionResult, SortedSessionResult } from '@/types/meeting';
+import { SessionResults, SortedSessionResult } from '@/types/meeting';
 import Image from 'next/image';
 import DriverProfile from './DriverProfile';
 import DefaultDriverProfile from './DefaultDriverProfile';
 import { useRouter } from 'next/navigation';
-
-interface SessionResults {
-  sessionResults: SortedSessionResult[];
-  isPending: boolean;
-}
 
 export default function SessionResultSection({
   sessionResults,
   isPending,
 }: SessionResults) {
   const router = useRouter();
+  const getDisplayPosition = (result: SortedSessionResult) => {
+    if (result.position !== null) return result.position;
+    if (result.dsq) return 'DSQ';
+    if (result.dns) return 'DNS';
+    if (result.dnf) return 'DNF';
+    return '-';
+  };
   return (
     <>
       {!isPending && (
         <table className="w-full table-fixed border-collapse select-none">
           <thead>
             <tr className="border-b border-white text-[20px] text-[#8B8B8B]">
-              <th className="w-25 shrink-0 px-4 py-8">등수</th>
-              <th className="max-w-70 px-4 py-8 text-left">이름</th>
-              <th className="max-w-70 px-4 py-8 text-left">팀</th>
-              <th className="w-20 px-4 py-8">Laps</th>
-              <th className="w-28 px-4 py-8">시간</th>
+              <th className="w-25 shrink-0 px-4 py-5">등수</th>
+              <th className="max-w-70 px-4 py-5 text-left">이름</th>
+              <th className="max-w-70 px-4 py-5 text-left">팀</th>
+              <th className="w-20 px-4 py-5">Laps</th>
+              <th className="w-28 px-4 py-5">시간</th>
             </tr>
           </thead>
           <tbody>
@@ -37,12 +38,12 @@ export default function SessionResultSection({
               >
                 <td
                   style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
-                  className="font- px-4 py-8 text-center text-[22px]"
+                  className="font- px-4 py-5 text-center text-[22px]"
                 >
-                  {result.position}
+                  {getDisplayPosition(result)}
                 </td>
-                <td className="px-4 py-8 font-bold">
-                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[20px]">
+                <td className="px-4 py-5 font-bold">
+                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[18px]">
                     {result.headshot_url ? (
                       <DriverProfile
                         className="duration-200 group-hover:scale-110"
@@ -59,7 +60,7 @@ export default function SessionResultSection({
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-8">
+                <td className="px-4 py-5">
                   <div
                     className="group flex cursor-pointer items-center gap-2 text-[18px]"
                     onClick={() => router.push(`/team/${result.team_slug}`)}
@@ -82,10 +83,10 @@ export default function SessionResultSection({
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-8 text-center text-[22px]">
+                <td className="px-4 py-5 text-center text-[22px]">
                   {result.number_of_laps}
                 </td>
-                <td className="py-8 text-center text-[20px]">
+                <td className="py-5 text-center text-[20px]">
                   + {result.gap_to_leader}
                 </td>
               </tr>

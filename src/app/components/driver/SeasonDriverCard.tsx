@@ -3,10 +3,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { SeasonDriver } from '@/hooks/SeasonDrivers';
 import { Drivers } from '@/images/drivers';
+import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 
 export default function SeasonDriverCard({ driver }: { driver: SeasonDriver }) {
   const router = useRouter();
   const [firstName, lastName] = driver.kr_name.split(' ');
+  const headshotSrc =
+    upgradeHeadshotQuality(driver.headshot_url) ?? Drivers.Kimi;
+
   return (
     <div
       onClick={() => router.push(`/driver/${driver.driver_profile_id}`)}
@@ -34,23 +38,13 @@ export default function SeasonDriverCard({ driver }: { driver: SeasonDriver }) {
             <Image src={driver.main_logo} alt="logo" width={50} height={50} />
           </div>
         </div>
-        {driver.headshot_url ? (
-          <Image
-            src={driver.headshot_url}
-            alt="driver"
-            width={160}
-            height={160}
-            className="z-10"
-          />
-        ) : (
-          <Image
-            src={Drivers.Kimi}
-            alt="driver"
-            width={160}
-            height={160}
-            className="z-10"
-          />
-        )}
+        <Image
+          src={headshotSrc}
+          alt="driver"
+          width={160}
+          height={160}
+          className="z-10"
+        />
       </div>
     </div>
   );

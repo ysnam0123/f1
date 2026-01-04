@@ -79,3 +79,7 @@ export interface SortedSessionResult {
   main_logo: string;
   white_logo: string;
 }
+export interface SessionResults {
+  sessionResults: SortedSessionResult[];
+  isPending: boolean;
+}

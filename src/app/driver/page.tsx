@@ -1,31 +1,23 @@
 'use client';
-import { teams } from '@/data/teams';
-import DriverListCard from '../components/driver/DriverListCard';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/supabase/client';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import AnimatedContent from '@/components/AnimatedContent';
 import { useSeasonDrivers } from '@/hooks/SeasonDrivers';
 import SeasonDriverCard from '../components/driver/SeasonDriverCard';
+import SeasonChangeButton from '../components/common/SeasonChangeButton';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
   const years = [2023, 2024, 2025, 2026];
   const [selectedYear, setSelectedYear] = useState(2025);
+
   const router = useRouter();
-  const result = teams.flatMap((team) =>
-    team.drivers.map((driver) => ({
-      driver,
-      team,
-    })),
-  );
   const { data, isPending, isError } = useSeasonDrivers(selectedYear);
   return (
     <>
       <div className="mx-auto max-w-315">
-        {/* 시즌 변경 버튼*/}
-        <div className="relative">
+        {/* <div className="relative">
           <button
             onClick={() => setOpened(!opened)}
             className="mb-10 flex h-12.5 w-36 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-white text-[20px] font-bold hover:bg-[#4b4b4b]"
@@ -64,15 +56,15 @@ export default function Page() {
               </ul>
             </AnimatedContent>
           )}
-        </div>
+        </div> */}
+        <SeasonChangeButton
+          opened={opened}
+          setOpened={setOpened}
+          years={years}
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
+        />
         <section className="grid grid-cols-4 gap-5">
-          {result.map((data) => (
-            <DriverListCard
-              key={data.driver.driverSlug}
-              team={data.team}
-              driver={data.driver}
-            />
-          ))}
           {data &&
             !isPending &&
             data.map((d) => (

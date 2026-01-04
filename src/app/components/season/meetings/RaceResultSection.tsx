@@ -1,14 +1,32 @@
+'use client';
 import Image from 'next/image';
 import StatsticsCard from './StatsticsCard';
 import PodiumCard from './PodiumCard';
+import { SessionResults, SortedSessionResult } from '@/types/meeting';
+import { useRouter } from 'next/navigation';
+import DriverProfile from './DriverProfile';
+import DefaultDriverProfile from './DefaultDriverProfile';
 
-export default function RaceResultSection() {
+export default function RaceResultSection({
+  sessionResults,
+  isPending,
+}: SessionResults) {
+  const router = useRouter();
+  const getDisplayPosition = (result: SortedSessionResult) => {
+    if (result.position !== null) return result.position;
+    if (result.dsq) return 'DSQ';
+    if (result.dns) return 'DNS';
+    if (result.dnf) return 'DNF';
+    return '-';
+  };
   return (
     <>
+      {isPending && <></>}
+
       <div className="mb-12.5 grid grid-cols-3 gap-7.5">
-        <PodiumCard />
-        <PodiumCard />
-        <PodiumCard />
+        {sessionResults.slice(0, 3).map((result) => (
+          <PodiumCard key={result.result_id} result={result} />
+        ))}
       </div>
       <div className="mb-12.5 min-h-50 w-285 rounded-[10px] bg-[#1A1A1A] px-17.5 py-5">
         <table className="w-full border-collapse select-none">
@@ -23,46 +41,80 @@ export default function RaceResultSection() {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-              <td className="py-4">4</td>
-              <td className="px-4 py-4 font-bold">랜도 노리스</td>
-              <td className="px-4 py-4">McLaren</td>
-              <td className="py-4">57</td>
-              <td className="px-4 py-4">+12.303s</td>
-              <td className="py-4 text-right font-bold">24</td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-              <td className="py-4">4</td>
-              <td className="px-4 py-4 font-bold">랜도 노리스</td>
-              <td className="px-4 py-4">McLaren</td>
-              <td className="py-4">57</td>
-              <td className="px-4 py-4">+12.303s</td>
-              <td className="py-4 text-right font-bold">24</td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-              <td className="py-4">4</td>
-              <td className="px-4 py-4 font-bold">랜도 노리스</td>
-              <td className="px-4 py-4">McLaren</td>
-              <td className="py-4">57</td>
-              <td className="px-4 py-4">+12.303s</td>
-              <td className="py-4 text-right font-bold">24</td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="border-b border-[#2A2A2A] text-center text-[16px]">
-              <td className="py-4">4</td>
-              <td className="px-4 py-4 font-bold">랜도 노리스</td>
-              <td className="px-4 py-4">McLaren</td>
-              <td className="py-4">57</td>
-              <td className="px-4 py-4">+12.303s</td>
-              <td className="py-4 text-right font-bold">24</td>
-            </tr>
+            {sessionResults.slice(3).map((result) => (
+              <tr
+                key={result.driver_number}
+                className="border-b border-[#2A2A2A] text-center text-[16px]"
+              >
+                <td
+                  style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
+                  className="font- px-4 py-5 text-center text-[20px]"
+                >
+                  {getDisplayPosition(result)}
+                </td>
+                <td className="px-4 py-5 font-bold">
+                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[18px]">
+                    {result.headshot_url ? (
+                      <DriverProfile
+                        className="duration-200 group-hover:scale-110"
+                        headshot={result.headshot_url}
+                        teamColor={result.team_colour}
+                      />
+                    ) : (
+                      <DefaultDriverProfile />
+                    )}
+                    <div className="relative flex gap-3">
+                      <div className="truncate">{result.kr_name}</div>
+                      <div>{result.driver_number}</div>
+                      <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-5">
+                  <div
+                    className="group flex cursor-pointer items-center gap-2 text-[18px]"
+                    onClick={() => router.push(`/team/${result.team_slug}`)}
+                  >
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110"
+                      style={{ backgroundColor: result.team_colour }}
+                    >
+                      <Image
+                        src={result.white_logo}
+                        alt="teamLogo"
+                        width={30}
+                        height={30}
+                      />
+                    </div>
+
+                    <span className="relative">
+                      {result.team_kr_name}
+                      <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                    </span>
+                  </div>
+                </td>
+                <td className="px-4 py-5 text-center text-[22px]">
+                  {result.number_of_laps}
+                </td>
+                <td className="py-5 text-center text-[20px]">
+                  + {result.gap_to_leader}
+                </td>
+                <td className="py-4 text-right font-bold">{result.points}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
+        <div className="flex flex-col gap-1 pt-2 pl-4 text-[15px]">
+          <p>
+            <span className="font-semibold">DNF</span>: 완주 실패
+          </p>
+          <p>
+            <span className="font-semibold">DNS</span>: 미출전
+          </p>
+          <p>
+            <span className="font-semibold">DSQ</span>: 실격
+          </p>
+        </div>
       </div>
       <h1 className="mb-12.5 text-[40px]" style={{ fontFamily: 'PartialSans' }}>
         STATSTICS
@@ -219,6 +271,7 @@ export default function RaceResultSection() {
             </tbody>
           </table>
         </div>
+
         <div className="min-h-175 w-89.5 rounded-[40px] bg-[#1A1A1A] px-17.5 py-4.5"></div>
       </div>
     </>

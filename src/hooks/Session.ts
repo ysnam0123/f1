@@ -55,7 +55,8 @@ export function useSessionResultData(sessionKey: number | null) {
         .from('v_meeting_results')
         .select('*')
         .eq('session_key', sessionKey)
-        .order('position');
+        .order('sort_order')
+        .order('position_order');
       console.log('정제된 순위정보:', sessionRanks);
 
       if (error) {

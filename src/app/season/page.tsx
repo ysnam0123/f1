@@ -8,6 +8,7 @@ import { supabase } from '@/supabase/client';
 import { Meeting } from '@/types/meeting';
 import { meetingData } from '../api/meeting/Meetings';
 import { useYearStore } from '@/store/YearStore';
+import SeasonChangeButton from '../components/common/SeasonChangeButton';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
@@ -48,7 +49,7 @@ export default function Page() {
         {/* <SeasonHeroBox /> */}
         <section className="mx-auto w-full max-w-350">
           {/* 시즌 변경 버튼*/}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setOpened(!opened)}
               className="mb-10 flex h-12.5 w-36 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-white text-[20px] font-bold hover:bg-[#4b4b4b]"
@@ -87,7 +88,14 @@ export default function Page() {
                 </ul>
               </AnimatedContent>
             )}
-          </div>
+          </div> */}
+          <SeasonChangeButton
+            opened={opened}
+            setOpened={setOpened}
+            years={years}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+          />
           <div className="grid grid-cols-3 gap-10">
             {meetings.map((meeting) => (
               <GrandPrixCard key={meeting.meeting_key} meetingInfo={meeting} />
