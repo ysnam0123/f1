@@ -4,14 +4,23 @@ import Image from 'next/image';
 
 export default function PodiumCard({
   result,
+  rank,
 }: {
   result: SortedSessionResult;
+  rank: 1 | 2 | 3;
 }) {
   const headshotSrc = upgradeHeadshotQuality(result.headshot_url);
   const [firstName, lastName] = result.kr_name.split(' ');
+  const podiumStyle = {
+    1: 'h-68 ',
+    2: 'h-64 ',
+    3: 'h-60 ',
+  }[rank];
   return (
     <>
-      <div className="relative h-59 min-w-[256px] overflow-hidden rounded-br-2xl">
+      <div
+        className={`relative hidden min-w-[256px] overflow-hidden rounded-br-2xl border border-[#5f5f5f] transition-all duration-300 sm:block ${podiumStyle}`}
+      >
         <Image
           src="/cardBg.png"
           alt="bg"
@@ -25,20 +34,25 @@ export default function PodiumCard({
           height={160}
           className="absolute bottom-16.25 left-1/2 z-10 -translate-x-1/2"
         />
-        <div className="absolute bottom-0 z-20 flex w-full items-center justify-between bg-[#222222] px-3.75 py-3.25">
-          <div className="flex flex-col gap-0.5 text-[#373737]">
-            {/* <span className="text-[14px] font-medium">{firstName}</span>
-            <span className="text-[17px] font-bold">{lastName}</span> */}
-            <span className="text-[17px] font-bold">{result.kr_name}</span>
-          </div>
-
-          <div className="relative h-10 w-30">
-            <Image
-              src={result.main_logo}
-              alt="team"
-              fill
-              className="object-cover"
-            />
+        <Image
+          src={result.main_logo}
+          alt="team"
+          width={90}
+          height={90}
+          className="absolute right-1"
+        />
+        <div className="absolute bottom-0 z-20 flex h-14 w-full items-center justify-between bg-[#222222] px-3.75">
+          <div className="flex w-full items-center justify-between text-white">
+            <span className="text-[19px] font-bold">{result.kr_name}</span>
+            <div className="flex items-center gap-3">
+              <p
+                style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
+                className="text-[16px]"
+              >
+                {result.driver_number}
+              </p>
+              <Image src={result.flag} alt="team" width={30} height={30} />
+            </div>
           </div>
         </div>
       </div>
