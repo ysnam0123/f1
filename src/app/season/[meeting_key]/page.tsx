@@ -12,88 +12,95 @@ import {
   useSessionResultData,
 } from '@/hooks/Session';
 import SessionNav from '@/app/components/season/meetings/SessionNav'; // SessionType,
-import { supabase } from '@/supabase/client';
-import { fetchDriversWithMeetingKey } from '@/app/api/f1/Drivers';
-import { fetchSession } from '@/app/api/meeting/Sessions';
-import { fetchResult } from '@/app/api/meeting/sessionResult';
+import { fetchSessionResults } from '@/app/api/meeting/Sessions';
+import { fetchCircuitByKey } from '@/app/api/meeting/Circuit';
+import { Session } from '@/types/meeting';
+import { usePitData } from '@/app/api/f1/race/pit';
+import { useStintsData } from '@/app/api/f1/race/stints';
+import { useRaceControlData } from '@/app/api/f1/race/raceControl';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
   const meetingKey = Number(params.meeting_key);
-
-  // 1차 완료
-  const { data: meetingInfo, isLoading: meetingLoading } =
-    useMeetingData(meetingKey);
-  const { data: sessions = [], isPending: sessionLoading } =
-    useSessionData(meetingKey);
-
-  const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
-  useEffect(() => {
-    if (!meetingInfo?.circuit_key) return;
-    const fetchCurcuitInfo = async () => {
-      const { data, error } = await supabase
-        .from('circuits')
-        .select('*')
-        .eq('circuit_key', meetingInfo?.circuit_key)
-        .single();
-
-      if (error) {
-        console.error('서킷 정보 불러오기 실패:', error);
-        return;
-      }
-      console.log('서킷 불러오기:', data);
-      setCircuitInfo(data);
-    };
-    fetchCurcuitInfo();
-  }, [meetingInfo]);
-
-  // 아직 완료안됨
-  const [isSelected, setIsSelected] = useState<string | null>(null);
-  useEffect(() => {
-    if (!sessions.length) return;
-    if (isSelected) return;
-
-    setIsSelected(sessions[0].session_name);
-    setSelectedSessionKey(sessions[0].session_key);
-  }, [sessions, isSelected]);
-
   const [selectedSessionKey, setSelectedSessionKey] = useState<number | null>(
     null,
   );
+  const [qSessionKey, setQSessionKey] = useState<number | null>(null);
+
+  const [raceSession, setRaceSession] = useState<number | null>(null);
+  const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
+  const [isSelected, setIsSelected] = useState<string | null>(null);
+
+  const { data: meetingInfo, isLoading: meetingLoading } =
+    useMeetingData(meetingKey);
+
+  const { data: sessions = [], isPending: sessionLoading } =
+    useSessionData(meetingKey);
 
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
     useSessionResultData(selectedSessionKey);
 
-  // 현재 선택된 세션 찾기
+  const { data: sessionStints, isLoading: stintsLoading } =
+    useStintsData(raceSession);
+
+  const { data: sessionRaceControl, isLoading: raceControlLoading } =
+    useRaceControlData(raceSession);
+
+  const {
+    data: pitData,
+    isLoading: pitLoading,
+    isError: pitError,
+  } = usePitData(raceSession);
+
+  if (sessionStints) {
+    console.log('sessionStints 불러옴:', sessionStints);
+  }
+  if (sessionRaceControl) {
+    console.log('sessionRaceControl 불러옴:', sessionRaceControl);
+  }
+  if (sessionRaceControl) {
+    console.log('pitData 불러옴:', pitData);
+  }
+
   useEffect(() => {
-    const findSession = sessions.find(
-      (session) => session.session_name === isSelected,
-    );
-    if (findSession) {
-      setSelectedSessionKey(findSession.session_key);
-      const sr = async () => {
-        const { data: sessionRanks, error } = await supabase
-          .from('v_meeting_results')
-          .select('*')
-          .eq('session_key', findSession?.session_key)
-          .order('position');
-        if (error) {
-          console.error('순위 불러오기 실패:', error);
-        }
-        console.log('정제된 순위정보:', sessionRanks);
-      };
-      sr();
+    if (!sessions) return;
+    const race = sessions.find((session) => session.session_name === 'Race');
+    if (race) {
+      setRaceSession(race.session_key);
     }
+  }, [sessions]);
+
+  useEffect(() => {
+    if (!meetingInfo?.circuit_key) return;
+    const loadCircuit = async () => {
+      const circuit = await fetchCircuitByKey(meetingInfo.circuit_key);
+      if (circuit) {
+        setCircuitInfo(circuit);
+      }
+    };
+    loadCircuit();
+  }, [meetingInfo?.circuit_key]);
+
+  const getSessionKeyByName = (sessions: Session[], sessionName: string) => {
+    return sessions.find((s) => s.session_name === sessionName)?.session_key;
+  };
+
+  useEffect(() => {
+    if (!isSelected) return;
+    const sessionKey = getSessionKeyByName(sessions, isSelected);
+    if (!sessionKey) return;
+    setSelectedSessionKey(sessionKey);
+    fetchSessionResults(sessionKey).then((results) => {
+      console.log('정제된 순위정보:', results);
+    });
   }, [isSelected, sessions]);
 
-  // 테스트용
-  if (sessions) {
-    console.log(sessions);
-    const raceSession = sessions.find(
-      (session) => session.session_name === 'Race',
-    );
-    console.log('raceSession:', raceSession?.session_key);
-  }
+  useEffect(() => {
+    if (!sessions.length) return;
+    if (isSelected) return;
+    setIsSelected(sessions[0].session_name);
+    setSelectedSessionKey(sessions[0].session_key);
+  }, [sessions, isSelected]);
 
   return (
     <>

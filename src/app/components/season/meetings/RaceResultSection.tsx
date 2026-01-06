@@ -281,8 +281,8 @@ export default function RaceResultSection({
               </tbody>
             </table>
           </div>
+          <div className="min-h-175 w-89.5 rounded-[40px] bg-[#1A1A1A] px-17.5 py-4.5"></div>
         </div>
-        <div className="min-h-175 w-89.5 rounded-[40px] bg-[#1A1A1A] px-17.5 py-4.5"></div>
       </div>
     </>
   );
