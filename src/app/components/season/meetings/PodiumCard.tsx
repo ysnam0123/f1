@@ -19,7 +19,7 @@ export default function PodiumCard({
   return (
     <>
       <div
-        className={`relative hidden min-w-[256px] overflow-hidden rounded-br-2xl border border-[#5f5f5f] transition-all duration-300 sm:block ${podiumStyle}`}
+        className={`relative hidden w-full min-w-50 overflow-hidden rounded-br-2xl border border-[#5f5f5f] whitespace-nowrap transition-all duration-300 sm:block ${podiumStyle}`}
       >
         <Image
           src="/cardBg.png"

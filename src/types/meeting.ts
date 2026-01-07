@@ -83,3 +83,34 @@ export interface SessionResults {
   sessionResults: SortedSessionResult[];
   isPending: boolean;
 }
+export interface RaceResults {
+  sessionResults: SortedSessionResult[];
+  isPending: boolean;
+  startingGrid: StartingGridWithDriver[];
+}
+
+export interface StartingGrid {
+  driver_number: number;
+  lap_duration: number;
+  meeting_key: number;
+  position: number;
+  session_key: number;
+}
+
+export interface StartingGridWithDriver {
+  driver_number: number;
+  full_name: string;
+  headshot_url: string | null;
+  id: number;
+  kr_name: string;
+  lap_duration: number;
+  main_logo: string | null;
+  meeting_key: number;
+  position: number;
+  session_key: number;
+  team_colour: string;
+  team_kr_name: string;
+  team_name: string;
+  team_slug: string;
+  white_logo: string;
+}

@@ -18,6 +18,7 @@ import { Session } from '@/types/meeting';
 import { usePitData } from '@/app/api/f1/race/pit';
 import { useStintsData } from '@/app/api/f1/race/stints';
 import { useRaceControlData } from '@/app/api/f1/race/raceControl';
+import { useStartingGridWithDriver } from '@/app/api/f1/race/starting_grid';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
@@ -26,40 +27,45 @@ export default function Page() {
     null,
   );
   const [qSessionKey, setQSessionKey] = useState<number | null>(null);
-
   const [raceSession, setRaceSession] = useState<number | null>(null);
   const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
   const [isSelected, setIsSelected] = useState<string | null>(null);
 
   const { data: meetingInfo, isLoading: meetingLoading } =
     useMeetingData(meetingKey);
-
   const { data: sessions = [], isPending: sessionLoading } =
     useSessionData(meetingKey);
-
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
     useSessionResultData(selectedSessionKey);
-
   const { data: sessionStints, isLoading: stintsLoading } =
     useStintsData(raceSession);
-
   const { data: sessionRaceControl, isLoading: raceControlLoading } =
     useRaceControlData(raceSession);
-
   const {
     data: pitData,
     isLoading: pitLoading,
     isError: pitError,
   } = usePitData(raceSession);
+  const {
+    data: startingGridData,
+    isLoading: startingGridLoading,
+    isError: startingGridError,
+  } = useStartingGridWithDriver(qSessionKey);
 
+  const raceResultLoading =
+    stintsLoading && raceControlLoading && pitLoading && startingGridLoading;
+  // 테스트
   if (sessionStints) {
     console.log('sessionStints 불러옴:', sessionStints);
   }
   if (sessionRaceControl) {
     console.log('sessionRaceControl 불러옴:', sessionRaceControl);
   }
-  if (sessionRaceControl) {
+  if (pitData) {
     console.log('pitData 불러옴:', pitData);
+  }
+  if (startingGridData) {
+    console.log('startingGridData 불러옴:', startingGridData);
   }
 
   useEffect(() => {
@@ -67,6 +73,13 @@ export default function Page() {
     const race = sessions.find((session) => session.session_name === 'Race');
     if (race) {
       setRaceSession(race.session_key);
+    }
+    if (!sessions) return;
+    const qualifying = sessions.find(
+      (session) => session.session_name === 'Qualifying',
+    );
+    if (qualifying) {
+      setQSessionKey(qualifying.session_key);
     }
   }, [sessions]);
 
@@ -115,10 +128,11 @@ export default function Page() {
             />
           )}
 
-          {isSelected === 'Race' ? (
+          {isSelected === 'Race' && startingGridData ? (
             <RaceResultSection
               isPending={sessionResultLoading}
               sessionResults={sessionResults}
+              startingGrid={startingGridData}
             />
           ) : (
             selectedSessionKey && (

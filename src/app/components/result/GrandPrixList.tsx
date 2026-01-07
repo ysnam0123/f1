@@ -1,7 +1,8 @@
 'use client';
-import { useMeetingData } from '@/app/api/meeting/Meetings';
+
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useMeetingData } from '@/hooks/Session';
 
 export default function GrandPrixList({
   selectedMeeting,
