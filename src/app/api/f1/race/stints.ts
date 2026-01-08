@@ -2,7 +2,7 @@ import { supabase } from '@/supabase/client';
 import { axiosInstance } from '../axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 
-interface Stints {
+export interface Stints {
   meeting_key: number;
   session_key: number;
   stint_number: number;

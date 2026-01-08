@@ -1,6 +1,6 @@
 'use client';
-
 import { Session } from '@/types/meeting';
+
 export default function SessionNav({
   sessionTabs,
   isSelected,
@@ -9,7 +9,6 @@ export default function SessionNav({
   sessionTabs: Session[];
   isSelected: string;
   setIsSelectedAction: (sessionName: string) => void;
-  // React.Dispatch<React.SetStateAction<SessionType>>;
 }) {
   return (
     <>

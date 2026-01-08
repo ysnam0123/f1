@@ -2,7 +2,7 @@ import { supabase } from '@/supabase/client';
 import { axiosInstance } from '../axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 
-interface RaceControl {
+export interface RaceControl {
   date: string;
   session_key: number;
   pit_duration: null;

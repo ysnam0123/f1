@@ -8,7 +8,7 @@ interface LoadingLottieProps {
   loadingText?: string;
 }
 
-export default function Loading({
+export default function F1Loading({
   className = '',
   loadingText = '로딩 중...',
 }: LoadingLottieProps) {
@@ -16,7 +16,7 @@ export default function Loading({
     <>
       <div
         className={twMerge(
-          'flex h-100 w-100 flex-col items-center justify-center gap-5 border border-white',
+          'flex h-100 w-100 flex-col items-center justify-center gap-5',
           className,
         )}
       >

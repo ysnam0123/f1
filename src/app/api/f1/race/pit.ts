@@ -2,7 +2,7 @@ import { supabase } from '@/supabase/client';
 import { axiosInstance } from '../axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 
-interface Pit {
+export interface Pit {
   date: string;
   session_key: number;
   pit_duration: null;

@@ -78,7 +78,7 @@ export default function StartingGridTable({
                 </div>
               </td>
               <td className="px-4 py-5 text-center text-[22px]">
-                {result.lap_duration}
+                {result.lap_duration ? `${result.lap_duration}` : 'null'}
               </td>
             </tr>
           ))}

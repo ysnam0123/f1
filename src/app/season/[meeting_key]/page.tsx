@@ -2,101 +2,68 @@
 import SeasonHeroBox from '@/app/components/season/SeasonHeroBox';
 import { Circuit } from '@/data/circuit';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import RaceResultSection from '@/app/components/season/meetings/RaceResultSection';
 import SessionResultSection from '@/app/components/season/meetings/SessionResultSection';
-import Loading from '@/app/components/common/Loading';
 import {
   useMeetingData,
   useSessionData,
   useSessionResultData,
 } from '@/hooks/Session';
-import SessionNav from '@/app/components/season/meetings/SessionNav'; // SessionType,
+import SessionNav from '@/app/components/season/meetings/SessionNav';
 import { fetchSessionResults } from '@/app/api/meeting/Sessions';
 import { fetchCircuitByKey } from '@/app/api/meeting/Circuit';
 import { Session } from '@/types/meeting';
-import { usePitData } from '@/app/api/f1/race/pit';
-import { useStintsData } from '@/app/api/f1/race/stints';
-import { useRaceControlData } from '@/app/api/f1/race/raceControl';
 import { useStartingGridWithDriver } from '@/app/api/f1/race/starting_grid';
 
 export default function Page() {
+  function useCircuit(circuitKey?: number) {
+    const [circuit, setCircuit] = useState<Circuit | null>(null);
+    useEffect(() => {
+      if (!circuitKey) return;
+      fetchCircuitByKey(circuitKey).then(setCircuit);
+    }, [circuitKey]);
+    return circuit;
+  }
   const params = useParams<{ meeting_key: string }>();
   const meetingKey = Number(params.meeting_key);
   const [selectedSessionKey, setSelectedSessionKey] = useState<number | null>(
     null,
   );
-  const [qSessionKey, setQSessionKey] = useState<number | null>(null);
-  const [raceSession, setRaceSession] = useState<number | null>(null);
-  const [circuitInfo, setCircuitInfo] = useState<Circuit | null>(null);
   const [isSelected, setIsSelected] = useState<string | null>(null);
-
   const { data: meetingInfo, isLoading: meetingLoading } =
     useMeetingData(meetingKey);
   const { data: sessions = [], isPending: sessionLoading } =
     useSessionData(meetingKey);
+  const getSessionKeyByName = (
+    sessions: Session[],
+    name: string,
+  ): number | null =>
+    sessions.find((s) => s.session_name === name)?.session_key ?? null;
+  const raceSessionKey = useMemo(
+    () => getSessionKeyByName(sessions, 'Race'),
+    [sessions],
+  );
+  const qualifyingSessionKey = useMemo(
+    () => getSessionKeyByName(sessions, 'Qualifying'),
+    [sessions],
+  );
+  const circuitInfo = useCircuit(meetingInfo?.circuit_key);
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
     useSessionResultData(selectedSessionKey);
-  const { data: sessionStints, isLoading: stintsLoading } =
-    useStintsData(raceSession);
-  const { data: sessionRaceControl, isLoading: raceControlLoading } =
-    useRaceControlData(raceSession);
-  const {
-    data: pitData,
-    isLoading: pitLoading,
-    isError: pitError,
-  } = usePitData(raceSession);
   const {
     data: startingGridData,
     isLoading: startingGridLoading,
     isError: startingGridError,
-  } = useStartingGridWithDriver(qSessionKey);
+  } = useStartingGridWithDriver(qualifyingSessionKey);
 
-  const raceResultLoading =
-    stintsLoading && raceControlLoading && pitLoading && startingGridLoading;
-  // 테스트
-  if (sessionStints) {
-    console.log('sessionStints 불러옴:', sessionStints);
-  }
-  if (sessionRaceControl) {
-    console.log('sessionRaceControl 불러옴:', sessionRaceControl);
-  }
-  if (pitData) {
-    console.log('pitData 불러옴:', pitData);
-  }
   if (startingGridData) {
     console.log('startingGridData 불러옴:', startingGridData);
   }
-
   useEffect(() => {
-    if (!sessions) return;
-    const race = sessions.find((session) => session.session_name === 'Race');
-    if (race) {
-      setRaceSession(race.session_key);
-    }
-    if (!sessions) return;
-    const qualifying = sessions.find(
-      (session) => session.session_name === 'Qualifying',
-    );
-    if (qualifying) {
-      setQSessionKey(qualifying.session_key);
-    }
-  }, [sessions]);
-
-  useEffect(() => {
-    if (!meetingInfo?.circuit_key) return;
-    const loadCircuit = async () => {
-      const circuit = await fetchCircuitByKey(meetingInfo.circuit_key);
-      if (circuit) {
-        setCircuitInfo(circuit);
-      }
-    };
-    loadCircuit();
-  }, [meetingInfo?.circuit_key]);
-
-  const getSessionKeyByName = (sessions: Session[], sessionName: string) => {
-    return sessions.find((s) => s.session_name === sessionName)?.session_key;
-  };
+    if (!sessions.length || isSelected) return;
+    setIsSelected(sessions[0].session_name);
+  }, [sessions, isSelected]);
 
   useEffect(() => {
     if (!isSelected) return;
@@ -107,13 +74,6 @@ export default function Page() {
       console.log('정제된 순위정보:', results);
     });
   }, [isSelected, sessions]);
-
-  useEffect(() => {
-    if (!sessions.length) return;
-    if (isSelected) return;
-    setIsSelected(sessions[0].session_name);
-    setSelectedSessionKey(sessions[0].session_key);
-  }, [sessions, isSelected]);
 
   return (
     <>
@@ -127,9 +87,9 @@ export default function Page() {
               setIsSelectedAction={setIsSelected}
             />
           )}
-
           {isSelected === 'Race' && startingGridData ? (
             <RaceResultSection
+              sessionKey={raceSessionKey}
               isPending={sessionResultLoading}
               sessionResults={sessionResults}
               startingGrid={startingGridData}

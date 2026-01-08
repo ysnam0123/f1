@@ -84,6 +84,7 @@ export interface SessionResults {
   isPending: boolean;
 }
 export interface RaceResults {
+  sessionKey: number | null;
   sessionResults: SortedSessionResult[];
   isPending: boolean;
   startingGrid: StartingGridWithDriver[];
