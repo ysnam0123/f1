@@ -12,7 +12,6 @@ import ResultStatstics from './statstics/ResultStatstics';
 import { useStintsData } from '@/app/api/f1/race/stints';
 import { useRaceControlData } from '@/app/api/f1/race/raceControl';
 import { usePitData } from '@/app/api/f1/race/pit';
-import { useStartingGridWithDriver } from '@/app/api/f1/race/starting_grid';
 import { useWeatherSummary } from '@/app/api/f1/race/weather';
 import F1Loading from '../../common/F1Loading';
 

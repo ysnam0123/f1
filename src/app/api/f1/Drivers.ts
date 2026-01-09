@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from './axiosInstance';
+import { supabase } from '@/supabase/client';
 
 interface Driver {
   meeting_key: number;
@@ -15,41 +16,69 @@ interface Driver {
   headshot_url: string;
   country_code: string;
 }
-
-export const fetchDriversWithMeetingKey = async (
-  meetingKey: number,
+// ===== API =====
+export const fetchDriverDataFromAPI = async (
+  sessionKey: number,
 ): Promise<Driver[]> => {
   const response = await axiosInstance.get('/drivers', {
-    params: { meeting_key: meetingKey },
+    params: { session_key: sessionKey },
   });
   console.log(response.data);
   return response.data;
 };
 
-export const driversData = async (): Promise<Driver[]> => {
-  const response = await axiosInstance.get('/drivers', {
-    params: { session_key: 'latest' },
-  });
-  return response.data;
+// ===== DB =====
+export const getDriverDataFromDB = async (sessionKey: number) => {
+  const { data, error } = await supabase
+    .from('drivers')
+    .select('*')
+    .eq('session_key', sessionKey);
+
+  if (error) throw error;
+  return data ?? [];
 };
 
-export const driverData = async (driverNumber: number): Promise<Driver> => {
-  const response = await axiosInstance.get('/drivers', {
-    params: { driver_number: driverNumber },
-  });
-  return response.data;
+// 없으면 supabse에 저장
+export const saveDriverData = async (sessionKey: number) => {
+  const driverData = await fetchDriverDataFromAPI(sessionKey);
+  if (!driverData || driverData.length === 0) return;
+
+  const { data, error } = await supabase
+    .from('drivers')
+    .upsert(driverData, {
+      onConflict: 'meeting_key,session_key,driver_number',
+    })
+    .select();
+  if (error) throw error;
+  return data ?? [];
 };
 
-export function useDriverData() {
-  return useQuery({
-    queryKey: ['drivers'],
-    queryFn: driversData,
+// ===== Ensure =====
+const ensureDriverData = async (sessionKey: number) => {
+  const existing = await getDriverDataFromDB(sessionKey);
+  if (existing.length > 0) return;
+
+  await saveDriverData(sessionKey);
+};
+
+// ===== React Query =====
+export function useDriverData(sessionKey: number | null) {
+  return useQuery<Driver[]>({
+    queryKey: ['drivers', sessionKey],
+    staleTime: 1000 * 60 * 60,
+    enabled: !!sessionKey,
+
+    queryFn: async () => {
+      await ensureDriverData(sessionKey!);
+      return getDriverDataFromDB(sessionKey!);
+    },
   });
 }
 
-export function useDriverNumber(driverNumber: number) {
-  return useQuery({
-    queryKey: ['driver', driverNumber],
-    queryFn: () => driverData(driverNumber),
-  });
-}
+// useEffect(() => {
+//   if (!meetingKey) return;
+//   const upsertDriverData = async () => {
+//     const drivers = await fetchDriverDataFromAPI(meetingKey);
+//     const uniqueDrivers = Array.from(
+//       new Map(drivers.map((d) => [d.driver_number, d])).values(),
+//     );

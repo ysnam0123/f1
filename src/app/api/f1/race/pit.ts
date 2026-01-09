@@ -11,58 +11,66 @@ export interface Pit {
   driver_number: number;
 }
 
-// API 호출
-export const fetchPitData = async (sessionKey: number): Promise<Pit[]> => {
+// ===== API =====
+export const fetchPitDataFromAPI = async (
+  sessionKey: number,
+): Promise<Pit[]> => {
   const response = await axiosInstance.get('/pit', {
     params: { session_key: sessionKey },
   });
-  console.log('피트api 데이터 불러오기:', response.data);
   return response.data;
 };
 
-// Supabase에서 불러오기
+// ===== DB =====
 export const getPitDataFromDB = async (sessionKey: number) => {
   const { data, error } = await supabase
     .from('pit_stops')
     .select('*')
     .eq('session_key', sessionKey);
 
-  if (error) {
-    console.error('DB pit 데이터 조회 실패:', error);
-    return null;
-  }
-  return data;
+  if (error) throw error;
+  return data ?? [];
 };
 
 // 없으면 supabse에 저장
 export const savePitData = async (sessionKey: number) => {
-  const pitData = await fetchPitData(sessionKey);
-
+  const pitData = await fetchPitDataFromAPI(sessionKey);
   if (!pitData || pitData.length === 0) return;
+
   const { data, error } = await supabase
     .from('pit_stops')
     .upsert(pitData, {
       onConflict: 'meeting_key,session_key,driver_number,lap_number',
     })
     .select();
-
-  console.log('data:', data);
-  console.log('error:', error);
+  if (error) throw error;
+  return data ?? [];
 };
 
-// 리액트 쿼리에 저장
+// ===== Ensure =====
+const ensurePitData = async (sessionKey: number) => {
+  const existing = await getPitDataFromDB(sessionKey);
+  if (existing.length > 0) return;
+
+  await savePitData(sessionKey);
+};
+
+// ===== React Query =====
 export function usePitData(sessionKey: number | null) {
   return useQuery<Pit[]>({
     queryKey: ['pit_stops', sessionKey],
-    queryFn: async () => {
-      let pitData = await getPitDataFromDB(sessionKey!);
-      if (!pitData || pitData.length === 0) {
-        await savePitData(sessionKey!);
-        pitData = await getPitDataFromDB(sessionKey!);
-      }
-      return pitData ?? [];
-    },
     staleTime: 1000 * 60 * 60,
     enabled: !!sessionKey,
+
+    queryFn: async () => {
+      await ensurePitData(sessionKey!);
+      return getPitDataFromDB(sessionKey!);
+    },
   });
 }
+
+// ===== API =====
+// ===== DB =====
+// ===== Ensure =====
+// ===== View =====
+// ===== React Query =====

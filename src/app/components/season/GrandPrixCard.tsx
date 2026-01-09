@@ -8,6 +8,32 @@ import { useRouter } from 'next/navigation';
 export default function GrandPrixCard({ meetingInfo }: CardProps) {
   const router = useRouter();
   const flagSrc = country_code_flags[meetingInfo.country_code];
+  const krStatus = () => {
+    switch (meetingInfo.status) {
+      case 'finished':
+        return (
+          <div className="flex items-center gap-1 text-[14px]">
+            <p>종료</p>
+            <div className="h-5 w-5 rounded-full bg-[#05AF05]"></div>
+          </div>
+        );
+      case 'ongoing':
+        return (
+          <div className="flex items-center gap-1 text-[14px]">
+            <p>진행중</p>
+            <div className="h-5 w-5 rounded-full bg-[#B80000]"></div>
+          </div>
+        );
+      case 'scheduled':
+        return (
+          <div className="flex items-center gap-1 text-[14px]">
+            <p>예정</p>
+            <div className="h-5 w-5 rounded-full bg-[#595959]"></div>
+          </div>
+        );
+    }
+  };
+
   return (
     <>
       <div
@@ -36,8 +62,9 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
               {meetingInfo.meeting_official_name}
             </p>
           </div>
-          <div className="shrink-0 text-[12px]">
+          <div className="flex shrink-0 flex-col items-end gap-0.5 text-[12px]">
             <p>{meetingInfo.date_start.split('T')[0]}</p>
+            <span>{krStatus()}</span>
           </div>
         </div>
         <div className="flex min-h-10 items-center justify-between">

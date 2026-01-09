@@ -1,4 +1,7 @@
+import { supabase } from '@/supabase/client';
 import { axiosInstance } from '../f1/axiosInstance';
+import { SortedSessionResult } from '@/types/meeting';
+import { useQuery } from '@tanstack/react-query';
 
 export interface Session {
   meeting_key: number;
@@ -18,48 +21,77 @@ export interface Session {
 }
 export type Sessions = Session[];
 
-export const fetchResult = async (meetingKey: number) => {
+// ===== API =====
+export const fetchResultDataFromAPI = async (sessionKey: number) => {
   const response = await axiosInstance.get('/session_result', {
-    params: { meeting_key: meetingKey },
+    params: { session_key: sessionKey },
   });
   console.log(response.data);
   return response.data;
 };
 
-// 최신 레이스 session_key 찾아오기
-export const sessionResult = async (
-  meetingKey: string | number = 'latest',
-): Promise<number | undefined> => {
-  const res = await axiosInstance.get('/sessions', {
-    params: { meeting_key: meetingKey },
-  });
-  const sessions: Session[] = res.data;
+// ===== DB =====
+export const getSessionResultDataFromDB = async (sessionKey: number) => {
+  const { data, error } = await supabase
+    .from('session_results')
+    .select('*')
+    .eq('session_key', sessionKey);
 
-  const race = sessions.find(
-    (session: Session) =>
-      session.session_name === 'Race' && session.session_type === 'Race',
-  );
-
-  if (race) {
-    return race.session_key;
-  } else {
-    const previousMeetingKey = Number(sessions[0].meeting_key) - 1;
-    return sessionResult(previousMeetingKey);
-  }
+  if (error) throw error;
+  return data ?? [];
 };
 
-// 최신 레이스 결과 호출
-export const latestRaceResult = async () => {
-  const sessionKey = await sessionResult();
-  if (!sessionKey) {
-    console.log('레이스 결과가 아직 없음');
+// 없으면 supabase에 저장
+export const saveResultData = async (sessionKey: number) => {
+  const resultData = await fetchResultDataFromAPI(sessionKey);
+  if (!resultData || resultData.length === 0) return;
+
+  const { data, error } = await supabase
+    .from('session_results')
+    .upsert(resultData, {
+      onConflict: 'meeting_key,session_key,driver_number',
+    })
+    .select();
+
+  console.log('data:', data);
+  console.log('error:', error);
+};
+
+// ===== Ensure =====
+const ensureResultData = async (sessionKey: number) => {
+  const existing = await getSessionResultDataFromDB(sessionKey);
+  if (existing && existing.length > 0) {
     return;
   }
-
-  const res = await axiosInstance.get('/session_result', {
-    params: { session_key: sessionKey },
-  });
-
-  console.log('latestRace:', res.data);
-  return res.data;
+  await saveResultData(sessionKey);
 };
+
+// ===== View =====
+export const getSortedResults = async (sessionKey: number) => {
+  const { data: sessionRanks, error } = await supabase
+    .from('v_meeting_results')
+    .select('*')
+    .eq('session_key', sessionKey)
+    .order('sort_order')
+    .order('position_order');
+  console.log('정제된 순위정보:', sessionRanks);
+
+  if (error) {
+    throw error;
+  }
+
+  return sessionRanks ?? [];
+};
+// ===== React Query =====
+export function useSortedResults(sessionKey: number | null) {
+  return useQuery<SortedSessionResult[]>({
+    queryKey: ['session_results', sessionKey],
+    enabled: !!sessionKey,
+    staleTime: 1000 * 60 * 60,
+
+    queryFn: async () => {
+      await ensureResultData(sessionKey!);
+      return getSortedResults(sessionKey!);
+    },
+  });
+}

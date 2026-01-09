@@ -1,11 +1,29 @@
 export interface CardProps {
   meetingInfo: Meeting;
 }
+// API RAW
+export interface ApiMeeting {
+  meeting_key: number;
+  meeting_name: string;
+  meeting_official_name: string;
+  location: string;
+  country_key: number;
+  country_code: string;
+  country_name: string;
+  circuit_key: number;
+  circuit_short_name: string;
+  gmt_offset: string;
+  date_start: string;
+  date_end?: string;
+  year: number;
+}
+// DB / Domain
+export type MeetingStatus = 'scheduled' | 'ongoing' | 'finished';
 export interface Meeting {
   meeting_key: number;
   circuit_key: number;
   circuit_short_name: string;
-  meeting_code: string;
+  meeting_code: string | null;
   location: string;
   country_key: number;
   country_code: string;
@@ -14,8 +32,11 @@ export interface Meeting {
   meeting_official_name: string;
   gmt_offset: string;
   date_start: string;
+  date_end: string;
   year: number;
-  round: number;
+  round: number | null;
+
+  status: MeetingStatus;
 }
 
 export interface Sessions {

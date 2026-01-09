@@ -5,16 +5,15 @@ import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import RaceResultSection from '@/app/components/season/meetings/RaceResultSection';
 import SessionResultSection from '@/app/components/season/meetings/SessionResultSection';
-import {
-  useMeetingData,
-  useSessionData,
-  useSessionResultData,
-} from '@/hooks/Session';
 import SessionNav from '@/app/components/season/meetings/SessionNav';
-import { fetchSessionResults } from '@/app/api/meeting/Sessions';
 import { fetchCircuitByKey } from '@/app/api/meeting/Circuit';
 import { Session } from '@/types/meeting';
-import { useStartingGridWithDriver } from '@/app/api/f1/race/starting_grid';
+import F1Loading from '@/app/components/common/F1Loading';
+import { useStartingGridData } from '@/app/api/f1/race/starting_grid';
+import { useSortedResults } from '@/app/api/meeting/sessionResult';
+import { useMeetingData } from '@/app/api/meeting/Meetings';
+import { useSessionData } from '@/app/api/meeting/Sessions';
+import { useDriverData } from '@/app/api/f1/Drivers';
 
 export default function Page() {
   function useCircuit(circuitKey?: number) {
@@ -31,10 +30,15 @@ export default function Page() {
     null,
   );
   const [isSelected, setIsSelected] = useState<string | null>(null);
+  // 미팅 정보
   const { data: meetingInfo, isLoading: meetingLoading } =
     useMeetingData(meetingKey);
+
+  // 세션 정보
   const { data: sessions = [], isPending: sessionLoading } =
     useSessionData(meetingKey);
+
+  // 레이스세션, 퀄리파잉 세션키 찾기
   const getSessionKeyByName = (
     sessions: Session[],
     name: string,
@@ -48,14 +52,23 @@ export default function Page() {
     () => getSessionKeyByName(sessions, 'Qualifying'),
     [sessions],
   );
+  // 서킷 정보 찾기
   const circuitInfo = useCircuit(meetingInfo?.circuit_key);
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
-    useSessionResultData(selectedSessionKey);
+    useSortedResults(selectedSessionKey);
+
+  // 드라이버 호출
+  const { data: driverData, isPending } = useDriverData(selectedSessionKey);
+  if (driverData) {
+    console.log('드라이버 호출', driverData);
+  }
+
+  // 스타팅 그리드 정보 불러오기
   const {
     data: startingGridData,
     isLoading: startingGridLoading,
     isError: startingGridError,
-  } = useStartingGridWithDriver(qualifyingSessionKey);
+  } = useStartingGridData(qualifyingSessionKey);
 
   if (startingGridData) {
     console.log('startingGridData 불러옴:', startingGridData);
@@ -70,9 +83,6 @@ export default function Page() {
     const sessionKey = getSessionKeyByName(sessions, isSelected);
     if (!sessionKey) return;
     setSelectedSessionKey(sessionKey);
-    fetchSessionResults(sessionKey).then((results) => {
-      console.log('정제된 순위정보:', results);
-    });
   }, [isSelected, sessions]);
 
   return (
@@ -80,81 +90,41 @@ export default function Page() {
       <>
         <SeasonHeroBox meetingInfo={meetingInfo} circuitInfo={circuitInfo} />
         <section className="mx-auto max-w-285">
-          {isSelected && (
-            <SessionNav
-              sessionTabs={sessions}
-              isSelected={isSelected}
-              setIsSelectedAction={setIsSelected}
-            />
-          )}
-          {isSelected === 'Race' && startingGridData ? (
-            <RaceResultSection
-              sessionKey={raceSessionKey}
-              isPending={sessionResultLoading}
-              sessionResults={sessionResults}
-              startingGrid={startingGridData}
-            />
+          {meetingLoading || sessionLoading ? (
+            <div className="flex h-200 items-center justify-center">
+              <F1Loading />
+            </div>
           ) : (
-            selectedSessionKey && (
-              <SessionResultSection
-                isPending={sessionResultLoading}
-                sessionResults={sessionResults}
-              />
-            )
+            <>
+              {isSelected && (
+                <SessionNav
+                  sessionTabs={sessions}
+                  isSelected={isSelected}
+                  setIsSelectedAction={setIsSelected}
+                />
+              )}
+              {isSelected === 'Race' && startingGridData ? (
+                <RaceResultSection
+                  sessionKey={raceSessionKey}
+                  isPending={sessionResultLoading || startingGridLoading}
+                  sessionResults={sessionResults}
+                  startingGrid={startingGridData}
+                />
+              ) : (
+                selectedSessionKey && (
+                  <SessionResultSection
+                    isPending={sessionResultLoading}
+                    sessionResults={sessionResults}
+                  />
+                )
+              )}
+            </>
           )}
         </section>
       </>
     </>
   );
 }
-
-// 현재 선택된 세션 찾기
-// useEffect(() => {
-//   const findSession = sessions.find(
-//     (session) => session.session_name === isSelected,
-//   );
-//   if (findSession) {
-//     setSelectedSessionKey(findSession.session_key);
-//   }
-//   console.log('현재 선택된 세션 찾기:', findSession);
-// }, [isSelected, sessions]);
-
-// // 세션 정보 저장
-// useEffect(() => {
-//   const fetchSessions = async () => {
-//     const results = await fetchSession(meetingKey);
-//     const { data, error } = await supabase
-//       .from('sessions')
-//       .upsert(results, { onConflict: 'session_key' })
-//       .select();
-//     console.log('data:', data);
-//     console.log('error:', error);
-//   };
-//   fetchSessions();
-// }, []);
-
-// 세션 결과 저장
-// useEffect(() => {
-//   const fetchSessionResult = async () => {
-//     const results = await fetchResult(meetingKey);
-//     const { data: serverData, error } = await supabase
-//       .from('session_results')
-//       .upsert(results, { onConflict: 'session_key,driver_number' })
-//       .select();
-
-//     console.log('data:', serverData);
-//     console.log('error:', error);
-//   };
-//   fetchSessionResult();
-// }, []);
-
-// if (meetingLoading || sessionLoading) {
-//   return (
-//     <div className="flex h-100 items-center justify-center">
-//       <Loading className="h-100 w-100" />
-//     </div>
-//   );
-// }
 
 // 드라이버 데이터 저장
 // useEffect(() => {
@@ -174,11 +144,3 @@ export default function Page() {
 //   };
 //   upsertDriverData();
 // }, [meetingKey]);
-
-// if (meetingLoading || sessionLoading) {
-//   return (
-//     <div className="flex h-100 items-center justify-center">
-//       <Loading className="h-100 w-100" />
-//     </div>
-//   );
-// }

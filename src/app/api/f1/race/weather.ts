@@ -23,8 +23,7 @@ export interface WeatherSessionSummary {
 
   weather_summary: string;
 }
-
-interface Weather {
+export interface Weather {
   meeting_key: number;
   session_key: number;
   date: string;
@@ -37,18 +36,17 @@ interface Weather {
   wind_direction: number;
 }
 
-// API 호출
-export const fetchWeatherData = async (
+// ===== API =====
+export const fetchWeatherDataFromAPI = async (
   sessionKey: number,
 ): Promise<Weather[]> => {
   const response = await axiosInstance.get('/weather', {
     params: { session_key: sessionKey },
   });
-  console.log('날씨 데이터 불러오기:', response.data);
   return response.data;
 };
 
-// Supabase에서 불러오기
+// ===== DB =====
 export const getWeatherDataFromDB = async (sessionKey: number) => {
   const { data, error } = await supabase
     .from('weather')
@@ -56,16 +54,13 @@ export const getWeatherDataFromDB = async (sessionKey: number) => {
     .eq('session_key', sessionKey)
     .order('date', { ascending: true });
 
-  if (error) {
-    console.error('DB weather 데이터 조회 실패:', error);
-    return null;
-  }
-  return data;
+  if (error) throw error;
+  return data ?? [];
 };
 
 // 없으면 supabase에 저장
 export const saveWeatherData = async (sessionKey: number) => {
-  const weatherData = await fetchWeatherData(sessionKey);
+  const weatherData = await fetchWeatherDataFromAPI(sessionKey);
   if (!weatherData || weatherData.length === 0) return;
 
   const { data, error } = await supabase
@@ -79,35 +74,16 @@ export const saveWeatherData = async (sessionKey: number) => {
   console.log('error:', error);
 };
 
-// react-query에 저장
-// export function useWeatherData(sessionKey: number | null) {
-//   return useQuery<Weather[]>({
-//     queryKey: ['weather', sessionKey],
-//     queryFn: async () => {
-//       let weatherData = await getWeatherDataFromDB(sessionKey!);
-//       if (!weatherData || weatherData.length === 0) {
-//         await saveWeatherData(sessionKey!);
-//         weatherData = await getWeatherDataFromDB(sessionKey!);
-//       }
-//       return weatherData ?? [];
-//     },
-//     staleTime: 1000 * 60 * 60,
-//     enabled: !!sessionKey,
-//   });
-// }
-
-// supabase에 저장되어있는지 확인하고, 없으면 api를 호출하는 함수
+// ===== Ensure =====
 const ensureWeatherData = async (sessionKey: number) => {
   const existing = await getWeatherDataFromDB(sessionKey);
-
   if (existing && existing.length > 0) {
     return;
   }
-
   await saveWeatherData(sessionKey);
 };
 
-// 전용 뷰
+// ===== View =====
 export const getWeatherSummary = async (sessionKey: number) => {
   const { data, error } = await supabase
     .from('weather_session_summary')
@@ -116,10 +92,10 @@ export const getWeatherSummary = async (sessionKey: number) => {
     .single();
 
   if (error) throw error;
-  return data;
+  return data ?? [];
 };
 
-// 전용 뷰를 리액트 쿼리로 감쌈
+// ===== React Query =====
 export function useWeatherSummary(sessionKey: number | null) {
   return useQuery<WeatherSessionSummary>({
     queryKey: ['weather_session_summary', sessionKey],

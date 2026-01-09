@@ -1,27 +1,60 @@
 import { Session } from '@/types/meeting';
 import { axiosInstance } from '../f1/axiosInstance';
 import { supabase } from '@/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 
-// 세션 불러오기
-export const fetchSession = async (meeting: number): Promise<Session[]> => {
+// ===== API =====
+export const fetchSessionFromAPI = async (
+  meetingKey: number,
+): Promise<Session[]> => {
   const response = await axiosInstance.get('/sessions', {
-    params: { meeting_key: meeting },
+    params: { meeting_key: meetingKey },
   });
-  console.log('세션 불러오기:', response.data);
-  return response.data;
+  return response.data ?? [];
 };
-
-export const fetchSessionResults = async (sessionKey: number) => {
+// ===== DB =====
+export const getSessionsFromDB = async (meetingKey: number) => {
   const { data, error } = await supabase
-    .from('v_meeting_results')
+    .from('sessions')
     .select('*')
-    .eq('session_key', sessionKey)
-    .order('position');
+    .eq('meeting_key', meetingKey)
+    .order('date_start', { ascending: true });
 
-  if (error) {
-    console.error('순위 불러오기 실패:', error);
-    return [];
-  }
-
-  return data;
+  if (error) throw error;
+  return data ?? [];
 };
+
+// ===== Sync (핵심) =====
+export const syncSessionsFromAPI = async (meetingKey: number) => {
+  try {
+    const apiSessions = await fetchSessionFromAPI(meetingKey);
+    if (!apiSessions || apiSessions.length === 0) return;
+
+    await supabase.from('sessions').upsert(apiSessions, {
+      onConflict: 'session_key',
+    });
+  } catch (e) {
+    console.warn('Sessions API sync failed:', e);
+  }
+};
+
+// ===== Ensure =====
+// DB 기준 보장 + API는 보조
+export const ensureSessions = async (meetingKey: number) => {
+  const dbMeetings = await getSessionsFromDB(meetingKey);
+  syncSessionsFromAPI(meetingKey);
+  return dbMeetings;
+};
+
+// ===== React Query =====
+export function useSessionData(meetingKey: number | null) {
+  return useQuery<Session[]>({
+    queryKey: ['sessions', meetingKey],
+    enabled: !!meetingKey,
+    staleTime: 1000 * 60 * 10, // 세션은 가끔 바뀜
+
+    queryFn: async () => {
+      return ensureSessions(meetingKey!);
+    },
+  });
+}
