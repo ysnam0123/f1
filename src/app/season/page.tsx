@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useYearStore } from '@/store/YearStore';
 import SeasonChangeButton from '../components/common/SeasonChangeButton';
 import { useMeetings } from '../api/meeting/Meetings';
+import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
+import F1Loading from '../components/common/F1Loading';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
@@ -11,14 +13,27 @@ export default function Page() {
   const setSelectedYear = useYearStore((s) => s.setSelectedYear);
   const years = [2023, 2024, 2025, 2026];
 
-  const { data: yearMeeting, isPending } = useMeetings(selectedYear);
-  const meetings = yearMeeting ?? [];
+  // const { data: yearMeeting, isPending } = useMeetings(selectedYear);
+  // const meetings = yearMeeting ?? [];
+  const {
+    data: meetings,
+    isPending,
+    error,
+  } = useMeetingsWithStatusAndPodium(selectedYear);
+
   return (
     <>
       <main className="min-h-screen">
         {/* <SeasonHeroBox /> */}
         <section className="mx-auto w-full max-w-350">
-          {!isPending && (
+          {isPending && (
+            <>
+              <div className="flex h-200 items-center justify-center">
+                <F1Loading />
+              </div>
+            </>
+          )}
+          {!isPending && meetings && (
             <>
               <SeasonChangeButton
                 opened={opened}

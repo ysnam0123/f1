@@ -1,6 +1,3 @@
-export interface CardProps {
-  meetingInfo: Meeting;
-}
 // API RAW
 export interface ApiMeeting {
   meeting_key: number;

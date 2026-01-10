@@ -1,7 +1,8 @@
 'use client';
 
+import { CardProps } from '@/hooks/SeasonRacePodium';
 import { country_code_flags } from '@/images/flags';
-import { CardProps } from '@/types/meeting';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 

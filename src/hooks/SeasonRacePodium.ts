@@ -29,6 +29,10 @@ export interface MeetingWithStatusAndPodium {
   race_podium: RacePodiumItem[] | null;
 }
 
+export interface CardProps {
+  meetingInfo: MeetingWithStatusAndPodium;
+}
+
 export const getMeetingsWithStatusAndPodium = async (
   year: number,
 ): Promise<MeetingWithStatusAndPodium[]> => {
