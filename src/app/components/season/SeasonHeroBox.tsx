@@ -16,9 +16,9 @@ export default function SeasonHeroBox({
   }
   const flagSrc = country_code_flags[meetingInfo!.country_code];
   const circuitSrc = circuitInfo.circuit_img;
-  if (circuitInfo) {
-    console.log('서킷 정보 테스트:', circuitInfo);
-  }
+  // if (circuitInfo) {
+  //   console.log('서킷 정보 테스트:', circuitInfo);
+  // }
   return (
     <>
       <section className="relative mb-12.5 h-100 select-none">

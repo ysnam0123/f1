@@ -25,6 +25,7 @@ export default function Header() {
           hoverSpeed={0}
           scaleOnHover
           ariaLabel="team logos"
+          className="hidden sm:block"
         />
         <div className="flex items-center gap-17.5 px-17.5 select-none">
           <Image

@@ -90,6 +90,7 @@ export interface SortedSessionResult {
   kr_name: string;
   flag: string;
   headshot_url: string;
+
   team_colour: string;
   team_kr_name: string;
   team_name: string;
@@ -104,7 +105,6 @@ export interface SessionResults {
 export interface RaceResults {
   sessionKey: number | null;
   sessionResults: SortedSessionResult[];
-  isPending: boolean;
   startingGrid: StartingGridWithDriver[];
 }
 

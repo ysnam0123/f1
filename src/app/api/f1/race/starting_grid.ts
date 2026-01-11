@@ -18,6 +18,7 @@ export const fetchStartingGridDataFromAPI = async (
   const response = await axiosInstance.get('/starting_grid', {
     params: { session_key: sessionKey },
   });
+  console.log('API에서 스타팅 그리드 불러옴!');
   return response.data;
 };
 
@@ -48,8 +49,7 @@ export const saveStartingGridData = async (sessionKey: number) => {
 // ===== Ensure =====
 const ensureStartingGridData = async (sessionKey: number) => {
   const existing = await getStartingGridDataFromDB(sessionKey);
-  if (existing.length > 0) return;
-
+  if (existing.length >= 20) return existing;
   await saveStartingGridData(sessionKey);
 };
 
@@ -66,15 +66,15 @@ export const getStartingGrid = async (sessionKey: number) => {
 };
 
 // ===== React Query =====
-export function useStartingGridData(sessionKey: number | null) {
+export function useStartingGridData(sessionKey: number, enabled: boolean) {
   return useQuery<StartingGridWithDriver[]>({
     queryKey: ['starting_grid_with_driver', sessionKey],
-    enabled: !!sessionKey,
+    enabled,
     staleTime: 1000 * 60 * 60,
 
     queryFn: async () => {
       await ensureStartingGridData(sessionKey!);
-      return getStartingGrid(sessionKey!);
+      return await getStartingGrid(sessionKey!);
     },
   });
 }

@@ -6,6 +6,8 @@ export interface Pit {
   date: string;
   session_key: number;
   pit_duration: null;
+  lane_duration: number;
+  stop_duration: number;
   lap_number: number;
   meeting_key: number;
   driver_number: number;

@@ -14,11 +14,12 @@ import { useRaceControlData } from '@/app/api/f1/race/raceControl';
 import { usePitData } from '@/app/api/f1/race/pit';
 import { useWeatherSummary } from '@/app/api/f1/race/weather';
 import F1Loading from '../../common/F1Loading';
+import { usePositionData } from '@/app/api/f1/race/position';
 
 export default function RaceResultSection({
   sessionKey,
   sessionResults,
-  isPending,
+  // isPending,
   startingGrid,
 }: RaceResults) {
   const [isShow, setIsShow] = useState(false);
@@ -37,10 +38,14 @@ export default function RaceResultSection({
     isLoading: pitLoading,
     isError: pitError,
   } = usePitData(sessionKey);
-
   const { data: weatherSummary, isLoading: weatherLoading } =
     useWeatherSummary(sessionKey);
 
+  const { data: driverPositionGain, isLoading: dPositionLoading } =
+    usePositionData(sessionKey, !!sessionKey);
+  if (driverPositionGain) {
+    console.log('드라이버 별 포지션:', driverPositionGain);
+  }
   const summaryLoading =
     stintsLoading || raceControlLoading || pitLoading || weatherLoading;
 
@@ -59,7 +64,7 @@ export default function RaceResultSection({
   }
   return (
     <>
-      {isPending && <></>}
+      {/* {isPending && <></>} */}
       <div className="my-5 flex items-end justify-center gap-7.5">
         {second && <PodiumCard result={second} rank={2} />}
         {first && <PodiumCard result={first} rank={1} />}

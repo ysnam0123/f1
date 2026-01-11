@@ -13,11 +13,15 @@ export interface MeetingWithStatusAndPodium {
   meeting_key: number;
   circuit_key: number;
   circuit_short_name: string;
+
   meeting_code: string;
   location: string;
+
   country_key: number;
   country_code: string;
   country_name: string;
+  country_kr_name: string | null;
+
   meeting_name: string;
   meeting_official_name: string;
   gmt_offset: string;
@@ -27,6 +31,7 @@ export interface MeetingWithStatusAndPodium {
   round: number;
   status: 'scheduled' | 'ongoing' | 'finished';
   race_podium: RacePodiumItem[] | null;
+  circuit_img: string | null;
 }
 
 export interface CardProps {

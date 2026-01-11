@@ -32,7 +32,7 @@ export default function Page() {
 
   return (
     <>
-      <Schedule />
+      {/* <Schedule /> */}
 
       <div className="mx-auto flex max-w-325 flex-col items-center gap-10">
         {/* <Results /> */}

@@ -77,7 +77,11 @@ export const saveWeatherData = async (sessionKey: number) => {
 // ===== Ensure =====
 const ensureWeatherData = async (sessionKey: number) => {
   const existing = await getWeatherDataFromDB(sessionKey);
+  const viewData = await getWeatherSummary(sessionKey);
   if (existing && existing.length > 0) {
+    return;
+  }
+  if (viewData && viewData.length > 0) {
     return;
   }
   await saveWeatherData(sessionKey);
@@ -89,7 +93,7 @@ export const getWeatherSummary = async (sessionKey: number) => {
     .from('weather_session_summary')
     .select('*')
     .eq('session_key', sessionKey)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
   return data ?? [];

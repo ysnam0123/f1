@@ -23,7 +23,7 @@ export const fetchDriverDataFromAPI = async (
   const response = await axiosInstance.get('/drivers', {
     params: { session_key: sessionKey },
   });
-  console.log(response.data);
+  console.log('API에서 드라이버 불러옴!');
   return response.data;
 };
 
@@ -35,6 +35,9 @@ export const getDriverDataFromDB = async (sessionKey: number) => {
     .eq('session_key', sessionKey);
 
   if (error) throw error;
+  if (data) {
+    console.log('DB에서 드라이버 불러옴!');
+  }
   return data ?? [];
 };
 
@@ -50,13 +53,17 @@ export const saveDriverData = async (sessionKey: number) => {
     })
     .select();
   if (error) throw error;
+  if (data) {
+    console.log('DB에 드라이버 저장!');
+  }
   return data ?? [];
 };
 
 // ===== Ensure =====
 const ensureDriverData = async (sessionKey: number) => {
   const existing = await getDriverDataFromDB(sessionKey);
-  if (existing.length > 0) return;
+  console.log('DB에서 드라이버 불러옴:', existing);
+  if (existing.length >= 20) return;
 
   await saveDriverData(sessionKey);
 };

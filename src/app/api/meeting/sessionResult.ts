@@ -19,14 +19,17 @@ export interface Session {
   gmt_offset: string;
   year: number;
 }
+
 export type Sessions = Session[];
 
 // ===== API =====
-export const fetchResultDataFromAPI = async (sessionKey: number) => {
+export const fetchResultDataFromAPI = async (
+  sessionKey: number,
+): Promise<Sessions> => {
   const response = await axiosInstance.get('/session_result', {
     params: { session_key: sessionKey },
   });
-  console.log(response.data);
+  console.log('API에서 세션결과 불러옴!');
   return response.data;
 };
 
@@ -36,6 +39,9 @@ export const getSessionResultDataFromDB = async (sessionKey: number) => {
     .from('session_results')
     .select('*')
     .eq('session_key', sessionKey);
+  if (data) {
+    console.log('DB에서 세션결과 불러옴:', data);
+  }
 
   if (error) throw error;
   return data ?? [];
@@ -53,6 +59,10 @@ export const saveResultData = async (sessionKey: number) => {
     })
     .select();
 
+  if (data) {
+    console.log('DB에 세션결과 저장!');
+  }
+
   console.log('data:', data);
   console.log('error:', error);
 };
@@ -60,9 +70,9 @@ export const saveResultData = async (sessionKey: number) => {
 // ===== Ensure =====
 const ensureResultData = async (sessionKey: number) => {
   const existing = await getSessionResultDataFromDB(sessionKey);
-  if (existing && existing.length > 0) {
-    return;
-  }
+  if (existing.length >= 20) return existing;
+  console.log('existing데이터 불러옴:', existing);
+
   await saveResultData(sessionKey);
 };
 
@@ -74,7 +84,7 @@ export const getSortedResults = async (sessionKey: number) => {
     .eq('session_key', sessionKey)
     .order('sort_order')
     .order('position_order');
-  console.log('정제된 순위정보:', sessionRanks);
+  console.log('정제된 순위정보 뷰 호출:', sessionRanks);
 
   if (error) {
     throw error;
@@ -82,6 +92,7 @@ export const getSortedResults = async (sessionKey: number) => {
 
   return sessionRanks ?? [];
 };
+
 // ===== React Query =====
 export function useSortedResults(sessionKey: number | null) {
   return useQuery<SortedSessionResult[]>({

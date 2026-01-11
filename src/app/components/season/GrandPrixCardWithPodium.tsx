@@ -6,7 +6,7 @@ import { country_code_flags } from '@/images/flags';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function GrandPrixCard({ meetingInfo }: CardProps) {
+export default function GrandPrixCardWithPodium({ meetingInfo }: CardProps) {
   const router = useRouter();
   const flagSrc = country_code_flags[meetingInfo.country_code];
   const krStatus = () => {
@@ -35,6 +35,12 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
     }
   };
 
+  const position = (p: number) => {
+    if (p === 1) return '1st';
+    if (p === 2) return '2nd';
+    if (p === 3) return '3rd';
+  };
+
   return (
     <>
       <div
@@ -56,7 +62,7 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
                 className="rounded-full"
               />
               <p className="text-[20px] text-white">
-                {meetingInfo.country_name}
+                {meetingInfo.country_kr_name}
               </p>
             </div>
             <p className="text-[12px] text-[#8B8B8B]">
@@ -69,21 +75,24 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
           </div>
         </div>
         <div className="flex min-h-10 items-center justify-between">
-          <div className="flex w-31.5 items-center gap-4.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold">
-            <p className="text-[10px] leading-none">1st</p>
-            <p className="text-[18px] leading-none">NOR</p>
-            <div className="h-5 w-5 shrink-0 rounded-full bg-[#FF8700]"></div>
-          </div>
-          <div className="flex w-31.5 items-center gap-4.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold">
-            <p className="text-[10px] leading-none">2nd</p>
-            <p className="text-[18px] leading-none">MAX</p>
-            <div className="h-5 w-5 shrink-0 rounded-full bg-[#3671C6]"></div>
-          </div>
-          <div className="flex w-31.5 items-center gap-4.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold">
-            <p className="text-[10px] leading-none">3rd</p>
-            <p className="text-[18px] leading-none">RUS</p>
-            <div className="h-5 w-5 shrink-0 rounded-full bg-[#00D2BE]"></div>
-          </div>
+          {meetingInfo.race_podium?.map((podium) => (
+            <div
+              key={podium.driver_code}
+              className="flex w-31.5 items-center gap-4.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold"
+            >
+              <p className="text-[12px] leading-none">
+                {position(podium.position)}
+              </p>
+              <p className="text-[18px] leading-none">{podium.driver_code}</p>
+              <div
+                className="h-6 w-6 shrink-0 rounded-full bg-contain bg-center bg-no-repeat"
+                style={{
+                  backgroundColor: podium.team_colour,
+                  backgroundImage: `url(${podium.team_white_logo})`,
+                }}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </>

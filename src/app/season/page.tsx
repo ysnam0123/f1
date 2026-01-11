@@ -1,20 +1,18 @@
 'use client';
-import GrandPrixCard from '../components/season/GrandPrixCard';
+
 import { useState } from 'react';
 import { useYearStore } from '@/store/YearStore';
 import SeasonChangeButton from '../components/common/SeasonChangeButton';
 import { useMeetings } from '../api/meeting/Meetings';
 import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import F1Loading from '../components/common/F1Loading';
+import GrandPrixCardWithPodium from '../components/season/GrandPrixCardWithPodium';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
   const selectedYear = useYearStore((s) => s.selectedYear);
   const setSelectedYear = useYearStore((s) => s.setSelectedYear);
   const years = [2023, 2024, 2025, 2026];
-
-  // const { data: yearMeeting, isPending } = useMeetings(selectedYear);
-  // const meetings = yearMeeting ?? [];
   const {
     data: meetings,
     isPending,
@@ -29,7 +27,7 @@ export default function Page() {
           {isPending && (
             <>
               <div className="flex h-200 items-center justify-center">
-                <F1Loading />
+                <F1Loading loadingText="시즌 불러오는중..." />
               </div>
             </>
           )}
@@ -44,7 +42,7 @@ export default function Page() {
               />
               <div className="grid grid-cols-3 gap-10">
                 {meetings.map((meeting) => (
-                  <GrandPrixCard
+                  <GrandPrixCardWithPodium
                     key={meeting.meeting_key}
                     meetingInfo={meeting}
                   />
@@ -57,32 +55,3 @@ export default function Page() {
     </>
   );
 }
-
-// useEffect(() => {
-//   const insert2025meeting = async () => {
-//     const meetings = await meetingData();
-
-//     const { data:serverData, error } = await supabase
-//       .from('meetings')
-//       .upsert(meetings, { onConflict: 'meeting_key' })
-//       .select();
-//     console.log('data:', serverData);
-//     console.log('error:', error);
-//   };
-//   insert2025meeting();
-// }, []);
-
-// 세션 결과 저장
-// useEffect(() => {
-//   const fetchSessionResult = async () => {
-//     const results = await fetchResult(1276);
-//     const { data: serverData, error } = await supabase
-//       .from('session_results')
-//       .upsert(results, { onConflict: 'session_key,driver_number' })
-//       .select();
-
-//     console.log('data:', serverData);
-//     console.log('error:', error);
-//   };
-//   fetchSessionResult();
-// }, []);
