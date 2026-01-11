@@ -47,7 +47,7 @@ export default function RaceResultSection({
     console.log('드라이버 별 포지션:', driverPositionGain);
   }
   const summaryLoading =
-    stintsLoading || raceControlLoading || pitLoading || weatherLoading;
+    stintsLoading || raceControlLoading || pitLoading || weatherLoading || dPositionLoading;
 
   // 테스트
   if (sessionStints) {

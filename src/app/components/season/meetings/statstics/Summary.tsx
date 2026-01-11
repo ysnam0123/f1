@@ -1,4 +1,5 @@
 import { WeatherSessionSummary } from '@/app/api/f1/race/weather';
+import Top3Position from './Top3Position';
 
 export default function Summary({
   weather,
@@ -32,6 +33,7 @@ export default function Summary({
             <div className="text-gray-500">바람</div>
             <div className="text-white">{weather.wind_level}</div>
           </div>
+          <Top3Position />
         </div>
       </div>
     </>

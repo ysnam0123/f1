@@ -14,6 +14,8 @@ export interface DriverPositionGain {
   meeting_key: number;
   session_key: number;
   driver_number: number;
+  start_position: number;
+  end_position: number;
   position_gain: number;
 
   driver_id: number;
@@ -22,7 +24,7 @@ export interface DriverPositionGain {
   kr_name: string;
   headshot_url: string;
 
-  team_kr_name: number;
+  team_kr_name: string;
   team_name: string;
   team_slug: string;
   team_colour: string;
