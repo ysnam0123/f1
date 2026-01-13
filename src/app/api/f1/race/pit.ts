@@ -5,13 +5,67 @@ import { useQuery } from '@tanstack/react-query';
 export interface Pit {
   date: string;
   session_key: number;
-  pit_duration: null;
+  pit_duration: number;
   lane_duration: number;
   stop_duration: number;
   lap_number: number;
   meeting_key: number;
   driver_number: number;
 }
+
+export interface PitView {
+  date: string;
+  session_key: number;
+  pit_duration: number;
+  lane_duration: number;
+  stop_duration: number;
+  lap_number: number;
+  meeting_key: number;
+
+  driver_id: number;
+  driver_number: number;
+  country_code: string;
+  country_kr_name: string;
+  full_name: string;
+  kr_name: string;
+  flag: string;
+  headshot_url: string;
+
+  team_colour: string;
+  team_kr_name: string;
+  team_name: string;
+  team_slug: string;
+  main_logo: string;
+  white_logo: string;
+}
+
+// interface TeamPitStopRow {
+//   // race context
+//   date: string;               // YYYY-MM-DD
+//   meeting_key: number;
+//   session_key: number;
+//   year: number;
+
+//   // team
+//   team_slug: string | null;
+//   team_name: string | null;
+//   team_kr_name: string | null;
+//   team_colour: string | null;
+//   main_logo: string | null;
+//   white_logo: string | null;
+
+//   // driver
+//   driver_id: number;
+//   driver_number: number;
+//   full_name: string;
+//   kr_name: string | null;
+
+//   // pit stop
+//   lap_number: number;
+//   stop_duration: number | null;   // ⭐ 핵심 기준
+//   lane_duration: number | null;
+//   pit_duration: number | null;
+// }
 
 // ===== API =====
 export const fetchPitDataFromAPI = async (
@@ -28,7 +82,8 @@ export const getPitDataFromDB = async (sessionKey: number) => {
   const { data, error } = await supabase
     .from('pit_stops')
     .select('*')
-    .eq('session_key', sessionKey);
+    .eq('session_key', sessionKey)
+    .order('pit_duration', { ascending: true });
 
   if (error) throw error;
   return data ?? [];
@@ -51,28 +106,65 @@ export const savePitData = async (sessionKey: number) => {
 
 // ===== Ensure =====
 const ensurePitData = async (sessionKey: number) => {
-  const existing = await getPitDataFromDB(sessionKey);
-  if (existing.length > 0) return;
+  const existing = await getPitstopView(sessionKey);
+  if (existing.length > 0) return existing;
 
   await savePitData(sessionKey);
+
+  const after = await getPitstopView(sessionKey);
+  if (!after || after.length === 0) {
+    throw new Error('Pit Stop view not ready yet');
+  }
+
+  return after;
 };
+
+// ===== 드라이버 별 피트스탑 View =====
+export const getPitstopView = async (sessionKey: number) => {
+  const { data, error } = await supabase
+    .from('v_pit_stops_with_driver')
+    .select('*')
+    .eq('session_key', sessionKey)
+    .order('stop_duration', { ascending: true });
+
+  if (error) throw error;
+  return data;
+};
+
+// ===== 팀 별 피트스탑 View =====
+// export const getTeamPitstopView = async (sessionKey: number) => {
+//   const { data, error } = await supabase
+//   .from('v_pit_stops_by_team')
+//   .select('*')
+//   .eq('session_key', sessionKey);
+
+//   if (error) throw error;
+//   return data;
+// };
 
 // ===== React Query =====
 export function usePitData(sessionKey: number | null) {
-  return useQuery<Pit[]>({
+  return useQuery<PitView[]>({
     queryKey: ['pit_stops', sessionKey],
     staleTime: 1000 * 60 * 60,
     enabled: !!sessionKey,
 
     queryFn: async () => {
       await ensurePitData(sessionKey!);
-      return getPitDataFromDB(sessionKey!);
+      return getPitstopView(sessionKey!);
     },
   });
 }
 
-// ===== API =====
-// ===== DB =====
-// ===== Ensure =====
-// ===== View =====
-// ===== React Query =====
+// export function useTeamPitData(sessionKey: number | null) {
+//   return useQuery<TeamPitStopRow[]>({
+//     queryKey: ['pit_stops', sessionKey],
+//     staleTime: 1000 * 60 * 60,
+//     enabled: !!sessionKey,
+
+//     queryFn: async () => {
+//       await ensurePitData(sessionKey!);
+//       return getTeamPitstopView(sessionKey!);
+//     },
+//   });
+// }

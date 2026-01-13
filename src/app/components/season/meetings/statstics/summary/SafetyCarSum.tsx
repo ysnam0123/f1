@@ -6,10 +6,12 @@ export default function SafetyCarSummary({
   SafetyCarNumber,
   raceControl,
   totalLaps,
+  setSelectedTab,
 }: {
   SafetyCarNumber: number;
   raceControl: RaceControl[];
   totalLaps: number;
+  setSelectedTab: (tab: string) => void;
 }) {
   const safetyCarEvents = raceControl.filter(
     (e) => e.category === 'safety_car',
@@ -51,15 +53,23 @@ export default function SafetyCarSummary({
 
   return (
     <div className="flex max-w-125 flex-col gap-3 rounded-4xl border border-[#262626] bg-[#161616] px-7.5 py-5">
-      <h1 className="mb-3 flex items-center gap-2 text-gray-400">
-        <Image src="/icons/safety.svg" alt="icon" width={36} height={36} />
-        <p
-          className="text-[20px]"
-          style={{ fontFamily: 'paperlogy', fontWeight: 500 }}
+      <div className="mb-4 flex items-center justify-between text-gray-400">
+        <h1 className="flex items-center gap-2">
+          <Image src="/icons/safety.svg" alt="icon" width={36} height={36} />
+          <p
+            className="text-[20px]"
+            style={{ fontFamily: 'paperlogy', fontWeight: 500 }}
+          >
+            레이스 중립화
+          </p>
+        </h1>
+        <button
+          onClick={() => setSelectedTab('이벤트')}
+          className="cursor-pointer text-[18px] hover:text-[#cacaca]"
         >
-          레이스 중립화
-        </p>
-      </h1>
+          전체보기
+        </button>
+      </div>
       <div
         className="flex items-end justify-between px-2"
         style={{ fontFamily: 'RiaSans', fontWeight: 700 }}

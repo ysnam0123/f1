@@ -4,7 +4,7 @@ import StatsticsCard from './StatsticsCard';
 import PodiumCard from './PodiumCard';
 import { RaceResults } from '@/types/meeting';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import DnsDnfDsqInfo from './DnsDnfDsqInfo';
 import RaceResultTable from './table/RaceResultTable';
 import StartingGridTable from './table/StartingGridTable';
@@ -22,6 +22,7 @@ export default function RaceResultSection({
   // isPending,
   startingGrid,
 }: RaceResults) {
+  const statisticsRef = useRef<HTMLDivElement | null>(null);
   const [isShow, setIsShow] = useState(false);
   const router = useRouter();
   const podiumResults = sessionResults.slice(0, 3);
@@ -44,6 +45,12 @@ export default function RaceResultSection({
     isLoading: pitLoading,
     isError: pitError,
   } = usePitData(sessionKey);
+
+  // const {
+  //   data: teamPitData,
+  //   isLoading: teamPitLoading,
+  //   isError: teamPitError,
+  // } = useTeamPitData(sessionKey);
 
   // weather Data
   const { data: weatherSummary, isLoading: weatherLoading } =
@@ -72,6 +79,9 @@ export default function RaceResultSection({
   if (pitData) {
     console.log('pitData 불러옴:', pitData);
   }
+  // if (teamPitData) {
+  //   console.log('teamPitData 불러옴:', teamPitData);
+  // }
   if (weatherSummary) {
     console.log('weatherSummary 불러옴:', weatherSummary);
   }
@@ -83,12 +93,25 @@ export default function RaceResultSection({
         {first && <PodiumCard result={first} rank={1} />}
         {third && <PodiumCard result={third} rank={3} />}
       </div>
-      <button
-        onClick={() => setIsShow(!isShow)}
-        className={`${isShow ? 'bg-[#4B4B4B]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
-      >
-        스타팅 그리드
-      </button>
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => setIsShow(!isShow)}
+          className={`${isShow ? 'bg-[#4B4B4B]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
+        >
+          스타팅 그리드
+        </button>
+        <button
+          onClick={() => {
+            statisticsRef.current?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }}
+          className={`mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] bg-[#212121] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
+        >
+          경기 분석 보기
+        </button>
+      </div>
       <div className="mb-12.5 min-h-50 max-w-285 rounded-[10px] bg-[#1A1A1A] px-17.5 py-5">
         {!isShow ? (
           <>
@@ -104,13 +127,16 @@ export default function RaceResultSection({
           <F1Loading loadingText="레이스 분석 중..." />
         </div>
       ) : (
-        <ResultStatstics
-          totalLaps={totalLaps!}
-          weather={weatherSummary!}
-          pit={pitData!}
-          stints={sessionStints!}
-          raceControl={sessionRaceControl!}
-        />
+        <div ref={statisticsRef}>
+          <ResultStatstics
+            totalLaps={totalLaps!}
+            weather={weatherSummary!}
+            pit={pitData!}
+            stints={sessionStints!}
+            raceControl={sessionRaceControl!}
+            positionGain={driverPositionGain!}
+          />
+        </div>
       )}
     </>
   );

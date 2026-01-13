@@ -19,11 +19,11 @@ export default function WeatherSummary({
           </p>
         </h1>
         <div className="flex items-center justify-between">
-          <div className="flex flex-col">
-            <div className="text-lg font-semibold text-white">
+          <div className="flex flex-col gap-6">
+            <div className="text-xl font-semibold text-white">
               {weather.weather_summary}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-10">
               <div className="flex flex-col">
                 <span className="text-gray-500">트랙 온도</span>
                 <div className="text-[18px]">

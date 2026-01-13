@@ -10,9 +10,10 @@ import Position from './Position';
 import PitStop from './PitStop';
 import Events from './Events';
 import { WeatherSessionSummary } from '@/app/api/f1/race/weather';
-import { Pit } from '@/app/api/f1/race/pit';
+import { PitView } from '@/app/api/f1/race/pit';
 import { Stints } from '@/app/api/f1/race/stints';
 import { RaceControl } from '@/app/api/f1/race/raceControl';
+import { DriverPositionGain } from '@/app/api/f1/race/position';
 
 export default function ResultStatstics({
   totalLaps,
@@ -20,12 +21,14 @@ export default function ResultStatstics({
   pit,
   stints,
   raceControl,
+  positionGain,
 }: {
   totalLaps: number;
   weather: WeatherSessionSummary;
-  pit: Pit[];
+  pit: PitView[];
   stints: Stints[];
   raceControl: RaceControl[];
+  positionGain: DriverPositionGain[];
 }) {
   const [selectedTab, setSelectedTab] = useState('전체 요약');
   const tabs = [
@@ -39,16 +42,19 @@ export default function ResultStatstics({
       case '전체 요약':
         return (
           <Summary
+            pit={pit}
             totalLaps={totalLaps}
             weather={weather}
             SafetyCarNumber={deployCount}
             raceControl={raceControl}
+            setSelectedTab={setSelectedTab}
+            positionGain={positionGain}
           />
         );
       case '포지션':
-        return <Position />;
+        return <Position positionGain={positionGain} />;
       case '피트 스탑':
-        return <PitStop />;
+        return <PitStop pit={pit} />;
       case '이벤트':
         return <Events />;
       default:
@@ -78,7 +84,13 @@ export default function ResultStatstics({
                 key={tab.label}
                 onClick={() => setSelectedTab(tab.label)}
               >
-                <Image src={tab.icon} alt="icon" height={30} width={30} />
+                <Image
+                  src={tab.icon}
+                  alt="icon"
+                  height={30}
+                  width={30}
+                  className="hidden sm:block"
+                />
                 <p
                   style={{ fontFamily: 'Pretendard' }}
                   className="text-[18px] font-semibold"
