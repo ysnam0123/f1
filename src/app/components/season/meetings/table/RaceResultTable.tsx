@@ -4,6 +4,7 @@ import DefaultDriverProfile from '../DefaultDriverProfile';
 import DriverProfile from '../DriverProfile';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { formatDuration } from '@/hooks/FormattingDuration';
 
 export default function RaceResultTable({
   results,
@@ -18,6 +19,7 @@ export default function RaceResultTable({
     if (result.dnf) return 'DNF';
     return '-';
   };
+
   return (
     <>
       <table className="w-full table-fixed border-collapse text-center whitespace-nowrap select-none sm:text-left">
@@ -27,7 +29,7 @@ export default function RaceResultTable({
             <th className="w-[40%] py-3 sm:w-[30%]">이름</th>
             <th className="w-[14%] py-3 sm:w-[25%]">팀</th>
             <th className="hidden w-[8%] py-3 md:table-cell">Laps</th>
-            <th className="hidden w-[9%] py-3 md:table-cell">시간</th>
+            <th className="hidden w-[15%] py-3 md:table-cell">시간</th>
             <th className="w-[10%] py-3">포인트</th>
           </tr>
         </thead>
@@ -89,7 +91,7 @@ export default function RaceResultTable({
               </td>
 
               <td className="hidden py-3 text-[18px] md:table-cell">
-                + {result.gap_to_leader}
+                {formatDuration(Number(result.duration))}
               </td>
               <td className="py-3 font-bold">{result.points}</td>
             </tr>

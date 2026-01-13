@@ -18,33 +18,33 @@ interface Driver {
 }
 
 // ===== API =====
-export const fetchDriverDataFromAPI = async (
-  sessionKey: number,
+export const fetchDriverMeetingKeyFromAPI = async (
+  meetingKey: number,
 ): Promise<Driver[]> => {
   const response = await axiosInstance.get('/drivers', {
-    params: { session_key: sessionKey },
+    params: { meeting_key: meetingKey },
   });
-  console.log('API에서 드라이버 불러옴!');
+  console.log('API에서 드라이버 불러옴!', response.data);
   return response.data;
 };
 
 // ===== DB =====
-export const getDriverDataFromDB = async (sessionKey: number) => {
+export const getDriverMeetingKeyFromDB = async (meetingKey: number) => {
   const { data, error } = await supabase
     .from('drivers')
     .select('*')
-    .eq('session_key', sessionKey);
+    .eq('meeting_key', meetingKey);
 
   if (error) throw error;
   if (data) {
-    // console.log('DB에서 드라이버 불러옴!', data);
+    console.log('DB에서 드라이버 불러옴!', data);
   }
   return data ?? [];
 };
 
 // 없으면 supabse에 저장
-export const saveDriverData = async (sessionKey: number) => {
-  const driverData = await fetchDriverDataFromAPI(sessionKey);
+export const saveDriverData = async (meetingKey: number) => {
+  const driverData = await fetchDriverMeetingKeyFromAPI(meetingKey);
   if (!driverData || driverData.length === 0) return;
 
   const { data, error } = await supabase
@@ -61,24 +61,24 @@ export const saveDriverData = async (sessionKey: number) => {
 };
 
 // ===== Ensure =====
-const ensureDriverData = async (sessionKey: number) => {
-  const existing = await getDriverDataFromDB(sessionKey);
+const ensureDriverData = async (meetingKey: number) => {
+  const existing = await getDriverMeetingKeyFromDB(meetingKey);
   // console.log('DB에서 드라이버 불러옴:', existing);
   if (existing.length >= 50) return;
 
-  await saveDriverData(sessionKey);
+  await saveDriverData(meetingKey);
 };
 
 // ===== React Query =====
-export function useDriverData(sessionKey: number | null) {
+export function useDriverMeetingKeyData(meetingKey: number | null) {
   return useQuery<Driver[]>({
-    queryKey: ['drivers', sessionKey],
+    queryKey: ['drivers', meetingKey],
     staleTime: 1000 * 60 * 60,
-    enabled: !!sessionKey,
+    enabled: !!meetingKey,
 
     queryFn: async () => {
-      await ensureDriverData(sessionKey!);
-      return getDriverDataFromDB(sessionKey!);
+      await ensureDriverData(meetingKey!);
+      return getDriverMeetingKeyFromDB(meetingKey!);
     },
   });
 }

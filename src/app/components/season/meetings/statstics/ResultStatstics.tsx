@@ -1,15 +1,11 @@
 'use client';
-import fastest from '/public/icons/fastest.svg';
 import graph from '/public/icons/graph.svg';
 import pitstop from '/public/icons/pitstop.svg';
 import retirement from '/public/icons/retirement.svg';
-import safety from '/public/icons/safety.svg';
-import warning from '/public/icons/warning.svg';
-import weather from '/public/icons/weather.svg';
 import overview from '/public/icons/overview.svg';
 import { useState } from 'react';
 import Image from 'next/image';
-import Summary from './Summary';
+import Summary from './summary/Summary';
 import Position from './Position';
 import PitStop from './PitStop';
 import Events from './Events';
@@ -17,14 +13,15 @@ import { WeatherSessionSummary } from '@/app/api/f1/race/weather';
 import { Pit } from '@/app/api/f1/race/pit';
 import { Stints } from '@/app/api/f1/race/stints';
 import { RaceControl } from '@/app/api/f1/race/raceControl';
-import Loading from '@/app/components/common/F1Loading';
 
 export default function ResultStatstics({
+  totalLaps,
   weather,
   pit,
   stints,
   raceControl,
 }: {
+  totalLaps: number;
   weather: WeatherSessionSummary;
   pit: Pit[];
   stints: Stints[];
@@ -40,7 +37,14 @@ export default function ResultStatstics({
   const renderTabContent = () => {
     switch (selectedTab) {
       case '전체 요약':
-        return <Summary weather={weather} />;
+        return (
+          <Summary
+            totalLaps={totalLaps}
+            weather={weather}
+            SafetyCarNumber={deployCount}
+            raceControl={raceControl}
+          />
+        );
       case '포지션':
         return <Position />;
       case '피트 스탑':
@@ -51,6 +55,11 @@ export default function ResultStatstics({
         return null;
     }
   };
+
+  const deployCount = raceControl.filter(
+    (e) => e.category === 'SafetyCar' && e.message === 'SAFETY CAR DEPLOYED',
+  ).length;
+  console.log(deployCount);
 
   return (
     <>

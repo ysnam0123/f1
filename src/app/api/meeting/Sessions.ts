@@ -10,8 +10,9 @@ export const fetchSessionFromAPI = async (
   const response = await axiosInstance.get('/sessions', {
     params: { meeting_key: meetingKey },
   });
-  return response.data ?? [];
+  return response.data;
 };
+
 // ===== DB =====
 export const getSessionsFromDB = async (meetingKey: number) => {
   const { data, error } = await supabase

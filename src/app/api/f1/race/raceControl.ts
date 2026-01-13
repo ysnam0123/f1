@@ -7,9 +7,19 @@ export interface RaceControl {
   session_key: number;
   date: string;
   driver_number?: number;
-  lap_number?: number;
+  lap_number: number;
   category?: string;
-  flag?: string;
+  flag?:
+    | 'YELLOW'
+    | 'DOUBLE_YELLOW'
+    | 'GREEN'
+    | 'RED'
+    | 'CLEAR'
+    | 'BLUE'
+    | 'CHEQUERED'
+    | 'BLACK AND WHITE'
+    | 'CLEAR'
+    | null;
   scope?: string;
   sector?: string;
   message: string;

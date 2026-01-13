@@ -23,22 +23,24 @@ export interface Session {
 export type Sessions = Session[];
 
 // ===== API =====
-export const fetchResultDataFromAPI = async (
-  sessionKey: number,
+export const fetchMeetingKeyResultDataFromAPI = async (
+  meetingKey: number,
 ): Promise<Sessions> => {
   const response = await axiosInstance.get('/session_result', {
-    params: { session_key: sessionKey },
+    params: { meeting_key: meetingKey },
   });
   console.log('API에서 세션결과 불러옴!');
   return response.data;
 };
 
 // ===== DB =====
-export const getSessionResultDataFromDB = async (sessionKey: number) => {
+export const getMeetingKeySessionResultDataFromDB = async (
+  meetingKey: number,
+) => {
   const { data, error } = await supabase
     .from('session_results')
     .select('*')
-    .eq('session_key', sessionKey);
+    .eq('meeting_key', meetingKey);
   if (data) {
     console.log('세션결과 db에서 불러옴:', data);
   }
@@ -47,8 +49,8 @@ export const getSessionResultDataFromDB = async (sessionKey: number) => {
 };
 
 // 없으면 supabase에 저장
-export const saveResultData = async (sessionKey: number) => {
-  const resultData = await fetchResultDataFromAPI(sessionKey);
+export const saveMeetingKeyResultData = async (meetingKey: number) => {
+  const resultData = await fetchMeetingKeyResultDataFromAPI(meetingKey);
   if (!resultData || resultData.length === 0) return;
 
   const { data, error } = await supabase
@@ -67,12 +69,12 @@ export const saveResultData = async (sessionKey: number) => {
 };
 
 // ===== Ensure =====
-const ensureResultData = async (sessionKey: number) => {
-  const existing = await getSessionResultDataFromDB(sessionKey);
+const ensureResultData = async (meetingKey: number) => {
+  const existing = await getMeetingKeySessionResultDataFromDB(meetingKey);
   console.log('existing데이터 불러옴:', existing);
-  if (existing.length >= 15) return existing;
+  if (existing.length >= 18) return existing;
 
-  await saveResultData(sessionKey);
+  await saveMeetingKeyResultData(meetingKey);
 };
 
 // ===== View =====
@@ -94,15 +96,18 @@ export const getSortedResults = async (sessionKey: number) => {
 };
 
 // ===== React Query =====
-export function useSortedResults(sessionKey: number | null) {
+export function useMeetingKeySortedResults(
+  meetingKey: number | null,
+  sessionKey: number | null,
+) {
   return useQuery<SortedSessionResult[]>({
-    queryKey: ['session_results', sessionKey],
-    enabled: !!sessionKey,
+    queryKey: ['session_results', meetingKey],
+    enabled: !!meetingKey,
     staleTime: 1000 * 60 * 60,
 
     queryFn: async () => {
       // 결과 데이터가 있는지 없는지 확인. 데이터 길이가 15를 넘어가면,
-      await ensureResultData(sessionKey!);
+      await ensureResultData(meetingKey!);
       // 뷰 호출
       return getSortedResults(sessionKey!);
     },

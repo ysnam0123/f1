@@ -14,7 +14,8 @@ import { useSortedResults } from '@/app/api/meeting/sessionResult';
 import { useMeetingData } from '@/app/api/meeting/Meetings';
 import { useSessionData } from '@/app/api/meeting/Sessions';
 import { useDriverData } from '@/app/api/f1/Drivers';
-import { fetchPositionDataFromAPI } from '@/app/api/f1/race/position';
+import { useDriverMeetingKeyData } from '@/app/api/f1/DriversMeetingKey';
+import { useMeetingKeySortedResults } from '@/app/api/meeting/sessionResultMeetingKey';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
@@ -55,27 +56,54 @@ export default function Page() {
     () => getSessionKeyByName(sessions, 'Qualifying'),
     [sessions],
   );
+  const [qSessionKeyReady, setQSessionKeyReady] = useState(false);
+
+  useEffect(() => {
+    if (qualifyingSessionKey !== null) {
+      setQSessionKeyReady(true);
+    } else {
+      setQSessionKeyReady(false);
+    }
+  }, [qualifyingSessionKey]);
+
   // 드라이버 호출
-  const { data: driverData, isPending: driverLoading } =
+  const { data: driverData = [], isPending: driverLoading } =
     useDriverData(selectedSessionKey);
 
+  // meeting_key로 드라이버 호출
+  const {
+    data: driverMeetingKeyData = [],
+    isPending: driverMeetingKeyLoading,
+  } = useDriverMeetingKeyData(meetingKey);
+
+  if (driverMeetingKeyData) {
+    console.log('미팅키로 드라이버 호출:', driverMeetingKeyData);
+  }
+
+  // 미팅키로 세션결과 호출
+  const {
+    data: sessionMeetingKeyResults = [],
+    isLoading: sessionMeetingkeyResultLoading,
+  } = useMeetingKeySortedResults(meetingKey, selectedSessionKey);
+  if (sessionMeetingKeyResults) {
+    console.log('sessionMeetingKeyResults:', sessionMeetingKeyResults);
+  }
+
   const isSessionResultReady =
-    !!selectedSessionKey && !!driverData && driverData.length >= 20;
+    !!selectedSessionKey && !!driverData && driverData.length >= 15;
   const { data: sessionResults = [], isLoading: sessionResultLoading } =
     useSortedResults(selectedSessionKey);
 
   // 스타팅 그리드 정보 불러오기
   const isStartingGridReady =
-    !!qualifyingSessionKey && !!driverData && driverData.length >= 20;
+    qSessionKeyReady && driverData && driverData.length >= 15;
+
   const {
     data: startingGridData,
     isLoading: startingGridLoading,
     isError: startingGridError,
-  } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady!);
+  } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady);
 
-  if (startingGridData) {
-    console.log('startingGridData 불러옴:', startingGridData);
-  }
   useEffect(() => {
     if (!sessions.length || isSelected) return;
     setIsSelected(sessions[0].session_name);

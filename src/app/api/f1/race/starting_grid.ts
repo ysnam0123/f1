@@ -37,20 +37,34 @@ export const getStartingGridDataFromDB = async (sessionKey: number) => {
 export const saveStartingGridData = async (sessionKey: number) => {
   const startingGridData = await fetchStartingGridDataFromAPI(sessionKey);
   if (!startingGridData || startingGridData.length === 0) return;
-  const { error } = await supabase
+
+  const { data, error } = await supabase
     .from('starting_grid')
     .upsert(startingGridData, {
       onConflict: 'meeting_key, session_key,driver_number',
     })
     .select();
+
+  if (data) {
+    console.log('DB에 스타팅 그리드 결과 저장!');
+  }
+
   if (error) throw error;
 };
 
 // ===== Ensure =====
 const ensureStartingGridData = async (sessionKey: number) => {
-  const existing = await getStartingGridDataFromDB(sessionKey);
-  if (existing.length >= 20) return existing;
+  const existing = await getStartingGrid(sessionKey);
+  if (existing && existing.length > 0) return existing;
+
   await saveStartingGridData(sessionKey);
+
+  const after = await getStartingGrid(sessionKey);
+  if (!after || after.length === 0) {
+    throw new Error('Starting grid view not ready yet');
+  }
+
+  return after;
 };
 
 // ===== View =====
@@ -66,21 +80,19 @@ export const getStartingGrid = async (sessionKey: number) => {
 };
 
 // ===== React Query =====
-export function useStartingGridData(sessionKey: number, enabled: boolean) {
+export function useStartingGridData(
+  sessionKey: number,
+  sessionKeyReady: boolean,
+) {
   return useQuery<StartingGridWithDriver[]>({
     queryKey: ['starting_grid_with_driver', sessionKey],
-    enabled,
+    retry: 3,
+    enabled: sessionKeyReady,
     staleTime: 1000 * 60 * 60,
 
     queryFn: async () => {
-      await ensureStartingGridData(sessionKey!);
-      return await getStartingGrid(sessionKey!);
+      await ensureStartingGridData(sessionKey);
+      return getStartingGrid(sessionKey);
     },
   });
 }
-
-// API 호출
-// Supabase에서 불러오기
-// 없으면 supabase에 저장
-// react-query에 저장
-// 전용 뷰

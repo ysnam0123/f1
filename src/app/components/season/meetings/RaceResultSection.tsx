@@ -28,26 +28,39 @@ export default function RaceResultSection({
   const first = podiumResults.find((r) => r.position === 1);
   const second = podiumResults.find((r) => r.position === 2);
   const third = podiumResults.find((r) => r.position === 3);
+  const totalLaps = first?.number_of_laps;
+
   // 레이스 결과 분석
   const { data: sessionStints, isLoading: stintsLoading } =
     useStintsData(sessionKey);
+
+  // race control data
   const { data: sessionRaceControl, isLoading: raceControlLoading } =
     useRaceControlData(sessionKey);
+
+  // pit stop data
   const {
     data: pitData,
     isLoading: pitLoading,
     isError: pitError,
   } = usePitData(sessionKey);
+
+  // weather Data
   const { data: weatherSummary, isLoading: weatherLoading } =
     useWeatherSummary(sessionKey);
 
+  // 드라이버 별 포지션 gain
   const { data: driverPositionGain, isLoading: dPositionLoading } =
     usePositionData(sessionKey, !!sessionKey);
   if (driverPositionGain) {
     console.log('드라이버 별 포지션:', driverPositionGain);
   }
   const summaryLoading =
-    stintsLoading || raceControlLoading || pitLoading || weatherLoading || dPositionLoading;
+    stintsLoading ||
+    raceControlLoading ||
+    pitLoading ||
+    weatherLoading ||
+    dPositionLoading;
 
   // 테스트
   if (sessionStints) {
@@ -92,6 +105,7 @@ export default function RaceResultSection({
         </div>
       ) : (
         <ResultStatstics
+          totalLaps={totalLaps!}
           weather={weatherSummary!}
           pit={pitData!}
           stints={sessionStints!}
