@@ -1,10 +1,13 @@
 'use client';
+import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
+import { TeamSeasonRankingView } from '@/types/Ranking';
 import { Team as TeamType } from '@/types/team';
+import { Trophy, Users } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface TeamProps {
-  team: TeamType;
+  team: TeamSeasonRankingView;
 }
 
 export default function Team({ team }: TeamProps) {
@@ -12,43 +15,95 @@ export default function Team({ team }: TeamProps) {
   return (
     <>
       <div
-        onClick={() => router.push(`/team/${team.slug}`)}
-        className="flex w-full flex-col gap-5 select-none"
+        onClick={() => router.push(`/team/${team.team_slug}`)}
+        className="relative cursor-pointer overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/50 p-6 transition-all duration-300 hover:border-zinc-700"
       >
-        <div className="flex items-center gap-2">
-          <h1 className="font-partial text-[30px] font-bold">{team.name}</h1>
-        </div>
-        <div className="group relative flex min-h-82.5 w-full cursor-pointer flex-col items-center justify-between rounded-xl border border-[#F4F4F4] bg-none px-6.75 py-4.5 transition-transform duration-300 hover:scale-105">
-          <div
-            className="absolute inset-0 z-10 cursor-pointer rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{
-              backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
-            }}
-          />
-          <div className="z-20 flex items-center">
-            <div className="flex gap-20">
-              <Image src={team.logoImg} alt="logo" width={120} height={120} />
-              <div className="flex gap-12.5">
-                {team.drivers.map((driver) => (
-                  <div key={driver.number} className="flex items-center gap-1">
-                    <div className="flex flex-col items-center gap-3.75">
-                      <Image
-                        src={driver.image}
-                        alt={driver.name}
-                        className="h-25 w-25"
-                      />
-                      <p className="text-[16px] font-bold">{driver.name}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        <div
+          className="absolute top-0 right-0 left-0 h-1"
+          style={{ backgroundColor: team.team_colour }}
+        />
+        {/* Header: Position & Logo */}
+        <div className="mb-4 flex items-start justify-between">
+          <div className="flex items-center gap-4">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-md font-mono text-[19px]"
+              style={{
+                backgroundColor: `${team.team_colour}15`,
+                color: team.team_colour,
+              }}
+            >
+              P{team.rank}
+            </div>
+
+            <div className="flex h-19 w-19 items-center justify-center rounded-lg bg-zinc-800/50 p-2">
+              <Image
+                src={team.main_logo}
+                alt={`${team.main_logo} logo`}
+                width={74}
+                height={74}
+              />
             </div>
           </div>
+
+          <div className="flex items-center gap-2 text-zinc-400">
+            <Trophy className="h-4 w-4" />
+            <span className="font-mono text-xl text-white">
+              {team.team_total_points}
+            </span>
+          </div>
+        </div>
+        {/* Team name */}
+        <div className="mb-4 flex items-center justify-between sm:flex-col md:flex-col lg:flex-row">
+          <div className="mr-auto flex flex-col">
+            <h3 className="mb-1 text-[22px] font-semibold text-white">
+              {team.team_name}
+            </h3>
+            <p className="text-[16px] tracking-wider text-zinc-500 uppercase">
+              {team.team_kr_name}
+            </p>
+          </div>
+          {/* 자동차 */}
           <Image
-            src={team.car}
+            src={team.car_img}
             alt="mcLarenCar"
-            className="z-20 h-34.75 w-116.25"
+            width={415}
+            height={40}
+            className="z-20 hidden sm:block"
           />
+        </div>
+        {/* Drivers */}
+        <div className="flex items-center gap-3 border-t border-zinc-800 pt-4">
+          <Users className="h-4 w-4 text-zinc-600" />
+          <div className="z-30 flex flex-1 items-center gap-4">
+            {team.drivers.map((driver) => (
+              <div
+                key={driver.driver_id}
+                className="group flex items-center gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/driver/${driver.driver_id}`);
+                }}
+              >
+                <div
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 p-2"
+                  style={{
+                    borderLeft: `2px solid ${team.team_colour}`,
+                  }}
+                >
+                  {driver.driver_number}
+                </div>
+                <p
+                  className="transition-all duration-100 ease-in group-hover:border-b"
+                  style={{ borderColor: team.team_colour }}
+                >
+                  {driver.kr_name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="z-20 flex items-center">
+          <div className="flex gap-20"></div>
         </div>
       </div>
     </>

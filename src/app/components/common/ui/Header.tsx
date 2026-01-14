@@ -45,7 +45,10 @@ export default function Header() {
             >
               시즌
             </li>
-            <li className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]">
+            <li
+              onClick={() => router.push('/ranking')}
+              className="cursor-pointer border-b-2 border-transparent py-6.25 hover:border-[#ffffff]"
+            >
               순위
             </li>
             <li

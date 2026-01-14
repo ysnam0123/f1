@@ -1,0 +1,30 @@
+import { useState } from 'react';
+
+interface StatCardProps {
+  label: string;
+  value: string | number;
+  teamColor: string;
+}
+
+export function StatCard({ label, value, teamColor }: StatCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="cursor-default border border-neutral-800 bg-[#111] p-6 transition-all duration-200"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        borderBottomColor: isHovered ? teamColor : '',
+        borderBottomWidth: isHovered ? '2px' : '1px',
+      }}
+    >
+      <div className="flex flex-col gap-2">
+        <p className="text-xs tracking-wider text-neutral-500 uppercase">
+          {label}
+        </p>
+        <p className="text-3xl font-semibold tracking-tight">{value}</p>
+      </div>
+    </div>
+  );
+}
