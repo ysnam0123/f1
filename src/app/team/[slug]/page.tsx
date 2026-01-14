@@ -1,5 +1,6 @@
 'use client';
 
+import { SeasonPerformance } from '@/app/components/team/SeasonPerformance';
 import { StatCard } from '@/app/components/team/StatCard';
 import { TeamDriverCard } from '@/app/components/team/TeamDriverCard';
 import { teams } from '@/data/teams';
@@ -11,6 +12,29 @@ export default function Page() {
   const params = useParams<{ slug: string }>();
   const team = teams.find((t) => t.slug === params.slug);
   const [isHovered, setIsHovered] = useState(false);
+
+  const dummyPerformanceData = [
+    { round: 1, points: 43, cumulativePoints: 43 },
+    { round: 2, points: 37, cumulativePoints: 80 },
+    { round: 3, points: 51, cumulativePoints: 131 },
+    { round: 4, points: 35, cumulativePoints: 166 },
+    { round: 5, points: 48, cumulativePoints: 214 },
+    { round: 6, points: 40, cumulativePoints: 254 },
+    { round: 7, points: 44, cumulativePoints: 298 },
+    { round: 8, points: 33, cumulativePoints: 331 },
+    { round: 9, points: 52, cumulativePoints: 383 },
+    { round: 10, points: 38, cumulativePoints: 421 },
+    { round: 11, points: 41, cumulativePoints: 462 },
+    { round: 12, points: 39, cumulativePoints: 501 },
+    { round: 13, points: 47, cumulativePoints: 548 },
+    { round: 14, points: 36, cumulativePoints: 584 },
+    { round: 15, points: 45, cumulativePoints: 629 },
+    { round: 16, points: 42, cumulativePoints: 671 },
+    { round: 17, points: 49, cumulativePoints: 720 },
+    { round: 18, points: 38, cumulativePoints: 758 },
+    { round: 19, points: 50, cumulativePoints: 808 },
+    { round: 20, points: 52, cumulativePoints: 860 },
+  ];
 
   return (
     <>
@@ -26,39 +50,37 @@ export default function Page() {
                 />
               </div>
               <div className="flex items-center gap-2">
-                <p className="text-[20px] tracking-wide text-neutral-500 uppercase">
+                <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
                   {team.slug}
                 </p>
-                <p className="text-[20px] tracking-wide text-neutral-500 uppercase">
+                <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
                   - 2025 시즌
                 </p>
               </div>
             </div>
             <Image src={team.logo} alt={'logo'} width={120} height={120} />
           </div>
-          <div className="py-12">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <StatCard
-                label="Constructors' Ranking"
-                value={`P${team.name}`}
-                teamColor={team.colorFrom}
-              />
-              <StatCard
-                label="Total Points"
-                value={2}
-                teamColor={team.colorFrom}
-              />
-              <StatCard
-                label="Wins / Podiums"
-                value={`${2} / ${5}`}
-                teamColor={team.colorFrom}
-              />
-              <StatCard
-                label="Drivers"
-                value={team.drivers.join(' • ')}
-                teamColor={team.colorFrom}
-              />
-            </div>
+          <div className="grid grid-cols-1 gap-4 py-12 md:grid-cols-2 lg:grid-cols-4">
+            <StatCard
+              label="Constructors' Ranking"
+              value={`P 1`}
+              teamColor={team.colorFrom}
+            />
+            <StatCard
+              label="Total Points"
+              value={2}
+              teamColor={team.colorFrom}
+            />
+            <StatCard
+              label="Wins / Podiums"
+              value={`${2} / ${5}`}
+              teamColor={team.colorFrom}
+            />
+            <StatCard
+              label="Drivers"
+              value={team.drivers.join(' • ')}
+              teamColor={team.colorFrom}
+            />
           </div>
           <div className="border-t border-neutral-800 py-12">
             <h2 className="mb-8 text-2xl font-semibold tracking-tight">
@@ -68,7 +90,7 @@ export default function Page() {
               {team.drivers.map((driver) => (
                 <TeamDriverCard
                   key={driver.number}
-                  name={driver.name}
+                  name={driver.krName}
                   number={driver.number}
                   imageUrl={driver.image}
                   teamColor={team.colorFrom}
@@ -76,63 +98,10 @@ export default function Page() {
               ))}
             </div>
           </div>
-          <div
-            style={{
-              backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
-            }}
-            className="mb-12.5 flex h-76 w-full justify-between rounded-4xl px-15 py-10"
-          >
-            <Image
-              src={`/cars/${team.slug}.png`}
-              alt="car"
-              width={750}
-              height={224}
-            />
-            <div className="flex shrink-0 flex-col items-center justify-center">
-              <Image src={team.logo} alt={'logo'} width={150} height={150} />
-              <p
-                className="text-center text-[30px] text-[#f1f1f1]"
-                style={{ fontFamily: 'PartialSans' }}
-              >
-                {team.name}
-              </p>
-            </div>
-          </div>
-          <h1 className="mb-7.5 text-[30px] font-bold">드라이버</h1>
-          <section className="mb-20 flex justify-between">
-            {team.drivers.map((driver) => (
-              <div
-                key={driver.number}
-                className="flex h-63 w-137.5 items-center justify-center gap-20 rounded-4xl py-5"
-                style={{
-                  backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
-                }}
-              >
-                <div className="flex h-full justify-between">
-                  <div className="flex flex-col">
-                    <div className="mb-auto">
-                      <p className="mb-2 text-[22px] font-bold">
-                        {driver.name}
-                      </p>
-                      <p
-                        className="text-[22px]"
-                        style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
-                      >
-                        {driver.number}
-                      </p>
-                    </div>
-                    <div>flag</div>
-                  </div>
-                </div>
-                <Image
-                  src={driver.image}
-                  alt={driver.name}
-                  width={200}
-                  height={200}
-                />
-              </div>
-            ))}
-          </section>
+          <SeasonPerformance
+            data={dummyPerformanceData}
+            teamColor={team.colorFrom}
+          />
           <section className="min-h-300 w-full rounded-[30px] bg-[#1C1C25] px-10 py-7.5">
             <h1
               className="mb-12.5 text-[40px]"

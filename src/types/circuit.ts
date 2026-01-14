@@ -3,6 +3,7 @@ import { StaticImageData } from 'next/image';
 export interface Circuit {
   circuit_key: number;
   circuit_short_name: string;
+  circuit_long_name: string;
   country_code: string;
   country_name: string;
   circuit_img: StaticImageData;

@@ -1,28 +1,17 @@
 'use client';
 
-import { findDriverInfo } from '@/finder/driverInfoFinder';
 import { useEffect } from 'react';
+import { fetchAllCircuits, useCircuitData } from '../api/meeting/Circuit';
+import CircuitCard from '../components/circuit/CircuitCard';
 
 export default function Page() {
-  // useEffect(() => {
-  //   const updateCircuitTable = async () => {
-  //     const { error } = await supabase
-  //       .from('circuits')
-  //       .upsert(circuit, { onConflict: 'circuit_key' });
-
-  //     if (error) {
-  //       console.error('error:', error);
-  //     }
-  //   };
-  //   updateCircuitTable();
-  // }, []);
-
-  useEffect(() => {
-    findDriverInfo(1141, 55);
-  }, []);
+  const { data: circuitData, isPending: circuitLoading } = useCircuitData();
+  if (circuitData) {
+    console.log(circuitData);
+  }
   return (
     <>
-      <h1>page Component</h1>
+      <CircuitCard />
     </>
   );
 }

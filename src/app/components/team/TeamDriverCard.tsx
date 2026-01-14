@@ -19,20 +19,11 @@ export function TeamDriverCard({
   return (
     <>
       <div
-        className="cursor-default overflow-hidden border border-neutral-800 bg-[#111] transition-all duration-300"
+        className="cursor-pointer overflow-hidden border border-neutral-800 bg-[#111] transition-all duration-300 select-none"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="aspect-3/4 overflow-hidden bg-neutral-900">
-          {/* <ImageWithFallback
-            src={imageUrl}
-            alt={name}
-            className="h-full w-full object-cover grayscale transition-all duration-300"
-            style={{
-              filter: isHovered ? 'grayscale(50%)' : 'grayscale(100%)',
-            }}
-          /> */}
-        </div>
+        <div className="h-80 bg-neutral-900">{/* 이미지 태그 */}</div>
         <div className="relative border-t border-neutral-800 p-6">
           <div
             className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"

@@ -11,35 +11,33 @@ export default function DriverHero({ driver, team }: Props) {
   const nationality = flags[driver.nationality];
   return (
     <>
-      <div
-        style={{
-          backgroundImage: `linear-gradient(to bottom, ${team.colorFrom} , ${team.colorTo})`,
-        }}
-        className="mb-10 flex h-90 w-full items-center justify-between rounded-4xl bg-red-300 px-30 select-none"
-      >
-        <div className="flex flex-col items-center">
+      <div className="mb-10 flex flex-col gap-5 select-none">
+        <p
+          className="text-[50px]"
+          style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
+        >
+          {driver.name}
+        </p>
+
+        <div className="flex text-[20px]">
+          <div className="flex gap-2 border-r border-white pr-2.5">
+            <Image src={nationality} alt="flag" width={36} height={26} />
+            <p>{driver.nationality}</p>
+          </div>
+          <p className="border-r border-white px-2.5">{driver.number}</p>
+          <p className="px-2.5">{team.krName}</p>
+        </div>
+        <div className="h-1 w-30 bg-[#DC0000]" />
+        <div className="flex items-center justify-between px-10">
+          <Image src={driver.image} alt="driver" width={240} height={240} />
           <Image
             src={team.logoImg}
             alt="driver"
-            width={120}
-            height={80}
+            width={180}
+            height={150}
             className="mb-3"
           />
-          <p
-            className="mb-5 text-[50px]"
-            style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
-          >
-            {driver.name}
-          </p>
-          <div className="flex text-[20px]">
-            <div className="flex gap-2 border-r border-white pr-2.5">
-              <Image src={nationality} alt="flag" width={43} height={26} />
-              <p>{driver.nationality}</p>
-            </div>
-            <p className="pl-2.5">{driver.number}</p>
-          </div>
         </div>
-        <Image src={driver.image} alt="driver" width={300} height={300} />
       </div>
     </>
   );

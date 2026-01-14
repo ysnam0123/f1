@@ -1,0 +1,93 @@
+interface RaceResult {
+  round: number;
+  race: string;
+  position: number | string;
+  points: number;
+}
+
+interface SeasonPerformanceProps {
+  results: RaceResult[];
+  teamColor: string;
+}
+
+export function DriverPerformance({
+  results,
+  teamColor,
+}: SeasonPerformanceProps) {
+  const maxPoints = Math.max(...results.map((r) => r.points));
+
+  return (
+    <section className="mx-auto max-w-7xl rounded-xl border border-[#4C4C4C] bg-[#111111] px-6 py-8 select-none">
+      <h2 className="mb-5 text-[30px] font-semibold tracking-wider">
+        시즌 퍼포먼스
+      </h2>
+      <h3 className="mb-3 text-[18px]">레이스 별 포인트</h3>
+      <div className="mb-3 flex h-32 items-end gap-1">
+        {results.map((result) => (
+          <div
+            key={result.round}
+            className="group flex flex-1 cursor-pointer flex-col justify-end"
+          >
+            <div className="relative">
+              <div
+                className="w-full transition-opacity duration-200 group-hover:opacity-70"
+                style={{
+                  height: `${(result.points / maxPoints) * 120}px`,
+                  backgroundColor: teamColor,
+                  opacity: 0.9,
+                }}
+              />
+              <div className="bg-foreground text-background absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded px-2 py-1 text-xs whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                {result.race}: P{result.position} ({result.points}pts)
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Race Results Table */}
+      <div className="space-y-4">
+        <h3 className="text-muted-foreground text-[18px]">레이스 별 결과</h3>
+        <div className="overflow-x-auto">
+          <table className="text-[18 w-full select-none">
+            <thead>
+              <tr className="border-border border-b">
+                <th className="text-muted-foreground px-4 py-3 text-left text-[16px] font-medium tracking-wider uppercase">
+                  Round
+                </th>
+                <th className="text-muted-foreground px-4 py-3 text-left text-[16px] font-medium tracking-wider uppercase">
+                  Grand Prix
+                </th>
+                <th className="text-muted-foreground px-4 py-3 text-right text-[16px] font-medium tracking-wider uppercase">
+                  Position
+                </th>
+                <th className="text-muted-foreground px-4 py-3 text-right text-[16px] font-medium tracking-wider uppercase">
+                  Points
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((result) => (
+                <tr
+                  key={result.round}
+                  className="border-border/50 border-b transition-colors duration-200 hover:bg-[#252525]"
+                >
+                  <td className="text-muted-foreground px-4 py-3">
+                    {result.round}
+                  </td>
+                  <td className="px-4 py-3">{result.race}</td>
+                  <td className="px-4 py-3 text-right font-medium">
+                    {typeof result.position === 'number'
+                      ? `P${result.position}`
+                      : result.position}
+                  </td>
+                  <td className="px-4 py-3 text-right">{result.points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
