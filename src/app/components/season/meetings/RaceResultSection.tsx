@@ -124,7 +124,7 @@ export default function RaceResultSection({
       </div>
       {summaryLoading ? (
         <div className="flex h-100 items-center justify-center">
-          <F1Loading loadingText="레이스 분석 중..." />
+          <F1Loading loadingText="정보 불러오는 중..." />
         </div>
       ) : (
         <div ref={statisticsRef}>

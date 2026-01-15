@@ -1,0 +1,82 @@
+import { TeamSeasonRankingView } from '@/types/Ranking';
+import Image from 'next/image';
+
+const data = [
+  { rank: 1, team: '맥라렌', points: 293, color: 'bg-orange-500' },
+  { rank: 2, team: '메르세데스', points: 247, color: 'bg-gray-300' },
+  { rank: 3, team: '페라리', points: 186, color: 'bg-red-600' },
+  { rank: 4, team: '레드불 레이싱', points: 169, color: 'bg-blue-600' },
+  { rank: 5, team: '애스턴 마틴', points: 135, color: 'bg-green-600' },
+];
+
+interface TS {
+  data: TeamSeasonRankingView[];
+}
+export default function ConstructorStandings({ data }: TS) {
+  return (
+    <>
+      <section className="w-full">
+        <div className="mb-5 flex items-center justify-between pr-3">
+          <h2 className="text-[18px] font-semibold text-(--color-title)">
+            팀 랭킹
+          </h2>
+          <button className="cursor-pointer text-[16px] text-(--color-title) hover:text-[#F8F8F8]">
+            전체보기
+          </button>
+        </div>
+        <div className="min-h-91 rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
+          {/* Header */}
+          <div className="mb-3 border-b border-white/10 pb-2">
+            <div className="grid grid-cols-[60px_1fr_80px] text-xs text-white/60 sm:text-sm">
+              <span>등수</span>
+              <span>팀</span>
+              <span className="pr-2 text-right">포인트</span>
+            </div>
+          </div>
+
+          {/* Table Body */}
+          <div className="space-y-1">
+            {data.map((item) => (
+              <div
+                key={item.rank}
+                className="grid h-16 grid-cols-[6px_54px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
+              >
+                {/* Team Color Bar */}
+                <div
+                  style={{ backgroundColor: item.team_colour }}
+                  className={`h-full rounded-l-lg`}
+                />
+
+                {/* Rank */}
+                <div className="text-center text-sm font-semibold text-white sm:text-base">
+                  {item.rank}
+                </div>
+
+                {/* Team */}
+                <div className="flex cursor-pointer items-center gap-3 py-2">
+                  <div className="flex h-10 w-17.5 items-center justify-center">
+                    <Image
+                      src={item.small_logo}
+                      width={70}
+                      height={40}
+                      className="object-contain"
+                      alt="team logo"
+                    />
+                  </div>
+                  <span className="truncate text-sm font-medium text-white sm:text-base">
+                    {item.team_kr_name}
+                  </span>
+                </div>
+
+                {/* Points */}
+                <div className="pr-3 text-right text-sm font-semibold text-white sm:text-base">
+                  {item.team_total_points}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

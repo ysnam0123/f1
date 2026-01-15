@@ -1,0 +1,38 @@
+:root {
+  /* 색상 */
+  --color-primary: #4caf50;
+  --color-primary-600: #3d8b3f;
+  --color-text: #333333;
+  --color-muted: #6f6f6f;
+  --color-box-bg: #111111;
+  --color-box-border: #4a4a4a;
+  --color-placeholder: #8b8b8b;
+
+  --color-table-bg: #171717;
+  --color-table-border: #4a4a4a;
+  --color-table-hover: #333333;
+
+  --color-card-bg: #171717;
+  --color-card-hover: #333333;
+
+  /* 텍스트 */
+  --color-title: #c3c3c3;
+  --color-title-hover: #f8f8f8;
+  --color-sub-text: #787575;
+
+  /* 그림자 */
+
+  /* 🟢 기본 그림자 (일반용: 카드, 버튼 등) */
+  --shadow-soft: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  /* ⚫ 강조 그림자 (hover, 활성화, 깊은 강조용) */
+  --shadow-strong: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  /* 🟩 포커스 그림자 (초점/선택용) */
+  --shadow-focus: 0 0 0 3px rgba(76, 175, 80, 0.2);
+
+  /* 모바일 그림자 */
+  --shadow-mobile: 0px 0px 2px rgba(0, 0, 0, 0.25);
+
+  /* 아티클 */
+  --article-title: #3b3b3b;
+  --article-content: #777777;
+}

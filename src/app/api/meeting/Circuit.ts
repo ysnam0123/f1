@@ -1,5 +1,5 @@
 import { supabase } from '@/supabase/client';
-import { Circuit } from '@/types/circuit';
+import { Circuit, CircuitView } from '@/types/circuit';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchCircuitByKey = async (circuitKey: number) => {
@@ -36,3 +36,28 @@ export function useCircuitData() {
     queryFn: fetchAllCircuits,
   });
 }
+
+// ==== view ====
+export const fetchCircuits = async (): Promise<CircuitView[]> => {
+  const { data, error } = await supabase
+    .from('v_circuit')
+    .select('*')
+    .order('first_grand_prix', { ascending: true });
+
+  if (error) {
+    console.error('Circuit fetch error:', error);
+    throw new Error('Failed to fetch circuits');
+  }
+
+  return data as CircuitView[];
+};
+
+// ==== view react query ====
+export const useCircuitViewData = () => {
+  return useQuery<CircuitView[]>({
+    queryKey: ['circuits'],
+    queryFn: fetchCircuits,
+    staleTime: 1000 * 60 * 60 * 24, // 24시간 (서킷은 거의 안 바뀜)
+    gcTime: 1000 * 60 * 60 * 24,
+  });
+};

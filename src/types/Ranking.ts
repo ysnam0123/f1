@@ -7,13 +7,13 @@ export interface DriverSeasonRankingView {
   full_name: string;
   kr_name: string;
   name_acronym: string;
-  headshot_url: string | null;
+  headshot_url: string;
   is_main: boolean;
 
   team_name: string | null;
   team_kr_name: string | null;
   team_slug: string | null;
-  team_colour: string | null;
+  team_colour: string;
   main_logo: string | null;
   white_logo: string | null;
 
@@ -30,13 +30,14 @@ export interface TeamSeasonRankingRow {
   rank: number;
   year: number;
 
-  team_name: string | null;
-  team_kr_name: string | null;
-  team_slug: string | null;
-  team_colour: string | null;
-  main_logo: string | null;
-  white_logo: string | null;
-  car_img: string | null;
+  team_name: string;
+  team_kr_name: string;
+  team_slug: string;
+  team_colour: string;
+  main_logo: string;
+  white_logo: string;
+  car_img: string;
+  small_logo: string;
 
   team_total_points: number;
   team_races: number;
@@ -49,7 +50,7 @@ export interface TeamSeasonRankingRow {
   full_name: string;
   kr_name: string;
   name_acronym: string;
-  headshot_url: string | null;
+  headshot_url: string;
   is_main: boolean;
 }
 
@@ -64,6 +65,7 @@ export interface TeamSeasonRankingView {
   main_logo: string;
   white_logo: string;
   car_img: string;
+  small_logo: string;
 
   team_total_points: number;
   team_races: number;

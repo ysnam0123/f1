@@ -51,6 +51,7 @@ export function groupTeamSeasonRanking(
         main_logo: row.main_logo,
         white_logo: row.white_logo,
         car_img: row.car_img,
+        small_logo: row.small_logo,
 
         team_total_points: row.team_total_points,
         team_races: row.team_races,
