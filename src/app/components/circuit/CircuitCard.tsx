@@ -1,46 +1,59 @@
+import { CircuitView } from '@/types/circuit';
+import { Crown } from 'lucide-react';
 import Image from 'next/image';
 
-export default function CircuitCard() {
+interface PageProps {
+  data: CircuitView;
+}
+export default function CircuitCard({ data }: PageProps) {
   return (
     <>
-      <div className="flex h-50 w-90 flex-col border border-[#4C4C4C] bg-[#111111] px-3.75 py-5">
-        <h1 className="mb-3.75">
-          Autodromo Internazionale Enzo e Dino Ferrari
-        </h1>
-        <div className="flex items-center">
-          <div className="flex flex-col sm:w-52.5">
-            <div className="flex items-center gap-1 border-b border-[#5B5B5B] pb-3.75">
-              <Image
-                src={'/flag/argentina.svg'}
-                alt="flag"
-                width={25}
-                height={15}
-              />
-              <p className="text-[14px]">아르헨티나</p>
+      <article className="flex cursor-pointer flex-col select-none">
+        <Image
+          src={data.circuit_bg}
+          alt="bg"
+          width={360}
+          height={200}
+          className="w-full rounded-t-xl"
+        />
+        <div className="flex h-40 w-full items-center justify-between rounded-b-xl border border-(--color-box-border) bg-(--color-main-black) px-5 py-3.75">
+          <div className="flex w-full flex-col">
+            <div className="flex w-full flex-col gap-2 border-b border-(--color-box-border) pb-5">
+              <h1 className="">{data.circuit_short_name}</h1>
+              <div className="flex items-center gap-2">
+                <Image src={data.flag} alt="flag" width={25} height={15} />
+                <p className="text-[14px]">{data.country_kr_name}</p>
+              </div>
             </div>
-            <div className="mx-2.5 flex items-center gap-5 pt-3.75">
-              <div className="flex flex-col items-center">
-                <h2 className="text-[14px] text-[#5E5E5E]">랩 수</h2>
-                <p className="text-[18px]">52</p>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-5 pt-2.5">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-[14px] text-[#5E5E5E]">랩 수</h2>
+                  <p className="text-[16px]">{data.laps}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-[14px] text-[#5E5E5E]">서킷 길이</h2>
+                  <p className="text-[16px]">{data.circuit_length}</p>
+                </div>
               </div>
-              <div className="flex flex-col items-center">
-                <h2 className="text-[14px] text-[#5E5E5E]">서킷 길이</h2>
-                <p className="text-[18px]">6.432</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h2 className="text-[14px] text-[#5E5E5E]">첫 그랑프리</h2>
-                <p className="text-[18px]">2004</p>
+              <div className="flex items-center gap-1">
+                <Crown className="h-4.25 w-4.25 text-[#D6B706]" />
+                <p className="border-r-2 border-(--color-border) pr-1 text-[16px]">
+                  {data.lap_record.driver}
+                </p>
+                <p className="text-[16px]">{data.lap_record.year}년</p>
               </div>
             </div>
           </div>
+
           <Image
-            src={'/circuit/china_shanghai.svg'}
-            width={100}
-            height={100}
+            src={data.circuit_img}
+            width={106}
+            height={106}
             alt="circuit"
           />
         </div>
-      </div>
+      </article>
     </>
   );
 }

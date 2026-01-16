@@ -1,44 +1,29 @@
 'use client'; // 클라이언트 컴포넌트로 선언
 import { useYoutube } from '@/hooks/useYoutue';
-import { YoutubeVideoItems } from '@/types/video';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export default function HighLights() {
-  const [videos, setVideos] = useState<YoutubeVideoItems[]>([]);
-
-  // useEffect(() => {
-  //   fetch('/api/youtube')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.items) setVideos(data.items);
-  //     })
-  //     .catch((err) => console.error('Failed to fetch YouTube data:', err));
-  // }, []);
-
   const { data, isPending, isError } = useYoutube();
-  // 리액트 쿼리 부분의 데이터 타입 정의할 것
-
-  // useEffect(()=>{
-  //   if(data){
-  //     setVideos(data)
-  //   }
-  // },[])
+  if (data) {
+    console.log('youtube', data);
+  }
 
   return (
     <>
       <div className="w-full select-none">
-        <h1 className="mb-3 text-[25px] font-bold">공식 하이라이트</h1>
-        <div className="flex min-h-[250px] w-full justify-between rounded-[20px] bg-[#1a1a1a] p-[52px]">
+        <h1 className="mb-3 text-[25px] font-bold text-(--color-title)">
+          공식 유튜브{' '}
+        </h1>
+        <div className="flex h-62.5 justify-between rounded-4xl bg-[#1a1a1a] px-5 pt-5">
           {isPending && <></>}
           {isError && <></>}
-          {videos &&
-            videos.map((video) => (
+          {data &&
+            data.map((video) => (
               <a
-                key={video.id.videoId}
+                key={video.snippet.title}
                 href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                 target="_blank"
-                className="w-[300px]"
+                className="flex max-w-62.5 flex-col items-start gap-3"
               >
                 <Image
                   src={video.snippet.thumbnails.medium.url}
@@ -46,7 +31,9 @@ export default function HighLights() {
                   width={video.snippet.thumbnails.medium.width}
                   height={video.snippet.thumbnails.medium.height}
                 />
-                <p className="line-clamp-2">{video.snippet.title}</p>
+                <p className="line-clamp-2 max-w-62.5 text-[13px] sm:text-[16px]">
+                  {video.snippet.title}
+                </p>
               </a>
             ))}
         </div>

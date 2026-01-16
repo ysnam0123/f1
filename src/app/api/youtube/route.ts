@@ -19,7 +19,7 @@ export async function GET() {
     }
 
     const data = await res.json();
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json(data.items, { status: 200 });
   } catch (error) {
     // 네트워크 오류나 파싱 오류
     return NextResponse.json(

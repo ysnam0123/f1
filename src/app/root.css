@@ -2,10 +2,14 @@
   /* 색상 */
   --color-primary: #4caf50;
   --color-primary-600: #3d8b3f;
+  --color-main-black: #111111;
   --color-text: #333333;
   --color-muted: #6f6f6f;
+
   --color-box-bg: #111111;
-  --color-box-border: #4a4a4a;
+  --color-box-border: #4c4c4c;
+
+  --color-border: #4a4a4a;
   --color-placeholder: #8b8b8b;
 
   --color-table-bg: #171717;

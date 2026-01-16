@@ -25,7 +25,7 @@ export default function Page() {
   if (data) {
     console.log('라이브 세션:', data);
   }
-  const { data: nextMeeting, isLoading } = useNextMeeting();
+  const { data: nextMeeting, isPending: nextMeetingLoading } = useNextMeeting();
   if (nextMeeting) {
     console.log('다음 미팅:', nextMeeting);
   }
@@ -86,7 +86,7 @@ export default function Page() {
           />
         </div>
         <HomeLogo />
-        <NextSession />
+        <NextSession data={nextMeeting} loading={nextMeetingLoading} />
         {DriverRankingLoading && (
           <div className="flex h-100 items-center justify-center">
             <F1Loading loadingText="레이스 분석 중..." />

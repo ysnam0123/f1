@@ -31,3 +31,10 @@ export interface YoutubeVideoItems {
   liveBroadcastContent: string;
   publishTime: string;
 }
+
+export interface YoutubeVideoItem {
+  id: Id;
+  kind: string;
+  etag: string;
+  snippet: Snippet;
+}

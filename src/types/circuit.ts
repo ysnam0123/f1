@@ -5,6 +5,7 @@ export interface Circuit {
   country_code: string;
   country_name: string;
   circuit_img: string;
+  circuit_bg: string;
   laps: number;
   first_grand_prix: number;
   circuit_length: number;
@@ -21,6 +22,7 @@ export interface CircuitView {
   country_code: string;
   country_name: string;
   circuit_img: string;
+  circuit_bg: string;
   laps: number;
   first_grand_prix: number;
   circuit_length: number;

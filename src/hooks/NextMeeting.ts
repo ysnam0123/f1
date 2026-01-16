@@ -1,10 +1,15 @@
 import { supabase } from '@/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 
-interface CircuitImg {
+interface Circuit {
   circuit_img: string;
+  circuit_long_name: string;
 }
-interface NextMeeting {
+interface Country {
+  flag: string;
+  country_kr_name: string;
+}
+export interface NextMeeting {
   circuit_key: number;
   circuit_short_name: string;
   country_code: string;
@@ -21,7 +26,8 @@ interface NextMeeting {
   meeting_official_name: string;
   round: number;
   year: number;
-  circuits: CircuitImg;
+  circuits: Circuit;
+  countries: Country;
 }
 
 // meetings.service.ts
@@ -32,7 +38,12 @@ export const getNextMeeting = async () => {
       `
       *,
       circuits (
-        circuit_img
+        circuit_img,
+        circuit_long_name
+      ),
+      countries!meetings_meeting_code_fkey (
+        flag,
+        country_kr_name
       )
     `,
     )

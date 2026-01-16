@@ -12,8 +12,11 @@ export default function Page() {
   }
   return (
     <>
-      <CircuitCard />
-      <div className="h-25 w-70 bg-[#111111]"></div>
+      <section className="mx-auto grid max-w-300 gap-7.5 sm:grid-cols-3">
+        {circuitData?.map((c) => (
+          <CircuitCard key={c.circuit_key} data={c} />
+        ))}
+      </section>
     </>
   );
 }
