@@ -16,8 +16,6 @@ const mapApiMeetingToDB = (m: ApiMeeting): Partial<Meeting> => ({
   gmt_offset: m.gmt_offset,
   date_start: m.date_start,
   date_end: m.date_end,
-
-  year: m.year,
 });
 const queryClient = new QueryClient();
 // ===== API =====
@@ -27,6 +25,7 @@ export const fetchMeetingsFromAPI = async (
   const response = await axiosInstance.get('/meetings', {
     params: { year: year },
   });
+  console.log(response.data);
   return response.data ?? [];
 };
 
@@ -45,20 +44,19 @@ export const getMeetingsFromDB = async (selectedYear: number) => {
 
 // ===== Sync (핵심) =====
 export const syncMeetingsFromAPI = async (year: number) => {
-  try {
-    const apiMeetings = await fetchMeetingsFromAPI(year);
-    if (!apiMeetings || apiMeetings.length === 0) return;
+  const apiMeetings = await fetchMeetingsFromAPI(year);
+  if (!apiMeetings?.length) return;
 
-    const meetingsForUpsert = apiMeetings.map(mapApiMeetingToDB);
-    await supabase.from('meetings').upsert(meetingsForUpsert, {
-      onConflict: 'meeting_key',
-    });
-    queryClient.invalidateQueries({
-      queryKey: ['meetings', year],
-    });
-  } catch (e) {
-    console.warn('Meetings API sync failed:', e);
-  }
+  const meetingsForUpsert = apiMeetings.map((m) => ({
+    ...mapApiMeetingToDB(m),
+    year, // ✅ 여기서 강제 주입
+  }));
+
+  const { error } = await supabase.from('meetings').upsert(meetingsForUpsert, {
+    onConflict: 'meeting_key',
+  });
+
+  if (error) throw error;
 };
 
 // ===== Ensure =====

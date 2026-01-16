@@ -1,11 +1,41 @@
 import { supabase } from '@/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 
+interface CircuitImg {
+  circuit_img: string;
+}
+interface NextMeeting {
+  circuit_key: number;
+  circuit_short_name: string;
+  country_code: string;
+  country_key: number;
+  country_name: string;
+  date_end: string;
+  date_start: string;
+  gmt_offset: string;
+  id: string;
+  location: string;
+  meeting_code: string;
+  meeting_key: number;
+  meeting_name: string;
+  meeting_official_name: string;
+  round: number;
+  year: number;
+  circuits: CircuitImg;
+}
+
 // meetings.service.ts
 export const getNextMeeting = async () => {
   const { data, error } = await supabase
     .from('meetings')
-    .select('*')
+    .select(
+      `
+      *,
+      circuits (
+        circuit_img
+      )
+    `,
+    )
     .gte('date_end', new Date().toISOString())
     .order('date_start', { ascending: true })
     .limit(1)
@@ -16,7 +46,7 @@ export const getNextMeeting = async () => {
 };
 
 export function useNextMeeting() {
-  return useQuery({
+  return useQuery<NextMeeting>({
     queryKey: ['meetings', 'next'],
     queryFn: getNextMeeting,
     staleTime: 1000 * 60 * 5, // 5분이면 충분

@@ -1,9 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useYearStore } from '@/store/YearStore';
 import SeasonChangeButton from '../components/common/SeasonChangeButton';
-import { useMeetings } from '../api/meeting/Meetings';
+import {
+  fetchMeetingsFromAPI,
+  syncMeetingsFromAPI,
+  useMeetings,
+} from '../api/meeting/Meetings';
 import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import F1Loading from '../components/common/F1Loading';
 import GrandPrixCardWithPodium from '../components/season/GrandPrixCardWithPodium';
@@ -18,6 +22,14 @@ export default function Page() {
     isPending,
     error,
   } = useMeetingsWithStatusAndPodium(selectedYear);
+
+  // const { data: seaon2026, isPending: s2026pending } = useMeetings(2026);
+  // if (seaon2026) {
+  //   console.log('2026:', seaon2026);
+  // }
+  // useEffect(() => {
+  //   fetchMeetingsFromAPI(2026);
+  // }, []);
 
   return (
     <>

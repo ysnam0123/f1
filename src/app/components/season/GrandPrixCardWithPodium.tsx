@@ -59,7 +59,7 @@ export default function GrandPrixCardWithPodium({ meetingInfo }: CardProps) {
                 alt="flag"
                 width={24}
                 height={24}
-                className="rounded-full"
+                className="rounded-full object-contain"
               />
               <p className="text-[20px] text-white">
                 {meetingInfo.country_kr_name}
