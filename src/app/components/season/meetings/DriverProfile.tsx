@@ -22,10 +22,10 @@ export default function DriverProfile({
   return (
     <>
       <div
-        style={{ backgroundColor: teamColor }}
-        className={`flex h-10 w-10 items-center justify-center rounded-full ${className}`}
+        // style={{ backgroundColor: teamColor }}
+        className={`flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#222222] ${className}`}
       >
-        <Image src={headshotSrc} alt="logo" width={30} height={30} />
+        <Image src={headshotSrc} alt="logo" width={36} height={36} />
       </div>
     </>
   );

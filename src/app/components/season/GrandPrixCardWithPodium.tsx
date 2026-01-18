@@ -45,9 +45,9 @@ export default function GrandPrixCardWithPodium({ meetingInfo }: CardProps) {
     <>
       <div
         onClick={() => router.push(`/season/${meetingInfo.meeting_key}`)}
-        className="flex min-h-45.5 min-w-105 cursor-pointer flex-col justify-between rounded-[10px] bg-[#1A1A1A] p-4.5 font-semibold hover:bg-[#313131]"
+        className="flex min-h-45.5 w-full cursor-pointer flex-col justify-between rounded-[10px] bg-[#1A1A1A] p-4.5 font-semibold hover:bg-[#313131]"
       >
-        <div className="mb-5 flex justify-between">
+        <div className="mb-2.5 flex items-center justify-between sm:mb-5">
           <div className="flex flex-col gap-3">
             <p className="text-[12px]">
               <span className="mr-0.5">{meetingInfo.round}</span>
@@ -65,27 +65,27 @@ export default function GrandPrixCardWithPodium({ meetingInfo }: CardProps) {
                 {meetingInfo.country_kr_name}
               </p>
             </div>
-            <p className="text-[12px] text-[#8B8B8B]">
-              {meetingInfo.meeting_official_name}
-            </p>
           </div>
           <div className="flex shrink-0 flex-col items-end gap-0.5 text-[12px]">
             <p>{meetingInfo.date_start.split('T')[0]}</p>
             <span>{krStatus()}</span>
           </div>
         </div>
+        <p className="flex text-[10px] text-[#8B8B8B] sm:text-[12px]">
+          {meetingInfo.meeting_official_name}
+        </p>
         <div className="flex min-h-10 items-center justify-between">
           {meetingInfo.race_podium?.map((podium) => (
             <div
               key={podium.driver_code}
-              className="flex w-31.5 items-center gap-4.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold"
+              className="flex w-full items-center gap-2.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold sm:w-31.5 sm:gap-4.5"
             >
-              <p className="text-[12px] leading-none">
+              <p className="text-[10px] leading-none sm:text-[12px]">
                 {position(podium.position)}
               </p>
               <p className="text-[18px] leading-none">{podium.driver_code}</p>
               <div
-                className="h-6 w-6 shrink-0 rounded-full bg-contain bg-center bg-no-repeat"
+                className="h-5 w-5 shrink-0 rounded-full bg-contain bg-center bg-no-repeat sm:h-6 sm:w-6"
                 style={{
                   backgroundColor: podium.team_colour,
                   backgroundImage: `url(${podium.team_white_logo})`,

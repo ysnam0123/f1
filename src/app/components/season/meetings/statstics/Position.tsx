@@ -66,10 +66,13 @@ export default function Position({
     <>
       <table className="w-full table-fixed border-collapse whitespace-nowrap select-none sm:text-left">
         <thead>
-          <tr className="border-b border-white text-[20px] text-[#8B8B8B]">
-            <th className="w-[12%] py-3 text-center">번호</th>
-            <th className="w-[40%] py-3 pl-5 text-left sm:w-[30%]">드라이버</th>
-            <th className="w-[14%] py-3 text-center sm:w-[20%]">팀</th>
+          <tr className="border-b border-white text-[14px] text-[#8B8B8B] sm:text-[20px]">
+            <th className="w-[5%] py-3 text-center sm:w-[12%]">번호</th>
+            <th className="w-[20%] py-3 pl-5 text-left sm:w-[30%]">드라이버</th>
+            {/* 768 px 이상에서 보임 */}
+            <th className="hidden w-[14%] py-3 text-center sm:w-[20%] md:table-cell">
+              팀
+            </th>
             <th className="hidden w-[15%] py-3 text-center md:table-cell">
               출발 포지션
             </th>
@@ -107,12 +110,12 @@ export default function Position({
             >
               <td
                 style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
-                className="py-3 text-center text-[20px] font-bold"
+                className="py-3 text-center text-[14px] font-bold sm:text-[20px]"
               >
                 {position.driver_number}
               </td>
               <td className="py-3 font-bold">
-                <div className="group flex min-w-0 cursor-pointer items-center justify-center gap-3 pl-5 text-[16px] sm:justify-start sm:text-[18px]">
+                <div className="group flex min-w-0 cursor-pointer items-center justify-start gap-3 pl-5 text-[16px] sm:text-[18px]">
                   {position.headshot_url ? (
                     <DriverProfile
                       className="shrink-0 duration-200 group-hover:scale-110"
@@ -122,13 +125,22 @@ export default function Position({
                   ) : (
                     <DefaultDriverProfile />
                   )}
-                  <div className="relative flex min-w-0 gap-2">
-                    <div className="truncate">{position.kr_name}</div>
+                  <div className="relative flex min-w-0 flex-col md:flex-row">
+                    <div className="text-[13px] md:text-[18px]">
+                      <p className="truncate">{position.kr_name}</p>
+                    </div>
+                    <div
+                      style={{ borderLeftColor: position.team_colour }}
+                      className="block border-l-4 pl-1 text-[11px] font-medium md:hidden"
+                    >
+                      {position.team_kr_name}
+                    </div>
                   </div>
                 </div>
               </td>
-              {/* 팀열 */}
-              <td className="py-3">
+              {/* 팀명 */}
+              {/* 768 px 이상에서 보임 */}
+              <td className="hidden py-3 md:table-cell">
                 <div
                   className="group flex cursor-pointer items-center gap-2"
                   onClick={() => router.push(`/team/${position.team_slug}`)}

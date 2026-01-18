@@ -1,10 +1,9 @@
 'use client';
-import { SortedSessionResult, StartingGridWithDriver } from '@/types/meeting';
+import { StartingGridWithDriver } from '@/types/meeting';
 import DefaultDriverProfile from '../DefaultDriverProfile';
 import DriverProfile from '../DriverProfile';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { supabase } from '@/supabase/client';
 
 export default function StartingGridTable({
   results,
@@ -17,11 +16,12 @@ export default function StartingGridTable({
     <>
       <table className="w-full border-collapse select-none">
         <thead>
-          <tr className="border-b border-white text-center text-[20px] text-[#8B8B8B]">
-            <th className="w-15 py-4">포지션</th>
-            <th className="px-4 py-4">이름</th>
-            <th className="px-4 py-4">팀</th>
-            <th className="w-20 py-4">Lap Time</th>
+          <tr className="border-b border-white text-center text-[13px] text-[#8B8B8B] sm:text-[20px]">
+            <th className="w-[3%] py-3 sm:w-[8%]">포지션</th>
+            <th className="w-[8%] py-4 sm:w-[30%]">이름</th>
+            {/* 768 px 이상에서 보임 */}
+            <th className="hidden px-4 py-4 sm:w-[25%] md:table-cell">팀</th>
+            <th className="w-[10%] py-4">Lap Time</th>
           </tr>
         </thead>
         <tbody>
@@ -32,11 +32,11 @@ export default function StartingGridTable({
             >
               <td
                 style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
-                className="font- px-4 py-5 text-center text-[20px]"
+                className="px-0 py-5 text-center text-[14px] sm:px-4 sm:text-[20px]"
               >
                 {result.position}
               </td>
-              <td className="px-4 py-5 font-bold">
+              <td className="py-3 font-bold">
                 <div className="group flex cursor-pointer items-center justify-start gap-3 text-[18px]">
                   {result.headshot_url ? (
                     <DriverProfile
@@ -47,14 +47,23 @@ export default function StartingGridTable({
                   ) : (
                     <DefaultDriverProfile />
                   )}
-                  <div className="relative flex gap-3">
-                    <div className="truncate">{result.kr_name}</div>
-                    <div>{result.driver_number}</div>
-                    <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                  <div className="relative flex min-w-0 flex-col md:flex-row">
+                    <div className="flex gap-2 text-[13px] md:text-[18px]">
+                      <p className="truncate">{result.kr_name}</p>
+                      {/* 640px 이상에서 보임 */}
+                      <p className="hidden sm:block">{result.driver_number}</p>
+                    </div>
+                    <div
+                      style={{ borderLeftColor: result.team_colour }}
+                      className="block border-l-4 pl-1 text-[11px] font-medium md:hidden"
+                    >
+                      {result.team_kr_name}
+                    </div>
                   </div>
                 </div>
               </td>
-              <td className="px-4 py-5">
+              {/* 768 px 이상에서 보임 */}
+              <td className="hidden px-4 py-3 md:table-cell">
                 <div
                   className="group flex cursor-pointer items-center gap-2 text-[18px]"
                   onClick={() => router.push(`/team/${result.team_slug}`)}
@@ -71,13 +80,10 @@ export default function StartingGridTable({
                     />
                   </div>
 
-                  <span className="relative">
-                    {result.team_kr_name}
-                    <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
-                  </span>
+                  <span className="relative">{result.team_kr_name}</span>
                 </div>
               </td>
-              <td className="px-4 py-5 text-center text-[22px]">
+              <td className="py-3 text-center text-[15px] sm:text-[22px]">
                 {result.lap_duration ? `${result.lap_duration}` : 'null'}
               </td>
             </tr>

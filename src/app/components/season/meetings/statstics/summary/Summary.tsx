@@ -26,7 +26,7 @@ export default function Summary({
 }) {
   return (
     <>
-      <div className="grid gap-10 rounded-xl bg-[#1A1A1A] pt-4 sm:grid-cols-2 sm:px-10">
+      <div className="grid gap-5 rounded-xl bg-none pt-4 sm:grid-cols-2 sm:gap-10 sm:bg-[#1A1A1A] sm:px-10">
         <WeatherSummary weather={weather} />
         <Top3Position
           setSelectedTab={setSelectedTab}

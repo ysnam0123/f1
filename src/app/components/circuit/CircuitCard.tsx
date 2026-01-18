@@ -1,14 +1,20 @@
+'use client';
 import { CircuitView } from '@/types/circuit';
 import { Crown } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface PageProps {
   data: CircuitView;
 }
 export default function CircuitCard({ data }: PageProps) {
+  const router = useRouter();
   return (
     <>
-      <article className="flex cursor-pointer flex-col select-none">
+      <article
+        onClick={() => router.push(`/circuit/${data.circuit_key}`)}
+        className="flex cursor-pointer flex-col select-none"
+      >
         <Image
           src={data.circuit_bg}
           alt="bg"

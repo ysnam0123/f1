@@ -14,6 +14,7 @@ import { PitView } from '@/app/api/f1/race/pit';
 import { Stints } from '@/app/api/f1/race/stints';
 import { RaceControl } from '@/app/api/f1/race/raceControl';
 import { DriverPositionGain } from '@/app/api/f1/race/position';
+import { RaceStatsticsTab } from '@/types/meeting';
 
 export default function ResultStatstics({
   totalLaps,
@@ -22,6 +23,9 @@ export default function ResultStatstics({
   stints,
   raceControl,
   positionGain,
+  tabs,
+  selectedTab,
+  setSelectedTabAction,
 }: {
   totalLaps: number;
   weather: WeatherSessionSummary;
@@ -29,14 +33,10 @@ export default function ResultStatstics({
   stints: Stints[];
   raceControl: RaceControl[];
   positionGain: DriverPositionGain[];
+  tabs: RaceStatsticsTab[];
+  selectedTab: string;
+  setSelectedTabAction: (tab: string) => void;
 }) {
-  const [selectedTab, setSelectedTab] = useState('전체 요약');
-  const tabs = [
-    { label: '전체 요약', icon: overview },
-    { label: '포지션', icon: graph },
-    { label: '피트 스탑', icon: pitstop },
-    { label: '이벤트', icon: retirement },
-  ];
   const renderTabContent = () => {
     switch (selectedTab) {
       case '전체 요약':
@@ -47,7 +47,7 @@ export default function ResultStatstics({
             weather={weather}
             SafetyCarNumber={deployCount}
             raceControl={raceControl}
-            setSelectedTab={setSelectedTab}
+            setSelectedTab={setSelectedTabAction}
             positionGain={positionGain}
           />
         );
@@ -71,7 +71,7 @@ export default function ResultStatstics({
     <>
       <section className="select-none">
         <h1
-          className="mb-12.5 text-[40px]"
+          className="mb-12.5 text-[16px] sm:text-[40px]"
           style={{ fontFamily: 'PartialSans' }}
         >
           STATSTICS
@@ -82,7 +82,7 @@ export default function ResultStatstics({
               <li
                 className={`${selectedTab === tab.label ? 'border-b-2 border-[#BFBFBF]' : ''} flex h-13 w-full max-w-71.25 cursor-pointer items-center justify-center gap-1 hover:bg-[#393939]`}
                 key={tab.label}
-                onClick={() => setSelectedTab(tab.label)}
+                onClick={() => setSelectedTabAction(tab.label)}
               >
                 <Image
                   src={tab.icon}

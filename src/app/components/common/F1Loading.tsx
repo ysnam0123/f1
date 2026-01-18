@@ -16,7 +16,7 @@ export default function F1Loading({
     <>
       <div
         className={twMerge(
-          'flex h-100 w-100 flex-col items-center justify-center gap-5',
+          'flex h-50 w-50 flex-col items-center justify-center gap-5 sm:h-100 sm:w-100',
           className,
         )}
       >

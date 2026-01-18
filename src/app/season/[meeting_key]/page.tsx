@@ -161,14 +161,14 @@ export default function Page() {
         {!isPageReady && (
           <>
             {' '}
-            <div className="flex h-100 items-center justify-center">
+            <div className="flex h-100 items-center justify-center sm:h-100">
               <F1Loading loadingText="로딩 중..." />
             </div>
           </>
         )}
         {isPageReady && (
           <>
-            <section className="mx-auto max-w-285">
+            <section className="mx-auto sm:max-w-285 sm:px-0">
               <>
                 {isSelected && (
                   <SessionNav
@@ -177,20 +177,22 @@ export default function Page() {
                     setIsSelectedAction={setIsSelected}
                   />
                 )}
-                {isSelected === 'Race' && startingGridData ? (
-                  <RaceResultSection
-                    sessionKey={raceSessionKey}
-                    sessionResults={sessionResults}
-                    startingGrid={startingGridData}
-                  />
-                ) : (
-                  selectedSessionKey && (
-                    <SessionResultSection
-                      isPending={sessionResultLoading}
+                <div className="px-5">
+                  {isSelected === 'Race' && startingGridData ? (
+                    <RaceResultSection
+                      sessionKey={raceSessionKey}
                       sessionResults={sessionResults}
+                      startingGrid={startingGridData}
                     />
-                  )
-                )}
+                  ) : (
+                    selectedSessionKey && (
+                      <SessionResultSection
+                        isPending={sessionResultLoading}
+                        sessionResults={sessionResults}
+                      />
+                    )
+                  )}
+                </div>
               </>
             </section>
           </>

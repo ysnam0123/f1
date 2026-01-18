@@ -1,3 +1,5 @@
+import { StaticImageData } from 'next/image';
+
 // API RAW
 export interface ApiMeeting {
   meeting_key: number;
@@ -132,4 +134,10 @@ export interface StartingGridWithDriver {
   team_name: string;
   team_slug: string;
   white_logo: string;
+}
+
+// 레이스 화면의 분석탭
+export interface RaceStatsticsTab {
+  label: string;
+  icon: StaticImageData;
 }

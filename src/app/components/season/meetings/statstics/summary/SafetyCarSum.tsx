@@ -52,12 +52,25 @@ export default function SafetyCarSummary({
   }
 
   return (
-    <div className="flex max-w-125 flex-col gap-3 rounded-4xl border border-[#262626] bg-[#161616] px-7.5 py-5">
+    <div className="flex max-w-125 flex-col gap-3 rounded-4xl border border-[#262626] bg-[#161616] px-3 py-3.75 sm:px-7.5 sm:py-5">
       <div className="mb-4 flex items-center justify-between text-gray-400">
         <h1 className="flex items-center gap-2">
-          <Image src="/icons/safety.svg" alt="icon" width={36} height={36} />
+          <Image
+            src="/icons/safety.svg"
+            alt="icon"
+            width={36}
+            height={36}
+            className="desktop"
+          />
+          <Image
+            src="/icons/safety.svg"
+            alt="icon"
+            width={20}
+            height={20}
+            className="mobile"
+          />
           <p
-            className="text-[20px]"
+            className="text-[13px] sm:text-[20px]"
             style={{ fontFamily: 'paperlogy', fontWeight: 500 }}
           >
             레이스 중립화
@@ -65,7 +78,7 @@ export default function SafetyCarSummary({
         </h1>
         <button
           onClick={() => setSelectedTab('이벤트')}
-          className="cursor-pointer text-[18px] hover:text-[#cacaca]"
+          className="cursor-pointer text-[12px] hover:text-[#cacaca] sm:text-[18px]"
         >
           전체보기
         </button>
@@ -75,11 +88,13 @@ export default function SafetyCarSummary({
         style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
       >
         <div className="flex flex-col">
-          <span className="mb-3 text-[36px] leading-none">
+          <span className="mb-3 text-[18px] leading-none sm:text-[36px]">
             {safetyCarCount}
-            <span className="ml-2 text-[18px] text-gray-400">세이프티 카</span>
+            <span className="ml-2 text-[14px] text-gray-400 sm:text-[18px]">
+              세이프티 카
+            </span>
             {redFlagCount > 0 && (
-              <span className="ml-2 text-[18px] text-red-500">
+              <span className="ml-2 text-[14px] text-red-500 sm:text-[18px]">
                 · {redFlagCount} 레드 플래그
               </span>
             )}
@@ -88,13 +103,13 @@ export default function SafetyCarSummary({
       </div>
 
       {/* 요약 문구 */}
-      <p className="mt-2 text-center text-[20px] text-gray-300">
+      <p className="mt-2 text-center text-[14px] text-gray-300 sm:text-[20px]">
         {summaryText}
       </p>
 
       {/* 하단 보조 정보 */}
       {safetyCarLaps > 0 && (
-        <p className="text-center text-[13px] text-gray-500">
+        <p className="text-left text-[10px] text-gray-500 sm:text-[13px]">
           Safety Car Laps · {safetyCarLaps} / {totalLaps}
         </p>
       )}

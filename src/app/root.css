@@ -1,12 +1,14 @@
 :root {
   /* 색상 */
-  --color-primary: #4caf50;
+  --color-bg-primary: #0b0b0b;
   --color-primary-600: #3d8b3f;
   --color-main-black: #111111;
   --color-text: #333333;
   --color-muted: #6f6f6f;
 
   --color-box-bg: #111111;
+  --color-box-hover: #2f2f2f;
+  --color-box-active: #131313;
   --color-box-border: #4c4c4c;
 
   --color-border: #4a4a4a;
@@ -19,10 +21,18 @@
   --color-card-bg: #171717;
   --color-card-hover: #333333;
 
+  --color-button-bg: #111111;
+  --color-button-border: #242424;
+  --color-button-hover: #171717;
+  --color-button-active: #252525;
+
   /* 텍스트 */
   --color-title: #c3c3c3;
   --color-title-hover: #f8f8f8;
   --color-sub-text: #787575;
+
+  /* 테이블 */
+  --color-table-head-bg: #111111;
 
   /* 그림자 */
 
@@ -40,3 +50,11 @@
   --article-title: #3b3b3b;
   --article-content: #777777;
 }
+
+/* 
+- sm: 640px
+- md: 768px
+- lg: 1024px
+- xl: 1280px
+- 2xl: 1536px 
+*/

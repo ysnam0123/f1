@@ -4,6 +4,7 @@ import './root.css';
 import Header from './components/common/ui/Header';
 import Footer from './components/common/ui/Footer';
 import Provider from './Provider';
+import MobileFooter from './components/mobile/MobileFooter';
 
 export const metadata: Metadata = {
   title: 'AfterLap',
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Header />
           <div className="min-h-screen">{children}</div>
           <Footer />
+          <MobileFooter />
         </Provider>
       </body>
     </html>

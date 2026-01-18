@@ -1,13 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useYearStore } from '@/store/YearStore';
 import SeasonChangeButton from '../components/common/SeasonChangeButton';
-import {
-  fetchMeetingsFromAPI,
-  syncMeetingsFromAPI,
-  useMeetings,
-} from '../api/meeting/Meetings';
 import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import F1Loading from '../components/common/F1Loading';
 import GrandPrixCardWithPodium from '../components/season/GrandPrixCardWithPodium';
@@ -17,23 +12,12 @@ export default function Page() {
   const selectedYear = useYearStore((s) => s.selectedYear);
   const setSelectedYear = useYearStore((s) => s.setSelectedYear);
   const years = [2023, 2024, 2025, 2026];
-  const {
-    data: meetings,
-    isPending,
-    error,
-  } = useMeetingsWithStatusAndPodium(selectedYear);
-
-  // const { data: seaon2026, isPending: s2026pending } = useMeetings(2026);
-  // if (seaon2026) {
-  //   console.log('2026:', seaon2026);
-  // }
-  // useEffect(() => {
-  //   fetchMeetingsFromAPI(2026);
-  // }, []);
+  const { data: meetings, isPending } =
+    useMeetingsWithStatusAndPodium(selectedYear);
 
   return (
     <>
-      <main className="min-h-screen">
+      <main className="min-h-screen px-5 sm:px-0">
         {/* <SeasonHeroBox /> */}
         <section className="mx-auto w-full max-w-350">
           {isPending && (
@@ -52,7 +36,7 @@ export default function Page() {
                 selectedYear={selectedYear}
                 setSelectedYear={setSelectedYear}
               />
-              <div className="grid grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-10">
                 {meetings.map((meeting) => (
                   <GrandPrixCardWithPodium
                     key={meeting.meeting_key}

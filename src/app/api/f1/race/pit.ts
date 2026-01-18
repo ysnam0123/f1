@@ -39,33 +39,33 @@ export interface PitView {
   white_logo: string;
 }
 
-// interface TeamPitStopRow {
-//   // race context
-//   date: string;               // YYYY-MM-DD
-//   meeting_key: number;
-//   session_key: number;
-//   year: number;
+interface TeamPitStopRow {
+  // race context
+  date: string; // YYYY-MM-DD
+  meeting_key: number;
+  session_key: number;
+  year: number;
 
-//   // team
-//   team_slug: string | null;
-//   team_name: string | null;
-//   team_kr_name: string | null;
-//   team_colour: string | null;
-//   main_logo: string | null;
-//   white_logo: string | null;
+  // team
+  team_slug: string | null;
+  team_name: string | null;
+  team_kr_name: string | null;
+  team_colour: string | null;
+  main_logo: string | null;
+  white_logo: string | null;
 
-//   // driver
-//   driver_id: number;
-//   driver_number: number;
-//   full_name: string;
-//   kr_name: string | null;
+  // driver
+  driver_id: number;
+  driver_number: number;
+  full_name: string;
+  kr_name: string | null;
 
-//   // pit stop
-//   lap_number: number;
-//   stop_duration: number | null;   // ⭐ 핵심 기준
-//   lane_duration: number | null;
-//   pit_duration: number | null;
-// }
+  // pit stop
+  lap_number: number;
+  stop_duration: number | null; // ⭐ 핵심 기준
+  lane_duration: number | null;
+  pit_duration: number | null;
+}
 
 // ===== API =====
 export const fetchPitDataFromAPI = async (
@@ -132,15 +132,15 @@ export const getPitstopView = async (sessionKey: number) => {
 };
 
 // ===== 팀 별 피트스탑 View =====
-// export const getTeamPitstopView = async (sessionKey: number) => {
-//   const { data, error } = await supabase
-//   .from('v_pit_stops_by_team')
-//   .select('*')
-//   .eq('session_key', sessionKey);
+export const getTeamPitstopView = async (sessionKey: number) => {
+  const { data, error } = await supabase
+    .from('v_pit_stops_by_team')
+    .select('*')
+    .eq('session_key', sessionKey);
 
-//   if (error) throw error;
-//   return data;
-// };
+  if (error) throw error;
+  return data;
+};
 
 // ===== React Query =====
 export function usePitData(sessionKey: number | null) {
@@ -156,15 +156,15 @@ export function usePitData(sessionKey: number | null) {
   });
 }
 
-// export function useTeamPitData(sessionKey: number | null) {
-//   return useQuery<TeamPitStopRow[]>({
-//     queryKey: ['pit_stops', sessionKey],
-//     staleTime: 1000 * 60 * 60,
-//     enabled: !!sessionKey,
+export function useTeamPitData(sessionKey: number | null) {
+  return useQuery<TeamPitStopRow[]>({
+    queryKey: ['pit_stops', sessionKey],
+    staleTime: 1000 * 60 * 60,
+    enabled: !!sessionKey,
 
-//     queryFn: async () => {
-//       await ensurePitData(sessionKey!);
-//       return getTeamPitstopView(sessionKey!);
-//     },
-//   });
-// }
+    queryFn: async () => {
+      await ensurePitData(sessionKey!);
+      return getTeamPitstopView(sessionKey!);
+    },
+  });
+}

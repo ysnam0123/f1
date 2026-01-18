@@ -16,7 +16,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <>
-      <div className="mb-4 flex flex-col px-2.5 py-2.5">
+      <div className="mb-4 flex h-12.5 flex-col px-2.5 py-2.5 sm:h-23.5">
         <LogoLoop
           logos={loopLogos}
           speed={20}

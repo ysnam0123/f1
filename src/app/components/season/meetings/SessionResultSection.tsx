@@ -20,17 +20,21 @@ export default function SessionResultSection({
   return (
     <>
       {!isPending && (
-        <table className="w-full table-fixed border-collapse select-none">
-          <thead>
-            <tr className="border-b border-white text-[20px] text-[#8B8B8B]">
-              <th className="w-25 shrink-0 px-4 py-5">등수</th>
-              <th className="max-w-70 px-4 py-5 text-left">이름</th>
-              <th className="max-w-70 px-4 py-5 text-left">팀</th>
-              <th className="w-20 px-4 py-5">Laps</th>
-              <th className="w-28 px-4 py-5">시간</th>
+        <table className="mt-3 w-full table-fixed border-collapse select-none">
+          <thead className="bg-(--color-table-head-bg)">
+            <tr className="border-b border-[#1C1A1D] text-[14px] text-[#8B8B8B] sm:text-[20px]">
+              <th className="w-[10%] shrink-0 px-4 py-3 sm:w-[10%]">등수</th>
+              <th className="w-[30%] py-3 text-left sm:w-[30%]">이름</th>
+              {/* 768 px 이상에서 보임 */}
+              <th className="hidden py-3 text-left sm:w-[25%] md:table-cell">
+                팀
+              </th>
+              {/* 768 px 이상에서 보임 */}
+              <th className="hidden py-3 sm:w-[8%] md:table-cell">Laps</th>
+              <th className="w-[15%] py-3">시간</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-[#000000]">
             {sessionResults.map((result) => (
               <tr
                 key={result.driver_number}
@@ -38,12 +42,12 @@ export default function SessionResultSection({
               >
                 <td
                   style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
-                  className="font- px-4 py-5 text-center text-[22px]"
+                  className="py-3 text-center text-[14px] sm:text-[22px]"
                 >
                   {getDisplayPosition(result)}
                 </td>
-                <td className="px-4 py-5 font-bold">
-                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[18px]">
+                <td className="py-3 font-bold">
+                  <div className="group flex cursor-pointer items-center justify-start gap-3 text-[14px] sm:text-[18px]">
                     {result.headshot_url ? (
                       <DriverProfile
                         className="duration-200 group-hover:scale-110"
@@ -53,14 +57,25 @@ export default function SessionResultSection({
                     ) : (
                       <DefaultDriverProfile />
                     )}
-                    <div className="relative flex gap-3">
-                      <div className="truncate">{result.kr_name}</div>
-                      <div>{result.driver_number}</div>
-                      <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-current transition-all duration-200 group-hover:w-full" />
+                    <div className="relative flex min-w-0 flex-col md:flex-row">
+                      <div className="flex gap-2 text-[13px] md:text-[18px]">
+                        <p className="truncate">{result.kr_name}</p>
+                        {/* 640px 이상에서 보임 */}
+                        <p className="hidden sm:block">
+                          {result.driver_number}
+                        </p>
+                      </div>
+                      <div
+                        style={{ borderLeftColor: result.team_colour }}
+                        className="block border-l-4 pl-1 text-[11px] font-medium md:hidden"
+                      >
+                        {result.team_kr_name}
+                      </div>
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-5">
+                {/* 768 px 이상에서 보임 */}
+                <td className="hidden py-3 md:table-cell">
                   <div
                     className="group flex cursor-pointer items-center gap-2 text-[18px]"
                     onClick={() => router.push(`/team/${result.team_slug}`)}
@@ -83,10 +98,11 @@ export default function SessionResultSection({
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-5 text-center text-[22px]">
+                {/* 768 px 이상에서 보임 */}
+                <td className="hidden py-3 text-center text-[22px] md:table-cell">
                   {result.number_of_laps}
                 </td>
-                <td className="py-5 text-center text-[20px]">
+                <td className="py-3 text-center text-[20px]">
                   + {result.gap_to_leader}
                 </td>
               </tr>

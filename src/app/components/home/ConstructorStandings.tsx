@@ -16,7 +16,7 @@ export default function ConstructorStandings({ data }: TS) {
   return (
     <>
       <section className="w-full">
-        <div className="mb-5 flex items-center justify-between pr-3">
+        <div className="mb-3 flex items-center justify-between pr-3 sm:mb-5">
           <h2 className="text-[18px] font-semibold text-(--color-title)">
             팀 랭킹
           </h2>

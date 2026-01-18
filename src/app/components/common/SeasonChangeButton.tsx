@@ -21,11 +21,11 @@ export default function SeasonChangeButton({
       <div className="relative z-30">
         <button
           onClick={() => setOpened(!opened)}
-          className="mb-10 flex h-12.5 w-36 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-white text-[20px] font-bold hover:bg-[#4b4b4b]"
+          className="mb-2.5 flex h-8 w-21 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-(--color-box-border) text-[14px] font-bold sm:mb-10 sm:h-12.5 sm:w-36 sm:text-[20px] sm:hover:bg-[#4b4b4b]"
         >
           <span>{selectedYear}</span>
           <ChevronDown
-            className={`transition-transform ${opened ? 'rotate-180' : ''}`}
+            className={`h-4.5 w-4.5 transition-transform sm:h-6 sm:w-6 ${opened ? 'rotate-180' : ''}`}
           />
         </button>
         {opened && (

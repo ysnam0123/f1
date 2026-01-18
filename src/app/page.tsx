@@ -75,7 +75,7 @@ export default function Page() {
 
   return (
     <>
-      <section className="relative mx-auto flex max-w-300 flex-col gap-12.5 px-10 select-none">
+      <section className="relative mx-auto flex max-w-300 flex-col gap-5 px-5 select-none sm:gap-12.5">
         <div className="desktop">
           <Image
             src={'/homeImg.svg'}
@@ -85,7 +85,9 @@ export default function Page() {
             className="absolute right-10 -z-30"
           />
         </div>
-        <HomeLogo />
+        <div className="desktop">
+          <HomeLogo />
+        </div>
         <NextSession data={nextMeeting} loading={nextMeetingLoading} />
         {DriverRankingLoading && (
           <div className="flex h-100 items-center justify-center">

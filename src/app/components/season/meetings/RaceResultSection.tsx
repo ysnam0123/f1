@@ -1,6 +1,9 @@
 'use client';
-import Image from 'next/image';
-import StatsticsCard from './StatsticsCard';
+import graph from '/public/icons/graph.svg';
+import pitstop from '/public/icons/pitstop.svg';
+import retirement from '/public/icons/retirement.svg';
+import overview from '/public/icons/overview.svg';
+import checker from '/public/icons/checker.svg';
 import PodiumCard from './PodiumCard';
 import { RaceResults } from '@/types/meeting';
 import { useRouter } from 'next/navigation';
@@ -15,6 +18,11 @@ import { usePitData } from '@/app/api/f1/race/pit';
 import { useWeatherSummary } from '@/app/api/f1/race/weather';
 import F1Loading from '../../common/F1Loading';
 import { usePositionData } from '@/app/api/f1/race/position';
+import RaceTabs from '../../mobile/meeting/raceTabs';
+import Summary from './statstics/summary/Summary';
+import Position from './statstics/Position';
+import PitStop from './statstics/PitStop';
+import Events from './statstics/Events';
 
 export default function RaceResultSection({
   sessionKey,
@@ -22,6 +30,18 @@ export default function RaceResultSection({
   // isPending,
   startingGrid,
 }: RaceResults) {
+  const tabs = [
+    { label: '전체 요약', icon: overview },
+    { label: '포지션', icon: graph },
+    { label: '피트 스탑', icon: pitstop },
+    { label: '이벤트', icon: retirement },
+  ];
+  const mobileTabs = [
+    { label: '레이스 결과', icon: checker },
+    { label: '스타팅 그리드', icon: checker },
+  ];
+  const [selectedTab, setSelectedTab] = useState('전체 요약');
+  const [mobileSelectedTab, mobileSetSelectedTab] = useState('레이스 결과');
   const statisticsRef = useRef<HTMLDivElement | null>(null);
   const [isShow, setIsShow] = useState(false);
   const router = useRouter();
@@ -38,6 +58,9 @@ export default function RaceResultSection({
   // race control data
   const { data: sessionRaceControl, isLoading: raceControlLoading } =
     useRaceControlData(sessionKey);
+  const deployCount = sessionRaceControl?.filter(
+    (e) => e.category === 'SafetyCar' && e.message === 'SAFETY CAR DEPLOYED',
+  ).length;
 
   // pit stop data
   const {
@@ -46,6 +69,7 @@ export default function RaceResultSection({
     isError: pitError,
   } = usePitData(sessionKey);
 
+  // groupby를 아직 안해서 못씀
   // const {
   //   data: teamPitData,
   //   isLoading: teamPitLoading,
@@ -85,59 +109,92 @@ export default function RaceResultSection({
   if (weatherSummary) {
     console.log('weatherSummary 불러옴:', weatherSummary);
   }
+  const mobileRenderMap: Record<string, React.ReactNode> = {
+    '레이스 결과': <RaceResultTable results={sessionResults} />,
+    '스타팅 그리드': <StartingGridTable results={startingGrid} />,
+    '전체 요약': (
+      <Summary
+        pit={pitData!}
+        totalLaps={totalLaps!}
+        weather={weatherSummary!}
+        SafetyCarNumber={deployCount!}
+        raceControl={sessionRaceControl!}
+        setSelectedTab={mobileSetSelectedTab}
+        positionGain={driverPositionGain!}
+      />
+    ),
+    포지션: <Position positionGain={driverPositionGain!} />,
+    '피트 스탑': <PitStop pit={pitData!} />,
+    이벤트: <Events />,
+  };
+
   return (
     <>
       {/* {isPending && <></>} */}
-      <div className="my-5 flex items-end justify-center gap-7.5">
+      <div className="my-0 flex items-end justify-center gap-7.5 sm:my-5">
         {second && <PodiumCard result={second} rank={2} />}
         {first && <PodiumCard result={first} rank={1} />}
         {third && <PodiumCard result={third} rank={3} />}
       </div>
-      <div className="flex items-center justify-between">
-        <button
-          onClick={() => setIsShow(!isShow)}
-          className={`${isShow ? 'bg-[#4B4B4B]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
-        >
-          스타팅 그리드
-        </button>
-        <button
-          onClick={() => {
-            statisticsRef.current?.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-          }}
-          className={`mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] bg-[#212121] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
-        >
-          경기 분석 보기
-        </button>
+      <div className="mobile mt-3">
+        <RaceTabs
+          selectedTab={mobileSelectedTab}
+          setSelectedTabAction={mobileSetSelectedTab}
+          tabs={tabs}
+          mobileTabs={mobileTabs}
+        />
+        <div>{mobileRenderMap[mobileSelectedTab]}</div>
       </div>
-      <div className="mb-12.5 min-h-50 max-w-285 rounded-[10px] bg-[#1A1A1A] px-17.5 py-5">
-        {!isShow ? (
-          <>
-            <RaceResultTable results={sessionResults} />
-            <DnsDnfDsqInfo />
-          </>
+      <div className="desktop">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => setIsShow(!isShow)}
+            className={`${isShow ? 'bg-[#4B4B4B]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
+          >
+            스타팅 그리드
+          </button>
+          <button
+            onClick={() => {
+              statisticsRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }}
+            className={`mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] bg-[#212121] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
+          >
+            경기 분석 보기
+          </button>
+        </div>
+        <div className="mb-5 min-h-50 w-full rounded-[10px] bg-[#1A1A1A] px-5 sm:mb-12.5 sm:max-w-285 sm:px-17.5 sm:py-5">
+          {!isShow ? (
+            <>
+              <RaceResultTable results={sessionResults} />
+              <DnsDnfDsqInfo />
+            </>
+          ) : (
+            <StartingGridTable results={startingGrid} />
+          )}
+        </div>
+        {summaryLoading ? (
+          <div className="flex h-100 items-center justify-center">
+            <F1Loading loadingText="정보 불러오는 중..." />
+          </div>
         ) : (
-          <StartingGridTable results={startingGrid} />
+          <div ref={statisticsRef}>
+            <ResultStatstics
+              tabs={tabs}
+              totalLaps={totalLaps!}
+              weather={weatherSummary!}
+              pit={pitData!}
+              stints={sessionStints!}
+              raceControl={sessionRaceControl!}
+              positionGain={driverPositionGain!}
+              selectedTab={selectedTab}
+              setSelectedTabAction={setSelectedTab}
+            />
+          </div>
         )}
       </div>
-      {summaryLoading ? (
-        <div className="flex h-100 items-center justify-center">
-          <F1Loading loadingText="정보 불러오는 중..." />
-        </div>
-      ) : (
-        <div ref={statisticsRef}>
-          <ResultStatstics
-            totalLaps={totalLaps!}
-            weather={weatherSummary!}
-            pit={pitData!}
-            stints={sessionStints!}
-            raceControl={sessionRaceControl!}
-            positionGain={driverPositionGain!}
-          />
-        </div>
-      )}
     </>
   );
 }
