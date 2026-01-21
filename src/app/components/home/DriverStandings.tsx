@@ -55,10 +55,11 @@ export default function DriverStandings({ data }: DS) {
       <div className="min-h-91 w-full rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
         {/* Header */}
         <div className="mb-3 border-b border-white/10 pb-2">
-          <div className="grid grid-cols-[60px_1fr_1fr_80px] text-xs text-white/60 sm:text-sm">
+          <div className="grid grid-cols-[60px_1fr_80px] pr-3 text-xs text-white/60 sm:text-sm">
             <span>등수</span>
             <span>선수</span>
-            <span className="text-center">팀</span>
+            {/* 768 px 이상에서 보임 */}
+            <span className="hidden text-center md:block">팀</span>
             <span className="text-right">포인트</span>
           </div>
         </div>
@@ -68,7 +69,7 @@ export default function DriverStandings({ data }: DS) {
           {data.map((item) => (
             <div
               key={item.rank}
-              className="grid h-16 grid-cols-[6px_50px_2fr_1fr_30px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_1fr_80px]"
+              className="grid h-16 grid-cols-[6px_50px_1fr_1fr] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_1fr_80px]"
             >
               {/* Team Color Bar */}
               <div
@@ -92,13 +93,23 @@ export default function DriverStandings({ data }: DS) {
                     alt="driver"
                   />
                 </div>
-                <span className="truncate text-sm font-medium text-white sm:text-base">
-                  {item.kr_name}
-                </span>
+                <div className="flex flex-col md:flex-row">
+                  <div className="flex gap-2 text-[13px] md:text-[18px]">
+                    <span className="truncate text-sm font-medium text-white sm:text-base">
+                      {item.kr_name}
+                    </span>
+                  </div>
+                  <div
+                    style={{ borderLeftColor: item.team_colour }}
+                    className="block border-l-4 pl-1 text-[11px] font-medium md:hidden"
+                  >
+                    {item.team_kr_name}
+                  </div>
+                </div>
               </div>
 
               {/* Team */}
-              <div className="truncate text-center text-sm text-white/80 sm:text-base">
+              <div className="hidden truncate text-center text-sm text-white/80 sm:text-base md:block">
                 {item.team_kr_name}
               </div>
 

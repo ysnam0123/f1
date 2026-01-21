@@ -1,15 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import f1 from '/public/f1.png';
 import logo from '/public/AfterLapLogo.svg';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TeamBox from './dropdown/TeamBox';
 import DriverBox from './dropdown/DriverBox';
 import { ChevronDown } from 'lucide-react';
-import LogoLoop from '@/components/LogoLoop';
-import { loopLogos } from '@/components/TeamLogoLoop';
 export default function Header() {
   const [openTeam, setOpenTeam] = useState(false);
   const [openDriver, setOpenDriver] = useState(false);
@@ -17,17 +14,6 @@ export default function Header() {
   return (
     <>
       <div className="mb-4 flex h-12.5 flex-col px-2.5 py-2.5 sm:h-23.5">
-        <LogoLoop
-          logos={loopLogos}
-          speed={20}
-          direction="left"
-          logoHeight={28}
-          gap={40}
-          hoverSpeed={0}
-          scaleOnHover
-          ariaLabel="team logos"
-          className="desktop"
-        />
         <div className="flex items-center gap-17.5 select-none sm:px-17.5">
           <Image
             src={logo}

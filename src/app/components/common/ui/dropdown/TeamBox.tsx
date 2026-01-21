@@ -1,11 +1,10 @@
-'use client';
 // import { Team as TeamType } from '@/types/team';
 import { teams } from '@/data/teams';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
-  className,
+  // className,
   onMouseLeave,
 }: {
   className?: string;
@@ -14,7 +13,7 @@ export default function TeamBox({
   const router = useRouter();
   return (
     <div
-      className="absolute top-32.5 left-0 z-100 flex min-h-120 w-screen justify-center bg-[#1a1a1a] px-12.5 py-12.5 select-none"
+      className="absolute top-22 left-0 z-100 flex min-h-120 w-screen justify-center bg-[#1a1a1a] px-12.5 py-12.5 select-none"
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-8">

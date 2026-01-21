@@ -1,6 +1,5 @@
 // import { Team as TeamType } from '@/types/team';
 import { teams } from '@/data/teams';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
@@ -16,10 +15,10 @@ export default function TeamBox({
   return (
     <>
       <div
-        className="absolute top-[130px] left-0 z-100 min-h-[400px] w-screen bg-[#1a1a1a] px-[50px] py-10 select-none"
+        className="absolute top-22 left-0 z-100 min-h-100 w-screen bg-[#1a1a1a] px-12.5 py-10 select-none"
         onMouseLeave={onMouseLeave}
       >
-        <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-x-4 gap-y-6">
+        <div className="mx-auto grid max-w-360 grid-cols-4 gap-x-4 gap-y-6">
           {teams.map((team) =>
             team.drivers.map((driver) => (
               <div
@@ -28,7 +27,7 @@ export default function TeamBox({
                   router.push(`/driver/${driver.driverSlug}`);
                 }}
                 key={driver.name}
-                className="flex min-h-8 cursor-pointer items-center gap-5 rounded-[8px] px-1 py-2"
+                className="flex min-h-8 cursor-pointer items-center gap-5 rounded-xl px-1 py-2"
                 style={{
                   transition: 'background-color 0.2s',
                 }}

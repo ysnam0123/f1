@@ -17,10 +17,10 @@ export default function ConstructorStandings({ data }: TS) {
     <>
       <section className="w-full">
         <div className="mb-3 flex items-center justify-between pr-3 sm:mb-5">
-          <h2 className="text-[18px] font-semibold text-(--color-title)">
+          <h2 className="text-[14px] font-semibold text-(--color-title) sm:text-[18px]">
             팀 랭킹
           </h2>
-          <button className="cursor-pointer text-[16px] text-(--color-title) hover:text-[#F8F8F8]">
+          <button className="cursor-pointer text-[12px] text-(--color-title) hover:text-[#F8F8F8] sm:text-[16px]">
             전체보기
           </button>
         </div>
@@ -39,7 +39,7 @@ export default function ConstructorStandings({ data }: TS) {
             {data.map((item) => (
               <div
                 key={item.rank}
-                className="grid h-16 grid-cols-[6px_54px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
+                className="grid h-16 grid-cols-[6px_40px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
               >
                 {/* Team Color Bar */}
                 <div
@@ -48,7 +48,7 @@ export default function ConstructorStandings({ data }: TS) {
                 />
 
                 {/* Rank */}
-                <div className="text-center text-sm font-semibold text-white sm:text-base">
+                <div className="text-center text-[16px] font-semibold text-white sm:text-base">
                   {item.rank}
                 </div>
 

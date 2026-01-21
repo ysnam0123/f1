@@ -98,10 +98,9 @@ export default function Page() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <ConstructorStandings data={TData!} />
             <DriverStandings data={DRData!} />
-            <HomeDriver />
-            <CircuitGrid data={CData} />
           </div>
         )}
+        <CircuitGrid data={CData} />
         <HighLights />
       </section>
     </>
