@@ -6,14 +6,12 @@ import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import ConstructorStandings from './components/home/ConstructorStandings';
 import DriverStandings from './components/home/DriverStandings';
 import CircuitGrid from './components/home/CircuitGrid';
-import HomeDriver from './components/home/HomeDriver';
 import HomeLogo from './components/home/HomeLogo';
 import NextSession from './components/home/NextSession';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
-import { supabase } from '@/supabase/client';
+import { useMemo } from 'react';
 import { useDriverRankingData } from './api/f1/ranking/driverRanking';
-import { useCircuitData, useCircuitViewData } from './api/meeting/Circuit';
+import { useCircuitViewData } from './api/meeting/Circuit';
 import F1Loading from './components/common/F1Loading';
 import {
   groupTeamSeasonRanking,
