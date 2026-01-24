@@ -30,10 +30,10 @@ export default function SeasonHeroBox({
             height={567}
             className="desktop h-full w-full object-cover"
           />
-          <div className="mobile h-[120px] w-[390px] bg-red-400" />
+          <div className="mobile h-30 w-97.5 bg-red-400" />
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
-        <div className="absolute left-1/2 mx-auto flex w-full max-w-[1300px] -translate-x-1/2 justify-between py-3.75 sm:top-5 sm:px-10">
+        <div className="absolute left-1/2 mx-auto flex w-full max-w-325 -translate-x-1/2 justify-between py-3.75 sm:top-5 sm:px-10">
           <div className="flex flex-col gap-2">
             {!meetingInfo ? (
               <div className="desktop flex flex-col gap-2">
@@ -63,7 +63,7 @@ export default function SeasonHeroBox({
                   </h2>
                 </div>
                 <div className="mb-3 flex items-center gap-2">
-                  <h1 className="text-[13px] font-bold sm:text-[30px]">
+                  <h1 className="text-[13px] font-bold sm:text-[26px]">
                     {meetingInfo?.meeting_official_name}
                   </h1>
                 </div>
@@ -75,7 +75,7 @@ export default function SeasonHeroBox({
             )}
           </div>
           <div className="desktop">
-            <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]/50">
+            <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]/80">
               {!circuitSrc && <SimpleLoading />}
               {circuitSrc && (
                 <>

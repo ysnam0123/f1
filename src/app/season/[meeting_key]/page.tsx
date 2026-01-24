@@ -81,28 +81,28 @@ export default function Page() {
   }
 
   // 미팅키로 세션결과 호출
-  const {
-    data: sessionMeetingKeyResults = [],
-    isLoading: sessionMeetingkeyResultLoading,
-  } = useMeetingKeySortedResults(meetingKey, selectedSessionKey);
-  if (sessionMeetingKeyResults) {
-    console.log('sessionMeetingKeyResults:', sessionMeetingKeyResults);
-  }
+  // const {
+  //   data: sessionMeetingKeyResults = [],
+  //   isLoading: sessionMeetingkeyResultLoading,
+  // } = useMeetingKeySortedResults(meetingKey, selectedSessionKey);
+  // if (sessionMeetingKeyResults) {
+  //   console.log('sessionMeetingKeyResults:', sessionMeetingKeyResults);
+  // }
 
-  const isSessionResultReady =
-    !!selectedSessionKey && !!driverData && driverData.length >= 15;
-  const { data: sessionResults = [], isLoading: sessionResultLoading } =
-    useSortedResults(selectedSessionKey);
+  // const isSessionResultReady =
+  //   !!selectedSessionKey && !!driverData && driverData.length >= 15;
+  // const { data: sessionResults = [], isLoading: sessionResultLoading } =
+  //   useSortedResults(selectedSessionKey);
 
   // 스타팅 그리드 정보 불러오기
-  const isStartingGridReady =
-    qSessionKeyReady && driverData && driverData.length >= 15;
+  // const isStartingGridReady =
+  //   qSessionKeyReady && driverData && driverData.length >= 15;
 
-  const {
-    data: startingGridData,
-    isLoading: startingGridLoading,
-    isError: startingGridError,
-  } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady);
+  // const {
+  //   data: startingGridData,
+  //   isLoading: startingGridLoading,
+  //   isError: startingGridError,
+  // } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady);
 
   useEffect(() => {
     if (!sessions.length || isSelected) return;
@@ -121,18 +121,13 @@ export default function Page() {
     setSelectedSessionKey(sessionKey);
   }, [isSelected, sessions]);
 
-  const isPageReady =
-    !!meetingInfo &&
-    !!circuitInfo &&
-    sessions.length > 0 &&
-    !!raceSessionKey &&
-    !!qualifyingSessionKey &&
-    !!driverData &&
-    driverData.length >= 15 &&
-    !!sessionResults &&
-    sessionResults.length >= 15 &&
-    !!startingGridData &&
-    startingGridData.length >= 15;
+  const isPageReady = !!meetingInfo && !!circuitInfo && sessions.length > 0;
+  // &&
+  // !!raceSessionKey &&
+  // !!qualifyingSessionKey;
+  // &&
+  // !!driverData &&
+  // driverData.length >= 15;
 
   useEffect(() => {
     console.log('서킷 정보:', circuitInfo);
@@ -140,19 +135,30 @@ export default function Page() {
     console.log('세션 정보:', sessions);
     console.log('레이스 세션키:', raceSessionKey);
     console.log('퀄리파잉 세션키:', qualifyingSessionKey);
-    console.log('세션 결과:', sessionResults);
-    console.log('드라이버 정보:', driverData);
-    console.log('스타팅 그리드 정보:', startingGridData);
   }, [
     circuitInfo,
     meetingInfo,
     sessions,
     raceSessionKey,
     qualifyingSessionKey,
-    sessionResults,
-    driverData,
-    startingGridData,
   ]);
+
+  // useEffect(() => {
+  //   console.log('레이스 세션키:', raceSessionKey);
+  //   console.log('퀄리파잉 세션키:', qualifyingSessionKey);
+  //   console.log('세션 결과:', sessionResults);
+  //   console.log('드라이버 정보:', driverData);
+  //   console.log('스타팅 그리드 정보:', startingGridData);
+  // }, [
+  //   circuitInfo,
+  //   meetingInfo,
+  //   sessions,
+  //   raceSessionKey,
+  //   qualifyingSessionKey,
+  //   sessionResults,
+  //   driverData,
+  //   startingGridData,
+  // ]);
 
   return (
     <>
@@ -177,8 +183,8 @@ export default function Page() {
                     setIsSelectedAction={setIsSelected}
                   />
                 )}
-                <div className="px-5">
-                  {isSelected === 'Race' && startingGridData ? (
+                <div>
+                  {/* {isSelected === 'Race' && startingGridData ? (
                     <RaceResultSection
                       sessionKey={raceSessionKey}
                       sessionResults={sessionResults}
@@ -191,7 +197,7 @@ export default function Page() {
                         sessionResults={sessionResults}
                       />
                     )
-                  )}
+                  )} */}
                 </div>
               </>
             </section>
