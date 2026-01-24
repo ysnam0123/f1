@@ -14,9 +14,9 @@ export default function HighLights() {
         <h1 className="mb-3 text-[25px] font-bold text-(--color-title)">
           공식 유튜브{' '}
         </h1>
-        <div className="flex h-62.5 justify-between rounded-4xl bg-[#1a1a1a] px-5 pt-5">
-          {isPending && <></>}
-          {isError && <></>}
+        {isPending && <></>}
+        {isError && <></>}
+        <div className="grid min-h-62.5 grid-cols-2 gap-10 rounded-4xl bg-[#1a1a1a] px-5 py-5 sm:grid-cols-4">
           {data &&
             data.map((video) => (
               <a

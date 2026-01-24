@@ -9,7 +9,7 @@ interface GrandPrix {
 export const useYearStore = create<GrandPrix>()(
   persist(
     (set) => ({
-      selectedYear: 2025,
+      selectedYear: 2026,
       setSelectedYear: (year) => set({ selectedYear: year }),
     }),
     {

@@ -1,5 +1,7 @@
+'use client';
 import { TeamSeasonRankingView } from '@/types/Ranking';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const data = [
   { rank: 1, team: '맥라렌', points: 293, color: 'bg-orange-500' },
@@ -13,6 +15,7 @@ interface TS {
   data: TeamSeasonRankingView[];
 }
 export default function ConstructorStandings({ data }: TS) {
+  const router = useRouter();
   return (
     <>
       <section className="w-full">
@@ -39,7 +42,7 @@ export default function ConstructorStandings({ data }: TS) {
             {data.map((item) => (
               <div
                 key={item.rank}
-                className="grid h-16 grid-cols-[6px_40px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
+                className="grid h-16 cursor-pointer grid-cols-[6px_40px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
               >
                 {/* Team Color Bar */}
                 <div

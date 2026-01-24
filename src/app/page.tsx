@@ -9,7 +9,7 @@ import CircuitGrid from './components/home/CircuitGrid';
 import HomeLogo from './components/home/HomeLogo';
 import NextSession from './components/home/NextSession';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDriverRankingData } from './api/f1/ranking/driverRanking';
 import { useCircuitViewData } from './api/meeting/Circuit';
 import F1Loading from './components/common/F1Loading';
@@ -17,6 +17,7 @@ import {
   groupTeamSeasonRanking,
   useTeamSeasonRanking,
 } from './api/f1/ranking/TeamRanking';
+import { useSessionData } from './api/meeting/Sessions';
 
 export default function Page() {
   const { data, isPending, isError } = useLiveSession();
@@ -33,7 +34,7 @@ export default function Page() {
     data: meetings,
     isPending: load2025,
     error: meetingError,
-  } = useMeetingsWithStatusAndPodium(2025);
+  } = useMeetingsWithStatusAndPodium(2026);
 
   // 드라이버 랭킹
   const { data: DriverRanking, isPending: DriverRankingLoading } =
@@ -56,21 +57,6 @@ export default function Page() {
     return [...circuitData].sort(() => Math.random() - 0.5).slice(0, 6);
   }, [circuitData]);
 
-  if (TData) {
-    console.log('TData:', TData);
-  }
-  if (circuitData) {
-    console.log(circuitData);
-  }
-
-  if (DriverRanking) {
-    console.log('드라이버랭킹:', DriverRanking);
-  }
-
-  if (meetings) {
-    console.log('레이스와 포디움:', meetings);
-  }
-
   return (
     <>
       <section className="relative mx-auto flex max-w-300 flex-col gap-5 px-5 select-none sm:gap-12.5">
@@ -80,7 +66,7 @@ export default function Page() {
             alt="homeImg"
             width={839}
             height={360}
-            className="absolute right-10 -z-30"
+            className="absolute right-5 -z-30"
           />
         </div>
         <div className="desktop">

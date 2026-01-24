@@ -6,6 +6,7 @@ import SeasonChangeButton from '../components/common/SeasonChangeButton';
 import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import F1Loading from '../components/common/F1Loading';
 import GrandPrixCardWithPodium from '../components/season/GrandPrixCardWithPodium';
+import GrandPrixCard from '../components/season/GrandPrixCard';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
@@ -14,6 +15,7 @@ export default function Page() {
   const years = [2023, 2024, 2025, 2026];
   const { data: meetings, isPending } =
     useMeetingsWithStatusAndPodium(selectedYear);
+  console.log(meetings);
 
   return (
     <>
@@ -31,18 +33,25 @@ export default function Page() {
             <>
               <SeasonChangeButton
                 opened={opened}
-                setOpened={setOpened}
+                setOpenedAction={setOpened}
                 years={years}
                 selectedYear={selectedYear}
-                setSelectedYear={setSelectedYear}
+                setSelectedYearAction={setSelectedYear}
               />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-10">
-                {meetings.map((meeting) => (
-                  <GrandPrixCardWithPodium
-                    key={meeting.meeting_key}
-                    meetingInfo={meeting}
-                  />
-                ))}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
+                {meetings.map((meeting) =>
+                  meeting.race_podium ? (
+                    <GrandPrixCardWithPodium
+                      key={meeting.meeting_key}
+                      meetingInfo={meeting}
+                    />
+                  ) : (
+                    <GrandPrixCard
+                      key={meeting.meeting_key}
+                      meetingInfo={meeting}
+                    />
+                  ),
+                )}
               </div>
             </>
           )}

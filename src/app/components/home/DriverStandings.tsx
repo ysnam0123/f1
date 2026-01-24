@@ -55,7 +55,7 @@ export default function DriverStandings({ data }: DS) {
       <div className="min-h-91 w-full rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
         {/* Header */}
         <div className="mb-3 border-b border-white/10 pb-2">
-          <div className="grid grid-cols-[60px_1fr_80px] pr-3 text-xs text-white/60 sm:text-sm">
+          <div className="grid grid-cols-[60px_1fr_1fr_80px] pr-3 text-xs text-white/60 sm:text-sm">
             <span>등수</span>
             <span>선수</span>
             {/* 768 px 이상에서 보임 */}
@@ -69,7 +69,7 @@ export default function DriverStandings({ data }: DS) {
           {data.map((item) => (
             <div
               key={item.rank}
-              className="grid h-16 grid-cols-[6px_50px_1fr_1fr] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_1fr_80px]"
+              className="grid h-16 cursor-pointer grid-cols-[6px_50px_1fr_1fr] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_1fr_80px]"
             >
               {/* Team Color Bar */}
               <div

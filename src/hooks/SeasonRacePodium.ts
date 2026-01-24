@@ -31,7 +31,7 @@ export interface MeetingWithStatusAndPodium {
   round: number;
   status: 'scheduled' | 'ongoing' | 'finished';
   race_podium: RacePodiumItem[] | null;
-  circuit_img: string | null;
+  circuit_img: string;
 }
 
 export interface CardProps {

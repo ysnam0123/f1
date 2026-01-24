@@ -5,23 +5,23 @@ import AnimatedContent from '@/components/AnimatedContent';
 
 export default function SeasonChangeButton({
   opened,
-  setOpened,
+  setOpenedAction,
   years,
   selectedYear,
-  setSelectedYear,
+  setSelectedYearAction,
 }: {
   opened: boolean;
-  setOpened: (state: boolean) => void;
+  setOpenedAction: (state: boolean) => void;
   years: number[];
   selectedYear: number;
-  setSelectedYear: (year: number) => void;
+  setSelectedYearAction: (year: number) => void;
 }) {
   return (
     <>
       <div className="relative z-30">
         <button
-          onClick={() => setOpened(!opened)}
-          className="mb-2.5 flex h-8 w-21 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-(--color-box-border) text-[14px] font-bold sm:mb-10 sm:h-12.5 sm:w-36 sm:text-[20px] sm:hover:bg-[#4b4b4b]"
+          onClick={() => setOpenedAction(!opened)}
+          className="mb-2.5 flex h-8 w-21 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-(--color-box-border) bg-(--color-box-bg) text-[14px] font-bold sm:mb-10 sm:h-12.5 sm:w-36 sm:text-[20px] sm:hover:bg-[#4b4b4b]"
         >
           <span>{selectedYear}</span>
           <ChevronDown
@@ -46,8 +46,8 @@ export default function SeasonChangeButton({
                 <li
                   key={year}
                   onClick={() => {
-                    setSelectedYear(year);
-                    setOpened(false);
+                    setSelectedYearAction(year);
+                    setOpenedAction(false);
                   }}
                   className="flex h-12.5 cursor-pointer items-center justify-center hover:bg-[#464646]"
                 >
