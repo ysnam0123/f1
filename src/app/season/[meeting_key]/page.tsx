@@ -1,6 +1,5 @@
 'use client';
 import SeasonHeroBox from '@/app/components/season/SeasonHeroBox';
-import { Circuit } from '@/data/circuit';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import RaceResultSection from '@/app/components/season/meetings/RaceResultSection';
@@ -16,6 +15,8 @@ import { useSessionData } from '@/app/api/meeting/Sessions';
 import { useDriverData } from '@/app/api/f1/Drivers';
 import { useDriverMeetingKeyData } from '@/app/api/f1/DriversMeetingKey';
 import { useMeetingKeySortedResults } from '@/app/api/meeting/sessionResultMeetingKey';
+import { Circuit } from '@/types/circuit';
+import ScheduledGrandPrix from '@/app/components/season/meetings/Scheduled/ScheduledGrandPrix';
 
 export default function Page() {
   const params = useParams<{ meeting_key: string }>();
@@ -81,39 +82,33 @@ export default function Page() {
   }
 
   // 미팅키로 세션결과 호출
-  // const {
-  //   data: sessionMeetingKeyResults = [],
-  //   isLoading: sessionMeetingkeyResultLoading,
-  // } = useMeetingKeySortedResults(meetingKey, selectedSessionKey);
-  // if (sessionMeetingKeyResults) {
-  //   console.log('sessionMeetingKeyResults:', sessionMeetingKeyResults);
-  // }
+  const {
+    data: sessionMeetingKeyResults = [],
+    isLoading: sessionMeetingkeyResultLoading,
+  } = useMeetingKeySortedResults(meetingKey, selectedSessionKey);
+  if (sessionMeetingKeyResults) {
+    console.log('sessionMeetingKeyResults:', sessionMeetingKeyResults);
+  }
 
-  // const isSessionResultReady =
-  //   !!selectedSessionKey && !!driverData && driverData.length >= 15;
-  // const { data: sessionResults = [], isLoading: sessionResultLoading } =
-  //   useSortedResults(selectedSessionKey);
+  const isSessionResultReady =
+    !!selectedSessionKey && !!driverData && driverData.length >= 15;
+  const { data: sessionResults = [], isLoading: sessionResultLoading } =
+    useSortedResults(selectedSessionKey);
 
   // 스타팅 그리드 정보 불러오기
-  // const isStartingGridReady =
-  //   qSessionKeyReady && driverData && driverData.length >= 15;
+  const isStartingGridReady =
+    qSessionKeyReady && driverData && driverData.length >= 15;
 
-  // const {
-  //   data: startingGridData,
-  //   isLoading: startingGridLoading,
-  //   isError: startingGridError,
-  // } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady);
+  const {
+    data: startingGridData,
+    isLoading: startingGridLoading,
+    isError: startingGridError,
+  } = useStartingGridData(qualifyingSessionKey!, isStartingGridReady);
 
   useEffect(() => {
     if (!sessions.length || isSelected) return;
     setIsSelected(sessions[0].session_name);
   }, [sessions, isSelected]);
-
-  // test
-  useEffect(() => {
-    console.log('선택된 세션:', isSelected);
-  }, [isSelected]);
-
   useEffect(() => {
     if (!isSelected) return;
     const sessionKey = getSessionKeyByName(sessions, isSelected);
@@ -121,13 +116,28 @@ export default function Page() {
     setSelectedSessionKey(sessionKey);
   }, [isSelected, sessions]);
 
+  function isSessionFinished(session: Session) {
+    return new Date(session.date_end) < new Date();
+  }
+  const selectedSession = useMemo(
+    () => sessions.find((s) => s.session_name === isSelected),
+    [sessions, isSelected],
+  );
+  const isSelectedSessionFinished = selectedSession
+    ? isSessionFinished(selectedSession)
+    : false;
+
+  const sessionFinishMap = useMemo(() => {
+    return sessions.reduce<Record<string, boolean>>((acc, session) => {
+      acc[session.session_name] = isSessionFinished(session);
+      return acc;
+    }, {});
+  }, [sessions]);
+  console.log('선택된 세션:', selectedSession);
+  console.log('세션 종료 상태:', isSelectedSessionFinished);
+  console.log('세션피니쉬 맵:', sessionFinishMap);
+
   const isPageReady = !!meetingInfo && !!circuitInfo && sessions.length > 0;
-  // &&
-  // !!raceSessionKey &&
-  // !!qualifyingSessionKey;
-  // &&
-  // !!driverData &&
-  // driverData.length >= 15;
 
   useEffect(() => {
     console.log('서킷 정보:', circuitInfo);
@@ -181,23 +191,34 @@ export default function Page() {
                     sessionTabs={sessions}
                     isSelected={isSelected}
                     setIsSelectedAction={setIsSelected}
+                    sessionFinishMap={sessionFinishMap}
                   />
                 )}
                 <div>
-                  {/* {isSelected === 'Race' && startingGridData ? (
-                    <RaceResultSection
-                      sessionKey={raceSessionKey}
-                      sessionResults={sessionResults}
-                      startingGrid={startingGridData}
+                  {!isSelectedSessionFinished && selectedSession && (
+                    <ScheduledGrandPrix
+                      data={selectedSession}
+                      circuitData={circuitInfo}
                     />
-                  ) : (
-                    selectedSessionKey && (
-                      <SessionResultSection
-                        isPending={sessionResultLoading}
-                        sessionResults={sessionResults}
-                      />
-                    )
-                  )} */}
+                  )}
+                  {isSelectedSessionFinished && (
+                    <>
+                      {isSelected === 'Race' && startingGridData ? (
+                        <RaceResultSection
+                          sessionKey={raceSessionKey}
+                          sessionResults={sessionResults}
+                          startingGrid={startingGridData}
+                        />
+                      ) : (
+                        selectedSessionKey && (
+                          <SessionResultSection
+                            isPending={sessionResultLoading}
+                            sessionResults={sessionResults}
+                          />
+                        )
+                      )}
+                    </>
+                  )}
                 </div>
               </>
             </section>

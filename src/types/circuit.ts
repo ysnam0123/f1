@@ -5,6 +5,7 @@ export interface Circuit {
   country_code: string;
   country_name: string;
   circuit_img: string;
+  circuit_detail_img: string;
   circuit_bg: string;
   laps: number;
   first_grand_prix: number;
@@ -14,6 +15,8 @@ export interface Circuit {
     driver: string | null;
     year: number | null;
   };
+  difficulty_summary: string;
+  watch_points: string[];
 }
 export interface CircuitView {
   circuit_key: number;

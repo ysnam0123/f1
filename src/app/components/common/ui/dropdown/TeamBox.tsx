@@ -1,5 +1,4 @@
 // import { Team as TeamType } from '@/types/team';
-import { teams } from '@/data/teams';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -17,7 +16,7 @@ export default function TeamBox({
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-8">
-        {teams.map((team) => (
+        {/* {teams.map((team) => (
           <div
             key={team.name}
             onClick={() => router.push(`/team/${team.slug}`)}
@@ -33,7 +32,7 @@ export default function TeamBox({
             />
             <h1 className="mb-3 text-[24px] font-medium">{team.krName}</h1>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

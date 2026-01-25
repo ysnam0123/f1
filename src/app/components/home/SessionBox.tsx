@@ -1,11 +1,13 @@
 'use client';
 import { Session } from '@/types/meeting';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface PageProps {
   data: Session;
 }
 export default function SessionBox({ data }: PageProps) {
+  const router = useRouter();
   const date = data.date_start.split('T')[0];
   const time = data.date_start.split('T')[1].split('+')[0];
   const isFinished = () => {
@@ -34,7 +36,10 @@ export default function SessionBox({ data }: PageProps) {
         >
           {date} / {time}
         </span>
-        <button className="h-10 cursor-pointer rounded-[5px] bg-[#212121] px-4 py-2 text-[16px]">
+        <button
+          onClick={() => router.push(`/season/${data.meeting_key}`)}
+          className="h-10 cursor-pointer rounded-[5px] bg-[#212121] px-4 py-2 text-[16px]"
+        >
           {isFinished() ? '결과보기' : '일정보기'}
         </button>
       </div>

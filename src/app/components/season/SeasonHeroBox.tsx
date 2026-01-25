@@ -1,8 +1,8 @@
-import { Circuit } from '@/data/circuit';
 import { country_code_flags } from '@/images/flags';
 import { Meeting } from '@/types/meeting';
 import Image from 'next/image';
 import SimpleLoading from '../common/SimpleLoading';
+import { Circuit } from '@/types/circuit';
 interface CircuitData {
   circuitInfo?: Circuit | null;
   meetingInfo?: Meeting;
@@ -15,7 +15,7 @@ export default function SeasonHeroBox({
     return null;
   }
   const flagSrc = country_code_flags[meetingInfo!.country_code];
-  const circuitSrc = circuitInfo.circuit_img;
+  const circuitSrc = circuitInfo.circuit_detail_img;
   // if (circuitInfo) {
   //   console.log('서킷 정보 테스트:', circuitInfo);
   // }
@@ -85,8 +85,8 @@ export default function SeasonHeroBox({
                   <Image
                     src={circuitSrc}
                     alt="circuit"
-                    width={300}
-                    height={300}
+                    width={500}
+                    height={270}
                   />
                 </>
               )}

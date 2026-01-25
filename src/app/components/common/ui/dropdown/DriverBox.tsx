@@ -1,5 +1,4 @@
 // import { Team as TeamType } from '@/types/team';
-import { teams } from '@/data/teams';
 import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
@@ -19,7 +18,7 @@ export default function TeamBox({
         onMouseLeave={onMouseLeave}
       >
         <div className="mx-auto grid max-w-360 grid-cols-4 gap-x-4 gap-y-6">
-          {teams.map((team) =>
+          {/* {teams.map((team) =>
             team.drivers.map((driver) => (
               <div
                 onClick={() => {
@@ -52,7 +51,7 @@ export default function TeamBox({
                 </h1>
               </div>
             )),
-          )}
+          )} */}
         </div>
       </div>
     </>
