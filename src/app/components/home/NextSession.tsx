@@ -13,7 +13,7 @@ interface PageProps {
 export default function NextSession({ data, loading }: PageProps) {
   const router = useRouter();
   const meetingKey = data?.meeting_key ?? null;
-  const { data: nextSessions = [] } = useSessionData(meetingKey);
+  const { data: nextSessions = [] } = useSessionData(meetingKey, !!meetingKey);
   if (loading) {
     return (
       <div className="flex h-full w-full items-center justify-center">

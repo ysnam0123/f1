@@ -23,3 +23,14 @@ export interface Team {
   car: StaticImageData;
   drivers: Driver[];
 }
+
+export interface TeamTable {
+  car_img: string;
+  main_logo: string;
+  small_logo: string;
+  team_colour: string;
+  team_kr_name: string;
+  team_name: string;
+  team_slug: string;
+  white_logo: string;
+}

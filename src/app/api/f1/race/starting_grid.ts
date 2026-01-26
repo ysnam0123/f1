@@ -82,12 +82,12 @@ export const getStartingGrid = async (sessionKey: number) => {
 // ===== React Query =====
 export function useStartingGridData(
   sessionKey: number,
-  sessionKeyReady: boolean,
+  startingGridFetchable: boolean,
 ) {
   return useQuery<StartingGridWithDriver[]>({
     queryKey: ['starting_grid_with_driver', sessionKey],
     retry: 3,
-    enabled: sessionKeyReady,
+    enabled: startingGridFetchable,
     staleTime: 1000 * 60 * 60,
 
     queryFn: async () => {

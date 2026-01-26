@@ -74,16 +74,18 @@ export default function GrandPrixCardWithPodium({ meetingInfo }: CardProps) {
         <p className="flex text-[10px] text-[#8B8B8B] sm:text-[12px]">
           {meetingInfo.meeting_official_name}
         </p>
-        <div className="flex min-h-10 items-center justify-between">
+        <div className="flex min-h-10 w-full items-center gap-2">
           {meetingInfo.race_podium?.map((podium) => (
             <div
               key={podium.driver_code}
-              className="flex w-full items-center gap-2.5 rounded-[5px] bg-[#242424] px-1.25 py-1.75 font-semibold sm:w-31.5 sm:gap-4.5"
+              className="flex flex-1 items-center justify-between rounded-[5px] bg-[#242424] px-2 py-1.75 font-semibold"
             >
               <p className="text-[10px] leading-none sm:text-[12px]">
                 {position(podium.position)}
               </p>
-              <p className="text-[18px] leading-none">{podium.driver_code}</p>
+              <p className="text-[14px] leading-none sm:text-[16px] lg:text-[18px]">
+                {podium.driver_code}
+              </p>
               <div
                 className="h-5 w-5 shrink-0 rounded-full bg-contain bg-center bg-no-repeat sm:h-6 sm:w-6"
                 style={{

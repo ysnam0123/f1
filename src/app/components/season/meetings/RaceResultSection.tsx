@@ -165,7 +165,7 @@ export default function RaceResultSection({
             경기 분석 보기
           </button>
         </div>
-        <div className="mb-5 min-h-50 w-full rounded-[10px] bg-[#1A1A1A] px-5 sm:mb-12.5 sm:max-w-285 sm:px-17.5 sm:py-5">
+        <div className="mb-5 min-h-50 w-full rounded-[10px] sm:mb-12.5 sm:max-w-285">
           {!isShow ? (
             <>
               <RaceResultTable results={sessionResults} />

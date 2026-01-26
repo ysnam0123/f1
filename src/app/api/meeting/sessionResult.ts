@@ -29,7 +29,7 @@ export const fetchResultDataFromAPI = async (
   const response = await axiosInstance.get('/session_result', {
     params: { session_key: sessionKey },
   });
-  console.log('API에서 세션결과 불러옴!');
+  // console.log('API에서 세션결과 불러옴!');
   return response.data;
 };
 
@@ -40,7 +40,7 @@ export const getSessionResultDataFromDB = async (sessionKey: number) => {
     .select('*')
     .eq('session_key', sessionKey);
   if (data) {
-    console.log('세션결과 db에서 불러옴:', data);
+    // console.log('세션결과 db에서 불러옴:', data);
   }
   if (error) throw error;
   return data ?? [];
@@ -59,7 +59,7 @@ export const saveResultData = async (sessionKey: number) => {
     .select();
 
   if (data) {
-    console.log('DB에 세션결과 저장!');
+    // console.log('DB에 세션결과 저장!');
   }
 
   console.log('data:', data);
@@ -84,7 +84,7 @@ export const getSortedResults = async (sessionKey: number) => {
     .order('sort_order')
     .order('position_order');
 
-  console.log('정제된 순위정보 뷰 호출:', sessionRanks);
+  // console.log('정제된 순위정보 뷰 호출:', sessionRanks);
 
   if (error) {
     throw error;
@@ -94,10 +94,13 @@ export const getSortedResults = async (sessionKey: number) => {
 };
 
 // ===== React Query =====
-export function useSortedResults(sessionKey: number | null) {
+export function useSortedResults(
+  sessionKey: number | null,
+  isFechable: boolean,
+) {
   return useQuery<SortedSessionResult[]>({
     queryKey: ['session_results', sessionKey],
-    enabled: !!sessionKey,
+    enabled: isFechable,
     staleTime: 1000 * 60 * 60,
 
     queryFn: async () => {

@@ -1,7 +1,6 @@
 'use client';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import { TeamSeasonRankingView } from '@/types/Ranking';
-import { Team as TeamType } from '@/types/team';
 import { Trophy, Users } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

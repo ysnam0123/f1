@@ -42,16 +42,24 @@ export const syncSessionsFromAPI = async (meetingKey: number) => {
 // ===== Ensure =====
 // DB 기준 보장 + API는 보조
 export const ensureSessions = async (meetingKey: number) => {
-  const dbMeetings = await getSessionsFromDB(meetingKey);
-  syncSessionsFromAPI(meetingKey);
-  return dbMeetings;
+  const dbSessions = await getSessionsFromDB(meetingKey);
+
+  if (dbSessions.length === 0) {
+    await syncSessionsFromAPI(meetingKey);
+    return await getSessionsFromDB(meetingKey);
+  }
+
+  return dbSessions;
 };
 
 // ===== React Query =====
-export function useSessionData(meetingKey: number | null) {
+export function useSessionData(
+  meetingKey: number | null,
+  sessionFetchable?: boolean,
+) {
   return useQuery<Session[]>({
     queryKey: ['sessions', meetingKey],
-    enabled: !!meetingKey,
+    enabled: sessionFetchable,
     staleTime: 1000 * 60 * 10, // 세션은 가끔 바뀜
 
     queryFn: async () => {

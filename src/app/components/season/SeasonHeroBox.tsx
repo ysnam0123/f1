@@ -30,7 +30,7 @@ export default function SeasonHeroBox({
             height={567}
             className="desktop h-full w-full object-cover"
           />
-          <div className="mobile h-30 w-97.5 bg-red-400" />
+          <div className="mobile h-30 w-full bg-red-400" />
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
         <div className="absolute left-1/2 mx-auto flex w-full max-w-325 -translate-x-1/2 justify-between py-3.75 sm:top-5 sm:px-10">

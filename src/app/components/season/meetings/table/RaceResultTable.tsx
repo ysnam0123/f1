@@ -25,13 +25,13 @@ export default function RaceResultTable({
       <table className="w-full table-fixed border-collapse text-left whitespace-nowrap select-none">
         <thead className="bg-(--color-table-head-bg)">
           <tr className="border-b border-white text-[13px] text-[#8B8B8B] sm:text-[20px]">
-            <th className="w-[5%] py-3 sm:w-[8%]">등수</th>
+            <th className="w-[5%] py-3 text-center sm:w-[8%]">등수</th>
             <th className="w-[20%] py-3 sm:w-[30%]">이름</th>
             {/* 768 px 이상에서 보임 */}
             <th className="hidden w-[14%] py-3 sm:w-[25%] md:table-cell">팀</th>
             {/* 768 px 이상에서 보임 */}
             <th className="hidden w-[8%] py-3 md:table-cell">Laps</th>
-            <th className="w-[15%] py-3">시간</th>
+            <th className="w-[12%] py-3">시간</th>
             {/* 768 px 이상에서 보임 */}
             <th className="hidden w-[10%] py-3 md:table-cell">포인트</th>
           </tr>
@@ -44,7 +44,7 @@ export default function RaceResultTable({
             >
               <td
                 style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
-                className="px-2 py-3 text-[14px] sm:text-[20px]"
+                className="px-2 py-3 text-center text-[14px] sm:text-[20px]"
               >
                 {getDisplayPosition(result)}
               </td>

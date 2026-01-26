@@ -96,20 +96,20 @@ export const getSortedResults = async (sessionKey: number) => {
 };
 
 // ===== React Query =====
-export function useMeetingKeySortedResults(
-  meetingKey: number | null,
-  sessionKey: number | null,
-) {
-  return useQuery<SortedSessionResult[]>({
-    queryKey: ['session_results', meetingKey],
-    enabled: !!meetingKey,
-    staleTime: 1000 * 60 * 60,
+// export function useMeetingKeySortedResults(
+//   meetingKey: number | null,
+//   sessionKey: number | null,
+// ) {
+//   return useQuery<SortedSessionResult[]>({
+//     queryKey: ['session_results', meetingKey],
+//     enabled: !!meetingKey,
+//     staleTime: 1000 * 60 * 60,
 
-    queryFn: async () => {
-      // 결과 데이터가 있는지 없는지 확인. 데이터 길이가 15를 넘어가면,
-      await ensureResultData(meetingKey!);
-      // 뷰 호출
-      return getSortedResults(sessionKey!);
-    },
-  });
-}
+//     queryFn: async () => {
+//       // 결과 데이터가 있는지 없는지 확인. 데이터 길이가 15를 넘어가면,
+//       await ensureResultData(meetingKey!);
+//       // 뷰 호출
+//       return getSortedResults(sessionKey!);
+//     },
+//   });
+// }

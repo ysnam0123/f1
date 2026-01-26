@@ -4,12 +4,13 @@ import { useRouter } from 'next/navigation';
 import { SeasonDriver } from '@/hooks/SeasonDrivers';
 import { Drivers } from '@/images/drivers';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
+import defaultDriver from '/public/drivers/defaultDriver.svg';
 
 export default function SeasonDriverCard({ driver }: { driver: SeasonDriver }) {
   const router = useRouter();
   const [firstName, lastName] = driver.kr_name.split(' ');
   const headshotSrc =
-    upgradeHeadshotQuality(driver.headshot_url) ?? Drivers.Kimi;
+    upgradeHeadshotQuality(driver.headshot_url) ?? defaultDriver;
 
   return (
     <div

@@ -17,6 +17,15 @@ export const fetchCircuitByKey = async (circuitKey: number) => {
   return data;
 };
 
+export function useCircuitData(circuitKey?: number) {
+  return useQuery<Circuit | null>({
+    queryKey: ['circuit', circuitKey],
+    enabled: !!circuitKey,
+    queryFn: () => fetchCircuitByKey(circuitKey!),
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+}
+
 export const fetchAllCircuits = async (): Promise<Circuit[]> => {
   const { data, error } = await supabase.from('circuits').select('*');
 
@@ -27,15 +36,6 @@ export const fetchAllCircuits = async (): Promise<Circuit[]> => {
 
   return data ?? [];
 };
-
-export function useCircuitData() {
-  return useQuery<Circuit[]>({
-    queryKey: ['circuits'],
-    staleTime: 1000 * 60 * 60,
-
-    queryFn: fetchAllCircuits,
-  });
-}
 
 // ==== view ====
 export const fetchCircuits = async (): Promise<CircuitView[]> => {

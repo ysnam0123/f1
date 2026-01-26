@@ -1,4 +1,3 @@
-// import { Team as TeamType } from '@/types/team';
 import { useRouter } from 'next/navigation';
 
 export default function TeamBox({

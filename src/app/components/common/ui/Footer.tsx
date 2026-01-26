@@ -8,7 +8,7 @@ export default function Footer() {
     <>
       <div className="mt-10 h-35 w-full bg-[#100F13] px-2.5 py-3.75 select-none sm:mt-50 sm:h-81.5 sm:px-12.5 sm:py-7.5">
         <div className="flex h-48.75 items-center">
-          <div className="flex h-full w-100 flex-col gap-2 border-0 border-[#717171] sm:border-r">
+          <div className="flex h-full w-100 flex-col gap-2 border-0 border-[#717171] lg:border-r">
             <Image
               src={'/AfterLapLogo.svg'}
               alt="logo"
@@ -33,7 +33,7 @@ export default function Footer() {
               © 2025 After Lap - All rights reserved.
             </p>
           </div>
-          <div className="desktop">
+          <div className="desktop lg:hidden">
             <div className="flex">
               <div className="flex h-full w-100 flex-col gap-2 border-r border-[#717171]">
                 <div className="flex flex-col gap-1 pl-4">
