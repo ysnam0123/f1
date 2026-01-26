@@ -47,15 +47,15 @@ export default function Top3Position({
             key={position.driver_id}
             className="flex items-center justify-between gap-2.5 px-0 sm:gap-4"
           >
-            <p className="w-24 shrink-0 truncate text-[14px] font-semibold sm:w-40 sm:text-[18px]">
+            <p className="w-24 flex-1 shrink-0 truncate text-[14px] font-semibold sm:w-40 sm:text-[18px]">
               {position.kr_name}
             </p>
-            <div className="flex w-24 shrink-0 items-center justify-center gap-1 text-[22px] sm:w-32 sm:gap-4">
+            <div className="flex w-24 flex-1 shrink-0 items-center justify-center gap-1 text-[22px] sm:w-32 sm:gap-4">
               <p className="w-6 text-center">{position.start_position}</p>
               <ArrowBigRight className="h-5 w-5 shrink-0" />
               <p className="w-6 text-center">{position.end_position}</p>
             </div>
-            <div className="relative flex items-center gap-2 text-[14px] font-semibold sm:text-[18px]">
+            <div className="relative flex w-20 items-center gap-2 text-[14px] font-semibold sm:text-[18px]">
               <span>+ {position.position_gain}</span>
               <Flame className="text-[#FF5900]" />
             </div>

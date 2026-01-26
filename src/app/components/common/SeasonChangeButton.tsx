@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import AnimatedContent from '@/components/AnimatedContent';
+import { twMerge } from 'tailwind-merge';
 
 export default function SeasonChangeButton({
   opened,
@@ -9,19 +10,24 @@ export default function SeasonChangeButton({
   years,
   selectedYear,
   setSelectedYearAction,
+  className,
 }: {
   opened: boolean;
   setOpenedAction: (state: boolean) => void;
   years: number[];
   selectedYear: number;
   setSelectedYearAction: (year: number) => void;
+  className?: string;
 }) {
   return (
     <>
-      <div className="relative z-30">
+      <div className="relative z-30 w-full">
         <button
           onClick={() => setOpenedAction(!opened)}
-          className="mb-2.5 flex h-8 w-21 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-(--color-box-border) bg-(--color-box-bg) text-[14px] font-bold sm:mb-10 sm:h-12.5 sm:w-36 sm:text-[20px] sm:hover:bg-[#4b4b4b]"
+          className={twMerge(
+            `mb-2.5 flex h-8 w-21 cursor-pointer items-center justify-center gap-1 rounded-[10px] border border-(--color-box-border) bg-(--color-box-bg) text-[14px] font-bold sm:mb-10 sm:h-12.5 sm:w-36 sm:text-[20px] sm:hover:bg-[#4b4b4b]`,
+            className,
+          )}
         >
           <span>{selectedYear}</span>
           <ChevronDown
@@ -41,7 +47,7 @@ export default function SeasonChangeButton({
             delay={0}
             className="absolute top-full"
           >
-            <ul className="w-36 rounded-[10px] border border-white bg-black text-center text-[20px] font-bold">
+            <ul className="w-21 rounded-[10px] border border-(--color-box-border) bg-(--color-box-bg) text-center text-[20px] font-bold sm:w-36">
               {years.map((year) => (
                 <li
                   key={year}

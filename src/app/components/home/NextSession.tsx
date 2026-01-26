@@ -63,7 +63,7 @@ export default function NextSession({ data, loading }: PageProps) {
                 />
               </div>
             </div>
-            <div className="hidden w-full rounded-[15px] bg-[#111111]/90 lg:flex lg:px-7 xl:max-w-62.5 xl:items-center xl:justify-center">
+            <div className="hidden w-full max-w-60 rounded-[15px] bg-[#111111]/90 p-5 lg:flex lg:items-center lg:justify-center">
               <Image
                 src="/circuit/brazil_interlagos.svg"
                 alt="circuit"

@@ -9,7 +9,7 @@ import CircuitGrid from './components/home/CircuitGrid';
 import HomeLogo from './components/home/HomeLogo';
 import NextSession from './components/home/NextSession';
 import Image from 'next/image';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useDriverRankingData } from './api/f1/ranking/driverRanking';
 import { useCircuitViewData } from './api/meeting/Circuit';
 import F1Loading from './components/common/F1Loading';
@@ -17,7 +17,6 @@ import {
   groupTeamSeasonRanking,
   useTeamSeasonRanking,
 } from './api/f1/ranking/TeamRanking';
-import { useSessionData } from './api/meeting/Sessions';
 
 export default function Page() {
   const { data, isPending, isError } = useLiveSession();
@@ -59,7 +58,7 @@ export default function Page() {
 
   return (
     <>
-      <section className="relative mx-auto flex max-w-300 flex-col gap-5 px-5 select-none sm:gap-12.5">
+      <section className="relative mx-auto flex max-w-full flex-col gap-5 px-5 select-none sm:gap-12.5 lg:px-30">
         <div className="desktop">
           <Image
             src={'/homeImg.svg'}

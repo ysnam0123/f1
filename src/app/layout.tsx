@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="bg-[#0B0B0B] text-[#ffffff]">
         <Provider>
           <Header />
-          <div className="min-h-screen">{children}</div>
+          <div className="min-h-screen pb-12 lg:pb-0">{children}</div>
           <Footer />
           <MobileFooter />
         </Provider>

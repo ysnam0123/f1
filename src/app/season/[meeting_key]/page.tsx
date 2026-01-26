@@ -8,7 +8,10 @@ import SessionNav from '@/app/components/season/meetings/SessionNav';
 import { useCircuitData } from '@/app/api/meeting/Circuit';
 import F1Loading from '@/app/components/common/F1Loading';
 import { useStartingGridData } from '@/app/api/f1/race/starting_grid';
-import { useSortedResults } from '@/app/api/meeting/sessionResult';
+import {
+  getSessionResult,
+  useSortedResults,
+} from '@/app/api/meeting/sessionResult';
 import { useMeetingData } from '@/app/api/meeting/Meetings';
 import { useSessionData } from '@/app/api/meeting/Sessions';
 import { useDriverData } from '@/app/api/f1/Drivers';
@@ -103,6 +106,10 @@ export default function Page() {
   }, [sessions, selectedSessionKey, finishedSessions, upcomingSessions]);
 
   const isPageReady = !!meetingInfo && !!circuitInfo && sessions.length > 0;
+
+  if (selectedSessionKey) {
+    getSessionResult(selectedSessionKey);
+  }
 
   return (
     <>

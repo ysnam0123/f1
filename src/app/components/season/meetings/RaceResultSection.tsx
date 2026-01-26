@@ -149,7 +149,7 @@ export default function RaceResultSection({
         <div className="flex items-center justify-between">
           <button
             onClick={() => setIsShow(!isShow)}
-            className={`${isShow ? 'bg-[#4B4B4B]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
+            className={`${isShow ? 'bg-[#EBEBEB] text-[#262626]' : 'bg-[#212121]'} mb-5 flex h-10 cursor-pointer items-center justify-center rounded-[10px] px-3.25 font-semibold hover:bg-[#4B4B4B] active:bg-[#2b2b2b]`}
           >
             스타팅 그리드
           </button>

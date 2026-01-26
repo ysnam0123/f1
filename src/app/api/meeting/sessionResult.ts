@@ -70,9 +70,12 @@ export const saveResultData = async (sessionKey: number) => {
 const ensureResultData = async (sessionKey: number) => {
   const existing = await getSessionResultDataFromDB(sessionKey);
   console.log('existing데이터 불러옴:', existing);
-  if (existing.length >= 15) return existing;
+  if (existing.length === 0) {
+    await fetchResultDataFromAPI(sessionKey);
+    return await getSessionResultDataFromDB(sessionKey);
+  }
 
-  await saveResultData(sessionKey);
+  return existing;
 };
 
 // ===== View =====
@@ -84,13 +87,27 @@ export const getSortedResults = async (sessionKey: number) => {
     .order('sort_order')
     .order('position_order');
 
-  // console.log('정제된 순위정보 뷰 호출:', sessionRanks);
+  console.log('정제된 순위정보 뷰 호출:', sessionRanks);
 
   if (error) {
     throw error;
   }
 
   return sessionRanks ?? [];
+};
+
+export const getSessionResult = async (sessionKey: number) => {
+  const { data, error } = await supabase
+    .from('v_session_result')
+    .select('*')
+    .eq('session_key', sessionKey)
+    .order('position', { ascending: true });
+
+  if (data) {
+    console.log('새로만든 세션 결과 뷰', data);
+  }
+  if (error) throw error;
+  return data ?? [];
 };
 
 // ===== React Query =====
@@ -107,7 +124,7 @@ export function useSortedResults(
       // 결과 데이터가 있는지 없는지 확인. 데이터 길이가 15를 넘어가면,
       await ensureResultData(sessionKey!);
       // 뷰 호출
-      return getSortedResults(sessionKey!);
+      return getSessionResult(sessionKey!);
     },
   });
 }

@@ -7,12 +7,12 @@ import { useMeetingsWithStatusAndPodium } from '@/hooks/SeasonRacePodium';
 import F1Loading from '../components/common/F1Loading';
 import GrandPrixCardWithPodium from '../components/season/GrandPrixCardWithPodium';
 import GrandPrixCard from '../components/season/GrandPrixCard';
+import { years } from '@/data/years';
 
 export default function Page() {
   const [opened, setOpened] = useState(false);
   const selectedYear = useYearStore((s) => s.selectedYear);
   const setSelectedYear = useYearStore((s) => s.setSelectedYear);
-  const years = [2023, 2024, 2025, 2026];
   const { data: meetings, isPending } =
     useMeetingsWithStatusAndPodium(selectedYear);
   console.log(meetings);

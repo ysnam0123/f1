@@ -11,6 +11,30 @@ export default function StartingGridTable({
   results: StartingGridWithDriver[];
 }) {
   const router = useRouter();
+  const processedResults = [...results]
+    .sort((a, b) => {
+      // 둘 다 완주
+      if (a.position !== null && b.position !== null) {
+        return a.position - b.position;
+      }
+
+      // 완주 vs 리타이어 → 완주 먼저
+      if (a.position !== null) return -1;
+      if (b.position !== null) return 1;
+
+      // 둘 다 리타이어면 순서 유지
+      return 0;
+    })
+    .map((result, index) => {
+      if (result.position !== null) {
+        return {
+          ...result,
+          displayPosition: index + 1,
+        };
+      }
+
+      return { ...result, displayPosition: '-' };
+    });
 
   return (
     <>
@@ -25,7 +49,7 @@ export default function StartingGridTable({
           </tr>
         </thead>
         <tbody>
-          {results.map((result) => (
+          {processedResults.map((result) => (
             <tr
               key={result.driver_number}
               className="border-b border-[#2A2A2A] text-center text-[16px]"
@@ -34,7 +58,7 @@ export default function StartingGridTable({
                 style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
                 className="px-0 py-5 text-center text-[14px] sm:px-4 sm:text-[20px]"
               >
-                {result.position}
+                {result.displayPosition}
               </td>
               <td className="py-3 font-bold">
                 <div className="group flex cursor-pointer items-center justify-start gap-3 text-[18px]">

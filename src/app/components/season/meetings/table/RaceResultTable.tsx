@@ -12,13 +12,34 @@ export default function RaceResultTable({
   results: SortedSessionResult[];
 }) {
   const router = useRouter();
-  const getDisplayPosition = (result: SortedSessionResult) => {
-    if (result.position !== null) return result.position;
-    if (result.dsq) return 'DSQ';
-    if (result.dns) return 'DNS';
-    if (result.dnf) return 'DNF';
-    return '-';
-  };
+  const processedResults = [...results]
+    .sort((a, b) => {
+      // 둘 다 완주
+      if (a.position !== null && b.position !== null) {
+        return a.position - b.position;
+      }
+
+      // 완주 vs 리타이어 → 완주 먼저
+      if (a.position !== null) return -1;
+      if (b.position !== null) return 1;
+
+      // 둘 다 리타이어면 순서 유지
+      return 0;
+    })
+    .map((result, index) => {
+      if (result.position !== null) {
+        return {
+          ...result,
+          displayPosition: index + 1,
+        };
+      }
+
+      if (result.dsq) return { ...result, displayPosition: 'DSQ' };
+      if (result.dns) return { ...result, displayPosition: 'DNS' };
+      if (result.dnf) return { ...result, displayPosition: 'DNF' };
+
+      return { ...result, displayPosition: '-' };
+    });
 
   return (
     <>
@@ -37,16 +58,16 @@ export default function RaceResultTable({
           </tr>
         </thead>
         <tbody className="bg-[#000000]">
-          {results.map((result) => (
+          {processedResults.map((result) => (
             <tr
-              key={result.driver_number}
+              key={`${result.session_key}-${result.driver_number}`}
               className="border-b border-[#2A2A2A] text-[16px] hover:bg-[#232323]"
             >
               <td
                 style={{ fontFamily: 'PartialSans', fontWeight: 700 }}
                 className="px-2 py-3 text-center text-[14px] sm:text-[20px]"
               >
-                {getDisplayPosition(result)}
+                {result.displayPosition}
               </td>
               <td className="py-3 font-bold">
                 <div className="group flex min-w-0 cursor-pointer items-center justify-start gap-3">

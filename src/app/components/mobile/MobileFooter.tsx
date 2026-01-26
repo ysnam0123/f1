@@ -17,7 +17,7 @@ export default function MobileFooter() {
   ];
 
   return (
-    <footer className="fixed right-0 bottom-0 left-0 z-50 flex h-12 items-center justify-center gap-6 border-t border-[#4A4A4A] bg-(--color-bg-primary) lg:hidden">
+    <footer className="fixed right-0 bottom-0 left-0 z-50 flex h-12 items-center justify-center gap-3 border-t border-[#4A4A4A] bg-(--color-bg-primary) sm:gap-10 lg:hidden">
       {menus.map(({ label, icon: Icon, path }) => {
         const isActive =
           path === '/' ? pathname === '/' : pathname.startsWith(path);
