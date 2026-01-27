@@ -23,7 +23,7 @@ export default function HighLights() {
                 key={video.snippet.title}
                 href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                 target="_blank"
-                className="flex max-w-62.5 flex-col items-start gap-3"
+                className="flex w-full flex-col items-start gap-3"
               >
                 <Image
                   src={video.snippet.thumbnails.medium.url}
@@ -31,7 +31,7 @@ export default function HighLights() {
                   width={video.snippet.thumbnails.medium.width}
                   height={video.snippet.thumbnails.medium.height}
                 />
-                <p className="line-clamp-2 max-w-62.5 text-[13px] sm:text-[16px]">
+                <p className="line-clamp-2 w-full text-[13px] sm:text-[16px]">
                   {video.snippet.title}
                 </p>
               </a>
