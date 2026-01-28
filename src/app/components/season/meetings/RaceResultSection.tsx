@@ -25,6 +25,7 @@ import PitStop from './statstics/PitStop';
 import Events from './statstics/Events';
 
 export default function RaceResultSection({
+  year,
   sessionKey,
   sessionResults,
   // isPending,
@@ -110,7 +111,7 @@ export default function RaceResultSection({
     console.log('weatherSummary 불러옴:', weatherSummary);
   }
   const mobileRenderMap: Record<string, React.ReactNode> = {
-    '레이스 결과': <RaceResultTable results={sessionResults} />,
+    '레이스 결과': <RaceResultTable year={year} results={sessionResults} />,
     '스타팅 그리드': <StartingGridTable results={startingGrid} />,
     '전체 요약': (
       <Summary
@@ -132,9 +133,9 @@ export default function RaceResultSection({
     <>
       {/* {isPending && <></>} */}
       <div className="my-0 flex items-end justify-center gap-7.5 sm:my-5">
-        {second && <PodiumCard result={second} rank={2} />}
-        {first && <PodiumCard result={first} rank={1} />}
-        {third && <PodiumCard result={third} rank={3} />}
+        {second && <PodiumCard year={year} result={second} rank={2} />}
+        {first && <PodiumCard year={year} result={first} rank={1} />}
+        {third && <PodiumCard year={year} result={third} rank={3} />}
       </div>
       <div className="mobile mt-3">
         <RaceTabs
@@ -168,7 +169,7 @@ export default function RaceResultSection({
         <div className="mb-5 min-h-50 w-full rounded-[10px] sm:mb-12.5 sm:max-w-285">
           {!isShow ? (
             <>
-              <RaceResultTable results={sessionResults} />
+              <RaceResultTable year={year} results={sessionResults} />
               <DnsDnfDsqInfo />
             </>
           ) : (

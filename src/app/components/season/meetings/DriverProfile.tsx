@@ -1,11 +1,11 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 export default function DriverProfile({
   headshot,
   teamColor,
   className,
 }: {
-  headshot: string;
+  headshot: StaticImageData;
   teamColor: string;
   className: string;
 }) {
@@ -18,14 +18,14 @@ export default function DriverProfile({
     }
     return url;
   };
-  const headshotSrc = upgradeHeadshotQuality(headshot);
+  // const headshotSrc = upgradeHeadshotQuality(headshot);
   return (
     <>
       <div
         // style={{ backgroundColor: teamColor }}
         className={`flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#222222] ${className}`}
       >
-        <Image src={headshotSrc} alt="logo" width={36} height={36} />
+        <Image src={headshot} alt="logo" width={36} height={36} />
       </div>
     </>
   );

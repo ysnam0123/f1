@@ -23,6 +23,7 @@ export default function Page() {
   const meetingKey = Number(params.meeting_key);
   const { data: meetingInfo, isPending: meetingLoading } =
     useMeetingData(meetingKey);
+  const year = meetingInfo?.year;
   const { data: circuitInfo, isPending: circuitLoading } = useCircuitData(
     meetingInfo?.circuit_key,
   );
@@ -105,7 +106,8 @@ export default function Page() {
     }
   }, [sessions, selectedSessionKey, finishedSessions, upcomingSessions]);
 
-  const isPageReady = !!meetingInfo && !!circuitInfo && sessions.length > 0;
+  const isPageReady =
+    !!meetingInfo && !!year && !!circuitInfo && sessions.length > 0;
 
   if (selectedSessionKey) {
     getSessionResult(selectedSessionKey);
@@ -148,6 +150,7 @@ export default function Page() {
                       raceSession &&
                       startingGridData ? (
                         <RaceResultSection
+                          year={year}
                           sessionKey={raceSession.session_key}
                           sessionResults={sessionResults}
                           startingGrid={startingGridData}
@@ -155,6 +158,7 @@ export default function Page() {
                       ) : (
                         selectedSessionKey && (
                           <SessionResultSection
+                            year={year}
                             isPending={sessionResultLoading}
                             sessionResults={sessionResults}
                           />

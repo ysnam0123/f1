@@ -1,15 +1,19 @@
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import { SortedSessionResult } from '@/types/meeting';
+import { findHeadshot } from '@/utils/findHeadShot';
 import Image from 'next/image';
 
 export default function PodiumCard({
   result,
   rank,
+  year,
 }: {
+  year: number;
   result: SortedSessionResult;
   rank: 1 | 2 | 3;
 }) {
   const headshotSrc = upgradeHeadshotQuality(result.headshot_url);
+  const headShot = findHeadshot(result.full_name, year);
   const [firstName, lastName] = result.kr_name.split(' ');
   const podiumStyle = {
     1: 'h-68 ',
@@ -28,7 +32,7 @@ export default function PodiumCard({
           className="absolute inset-0 z-0 object-cover"
         />
         <Image
-          src={headshotSrc!}
+          src={headShot}
           alt="driver"
           width={160}
           height={160}

@@ -5,10 +5,13 @@ import DriverProfile from '../DriverProfile';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { formatDuration } from '@/hooks/FormattingDuration';
+import { findHeadshot } from '@/utils/findHeadShot';
 
 export default function RaceResultTable({
   results,
+  year,
 }: {
+  year: number;
   results: SortedSessionResult[];
 }) {
   const router = useRouter();
@@ -71,10 +74,10 @@ export default function RaceResultTable({
               </td>
               <td className="py-3 font-bold">
                 <div className="group flex min-w-0 cursor-pointer items-center justify-start gap-3">
-                  {result.headshot_url ? (
+                  {findHeadshot(result.full_name, year) ? (
                     <DriverProfile
                       className="shrink-0 duration-200 group-hover:scale-110"
-                      headshot={result.headshot_url}
+                      headshot={findHeadshot(result.full_name, year)}
                       teamColor={result.team_colour}
                     />
                   ) : (

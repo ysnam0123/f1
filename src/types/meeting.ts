@@ -103,8 +103,10 @@ export interface SortedSessionResult {
 export interface SessionResults {
   sessionResults: SortedSessionResult[];
   isPending: boolean;
+  year: number;
 }
 export interface RaceResults {
+  year: number;
   sessionKey: number | null;
   sessionResults: SortedSessionResult[];
   startingGrid: StartingGridWithDriver[];

@@ -4,10 +4,12 @@ import Image from 'next/image';
 import DriverProfile from './DriverProfile';
 import DefaultDriverProfile from './DefaultDriverProfile';
 import { useRouter } from 'next/navigation';
+import { findHeadshot } from '@/utils/findHeadShot';
 
 export default function SessionResultSection({
   sessionResults,
   isPending,
+  year,
 }: SessionResults) {
   const router = useRouter();
   const processedResults = [...sessionResults]
@@ -69,10 +71,10 @@ export default function SessionResultSection({
                 </td>
                 <td className="py-3 font-bold">
                   <div className="group flex cursor-pointer items-center justify-start gap-3 text-[14px] sm:text-[18px]">
-                    {result.headshot_url ? (
+                    {findHeadshot(result.full_name, year) ? (
                       <DriverProfile
                         className="duration-200 group-hover:scale-110"
-                        headshot={result.headshot_url}
+                        headshot={findHeadshot(result.full_name, year)}
                         teamColor={result.team_colour}
                       />
                     ) : (

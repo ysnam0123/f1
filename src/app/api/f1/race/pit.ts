@@ -90,33 +90,36 @@ export const getPitDataFromDB = async (sessionKey: number) => {
 };
 
 // 없으면 supabse에 저장
-export const savePitData = async (sessionKey: number) => {
-  const pitData = await fetchPitDataFromAPI(sessionKey);
-  if (!pitData || pitData.length === 0) return;
+export const syncPitDataFromAPI = async (sessionKey: number) => {
+  try {
+    const apiPit = await fetchPitDataFromAPI(sessionKey);
+    if (!apiPit || apiPit.length === 0) return;
 
-  const { data, error } = await supabase
-    .from('pit_stops')
-    .upsert(pitData, {
+    await supabase.from('pit_stops').upsert(apiPit, {
       onConflict: 'meeting_key,session_key,driver_number,lap_number',
-    })
-    .select();
-  if (error) throw error;
-  return data ?? [];
+    });
+  } catch (e) {
+    console.warn('Sessions API sync failed:', e);
+  }
 };
 
 // ===== Ensure =====
 const ensurePitData = async (sessionKey: number) => {
   const existing = await getPitstopView(sessionKey);
-  if (existing.length > 0) return existing;
 
-  await savePitData(sessionKey);
-
-  const after = await getPitstopView(sessionKey);
-  if (!after || after.length === 0) {
-    throw new Error('Pit Stop view not ready yet');
+  if (existing.length === 0) {
+    await syncPitDataFromAPI(sessionKey);
   }
+  return existing;
+};
 
-  return after;
+const ensureTeamPitData = async (sessionKey: number) => {
+  const existing = await getTeamPitstopView(sessionKey);
+
+  if (existing.length === 0) {
+    await syncPitDataFromAPI(sessionKey);
+  }
+  return existing;
 };
 
 // ===== 드라이버 별 피트스탑 View =====
@@ -126,7 +129,9 @@ export const getPitstopView = async (sessionKey: number) => {
     .select('*')
     .eq('session_key', sessionKey)
     .order('stop_duration', { ascending: true });
-
+  if (data) {
+    console.log('드라이버 별 피트스탑 뷰', data);
+  }
   if (error) throw error;
   return data;
 };
@@ -163,7 +168,7 @@ export function useTeamPitData(sessionKey: number | null) {
     enabled: !!sessionKey,
 
     queryFn: async () => {
-      await ensurePitData(sessionKey!);
+      await ensureTeamPitData(sessionKey!);
       return getTeamPitstopView(sessionKey!);
     },
   });
