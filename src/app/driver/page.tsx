@@ -28,7 +28,11 @@ export default function Page() {
           {data &&
             !isPending &&
             data.map((d) => (
-              <SeasonDriverCard key={d.driver_profile_id} driver={d} />
+              <SeasonDriverCard
+                key={d.driver_profile_id}
+                year={selectedYear}
+                driver={d}
+              />
             ))}
         </section>
       </div>

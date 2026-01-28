@@ -5,7 +5,14 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import DefaultDriverProfile from '../DefaultDriverProfile';
 import { useState } from 'react';
-export default function PitStop({ pit }: { pit: PitView[] }) {
+import { findHeadshot } from '@/utils/findHeadShot';
+export default function PitStop({
+  pit,
+  year,
+}: {
+  pit: PitView[];
+  year: number;
+}) {
   const router = useRouter();
   const tabs = ['팀 별', '드라이버 별'];
   const [isSelected, setIsSelected] = useState('팀 별');
@@ -51,10 +58,10 @@ export default function PitStop({ pit }: { pit: PitView[] }) {
               </td>
               <td className="py-3 font-bold">
                 <div className="group flex min-w-0 cursor-pointer items-center justify-start gap-3 pl-3 text-[16px] sm:text-[18px]">
-                  {p.headshot_url ? (
+                  {findHeadshot(p.full_name, year) ? (
                     <DriverProfile
                       className="shrink-0 duration-200 group-hover:scale-110"
-                      headshot={p.headshot_url}
+                      headshot={findHeadshot(p.full_name, year)}
                       teamColor={p.team_colour}
                     />
                   ) : (

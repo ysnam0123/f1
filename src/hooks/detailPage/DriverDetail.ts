@@ -6,7 +6,8 @@ interface Performance {
   race: string;
   round: number;
   points: number;
-  position: string;
+  position: string | null;
+  flag: string;
 }
 
 export interface DriverSeasonData {

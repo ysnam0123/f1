@@ -15,6 +15,7 @@ export default function Summary({
   setSelectedTab,
   positionGain,
   pit,
+  year,
 }: {
   pit: PitView[];
   weather: WeatherSessionSummary;
@@ -23,7 +24,9 @@ export default function Summary({
   totalLaps: number;
   setSelectedTab: (tab: string) => void;
   positionGain: DriverPositionGain[];
+  year: number;
 }) {
+  console.log('3번 year :', year);
   return (
     <>
       <div className="grid gap-5 rounded-xl bg-none pt-4 sm:grid-cols-2 sm:gap-10 sm:bg-[#1A1A1A] sm:px-10">
@@ -32,7 +35,7 @@ export default function Summary({
           setSelectedTab={setSelectedTab}
           positionGain={positionGain}
         />
-        <FastestPitStop pit={pit} setSelectedTab={setSelectedTab} />
+        <FastestPitStop year={year} pit={pit} setSelectedTab={setSelectedTab} />
         <SafetyCarSummary
           SafetyCarNumber={SafetyCarNumber}
           raceControl={raceControl}

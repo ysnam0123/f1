@@ -24,6 +24,7 @@ export default function Page() {
   const { data: meetingInfo, isPending: meetingLoading } =
     useMeetingData(meetingKey);
   const year = meetingInfo?.year;
+  console.log('1번 year :', year);
   const { data: circuitInfo, isPending: circuitLoading } = useCircuitData(
     meetingInfo?.circuit_key,
   );

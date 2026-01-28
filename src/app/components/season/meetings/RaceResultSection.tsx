@@ -52,6 +52,8 @@ export default function RaceResultSection({
   const third = podiumResults.find((r) => r.position === 3);
   const totalLaps = first?.number_of_laps;
 
+  console.log('2번 year :', year);
+
   // 레이스 결과 분석
   const { data: sessionStints, isLoading: stintsLoading } =
     useStintsData(sessionKey);
@@ -115,6 +117,7 @@ export default function RaceResultSection({
     '스타팅 그리드': <StartingGridTable results={startingGrid} />,
     '전체 요약': (
       <Summary
+        year={year}
         pit={pitData!}
         totalLaps={totalLaps!}
         weather={weatherSummary!}
@@ -124,8 +127,8 @@ export default function RaceResultSection({
         positionGain={driverPositionGain!}
       />
     ),
-    포지션: <Position positionGain={driverPositionGain!} />,
-    '피트 스탑': <PitStop pit={pitData!} />,
+    포지션: <Position year={year} positionGain={driverPositionGain!} />,
+    '피트 스탑': <PitStop year={year} pit={pitData!} />,
     이벤트: <Events />,
   };
 
@@ -183,6 +186,7 @@ export default function RaceResultSection({
         ) : (
           <div ref={statisticsRef}>
             <ResultStatstics
+              year={year}
               tabs={tabs}
               totalLaps={totalLaps!}
               weather={weatherSummary!}

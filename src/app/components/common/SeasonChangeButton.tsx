@@ -21,7 +21,7 @@ export default function SeasonChangeButton({
 }) {
   return (
     <>
-      <div className="relative z-30 w-full">
+      <div className="relative z-30">
         <button
           onClick={() => setOpenedAction(!opened)}
           className={twMerge(

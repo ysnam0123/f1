@@ -1,8 +1,11 @@
+import Image from 'next/image';
+
 interface RaceResult {
-  round: number;
   race: string;
-  position: number | string;
+  round: number;
   points: number;
+  position: string | null;
+  flag: string;
 }
 
 interface SeasonPerformanceProps {
@@ -17,7 +20,7 @@ export function DriverPerformance({
   const maxPoints = Math.max(...results.map((r) => r.points));
 
   return (
-    <section className="mx-auto max-w-7xl rounded-xl border border-[#4C4C4C] bg-[#111111] px-6 py-8 select-none">
+    <section className="mx-auto w-full rounded-xl border border-[#4C4C4C] bg-[#111111] px-6 py-8 select-none">
       <h2 className="mb-5 text-[30px] font-semibold tracking-wider">
         시즌 퍼포먼스
       </h2>
@@ -75,7 +78,15 @@ export function DriverPerformance({
                   <td className="text-muted-foreground px-4 py-3">
                     {result.round}
                   </td>
-                  <td className="px-4 py-3">{result.race}</td>
+                  <td className="flex items-center gap-2 px-4 py-3">
+                    <Image
+                      src={result.flag}
+                      alt="flag"
+                      width={24}
+                      height={15}
+                    />
+                    {result.race}
+                  </td>
                   <td className="px-4 py-3 text-right font-medium">
                     {typeof result.position === 'number'
                       ? `P${result.position}`

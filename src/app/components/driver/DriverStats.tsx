@@ -1,13 +1,34 @@
+import { DriverSeasonData } from '@/hooks/detailPage/DriverDetail';
 import { StatCard } from '../team/StatCard';
 
-export default function DriverStats() {
+export default function DriverStats({ data }: { data?: DriverSeasonData }) {
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-4 border-y border-[#4C4C4C] py-12 pt-8 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Total Points" value={2} teamColor={'#ffffff'} />
-        <StatCard label="Total Points" value={2} teamColor={'#ffffff'} />
-        <StatCard label="Total Points" value={2} teamColor={'#ffffff'} />
-        <StatCard label="Total Points" value={2} teamColor={'#ffffff'} />
+        {data && (
+          <>
+            <StatCard
+              label="드라이버 순위"
+              value={data.rank}
+              teamColor={data?.team.team_colour}
+            />
+            <StatCard
+              label="Total Points"
+              value={data.total_points}
+              teamColor={data?.team.team_colour}
+            />
+            <StatCard
+              label="포디움 횟수"
+              value={data.podiums}
+              teamColor={data?.team.team_colour}
+            />
+            <StatCard
+              label="우승 횟수"
+              value={data.wins}
+              teamColor={data?.team.team_colour}
+            />
+          </>
+        )}
       </div>
     </>
   );

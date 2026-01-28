@@ -1,8 +1,13 @@
-import { DriverDetailData } from '@/hooks/detailPage/DriverDetail';
+import {
+  DriverDetailData,
+  DriverSeasonData,
+} from '@/hooks/detailPage/DriverDetail';
 import defaultDriver from '/public/drivers/defaultDriver.svg';
 import Image from 'next/image';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import SeasonChangeButton from '../common/SeasonChangeButton';
+import { findHeadshot } from '@/utils/findHeadShot';
+import { teams2026 } from '@/images/team';
 
 interface Props {
   data: DriverDetailData;
@@ -11,6 +16,7 @@ interface Props {
   years: number[];
   selectedYear: number;
   setSelectedYear: (year: number) => void;
+  seasonData?: DriverSeasonData;
 }
 
 export default function DriverHero({
@@ -19,14 +25,12 @@ export default function DriverHero({
   setOpened,
   years,
   selectedYear,
+  seasonData,
   setSelectedYear,
 }: Props) {
-  const seasonData = data.seasons.find(
-    (season) => season.year === selectedYear,
-  );
-  const findHeadshot = seasonData?.headshot_url
-    ? seasonData?.headshot_url
-    : data.seasons.find((season) => season.headshot_url != null);
+  const fullName = data.first_name + data.last_name;
+  const data2025 = data.seasons.find((season) => season.year === 2025);
+  const data2026 = teams2026.find((team) => team);
   return (
     <>
       <div className="mb-10 flex flex-col gap-5 select-none">
@@ -56,36 +60,69 @@ export default function DriverHero({
           </p>
           <p className="px-2.5">{data.kr_name}</p>
         </div>
-        <div
-          className="h-1 w-30"
-          style={{ backgroundColor: data.seasons[0].team.team_colour }}
-        />
-        <div className="flex items-end justify-between px-10">
+        {seasonData && (
+          <div
+            className="h-1 w-50"
+            style={{ backgroundColor: seasonData.team.team_colour }}
+          />
+        )}
+        <div className="flex items-center justify-between px-10">
           <Image
             src={
-              seasonData?.headshot_url
-                ? upgradeHeadshotQuality(seasonData.headshot_url)
+              findHeadshot(fullName, selectedYear)
+                ? findHeadshot(fullName, selectedYear)
                 : defaultDriver
             }
             alt="driver"
-            width={350}
-            height={350}
+            width={250}
+            height={250}
+            className="desktop"
+          />
+          <Image
+            src={
+              findHeadshot(fullName, selectedYear)
+                ? findHeadshot(fullName, selectedYear)
+                : defaultDriver
+            }
+            alt="driver"
+            width={150}
+            height={150}
+            className="mobile"
           />
           <div className="flex flex-col items-end">
-            <Image
-              src={data.seasons[0].team.main_logo}
-              alt="driver"
-              width={180}
-              height={150}
-              className="mb-3"
-            />
-            <Image
-              src={data.seasons[0].team.car_img}
-              alt="driver"
-              width={500}
-              height={150}
-              className="mb-3"
-            />
+            {seasonData?.team.main_logo ? (
+              <Image
+                src={seasonData.team.main_logo}
+                alt="logoImg"
+                width={180}
+                height={150}
+                className="mb-3"
+              />
+            ) : (
+              <div></div>
+              // <Image
+              //   src={data2025.team.main_logo}
+              //   alt="logoImg"
+              //   width={180}
+              //   height={150}
+              //   className="mb-3"
+              // />
+            )}
+            {seasonData?.team.car_img ? (
+              <Image
+                src={seasonData.team.car_img}
+                alt="carImg"
+                width={500}
+                height={150}
+              />
+            ) : (
+              <Image
+                src={'/cars/car.svg'}
+                alt="carImg"
+                width={500}
+                height={150}
+              />
+            )}
           </div>
         </div>
       </div>

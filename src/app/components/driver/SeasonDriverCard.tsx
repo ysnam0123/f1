@@ -2,11 +2,17 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { SeasonDriver } from '@/hooks/SeasonDrivers';
-import { Drivers } from '@/images/drivers';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import defaultDriver from '/public/drivers/defaultDriver.svg';
+import { findHeadshot } from '@/utils/findHeadShot';
 
-export default function SeasonDriverCard({ driver }: { driver: SeasonDriver }) {
+export default function SeasonDriverCard({
+  driver,
+  year,
+}: {
+  driver: SeasonDriver;
+  year: number;
+}) {
   const router = useRouter();
   const [firstName, lastName] = driver.kr_name.split(' ');
   const headshotSrc =
@@ -39,13 +45,23 @@ export default function SeasonDriverCard({ driver }: { driver: SeasonDriver }) {
             <Image src={driver.main_logo} alt="logo" width={50} height={50} />
           </div>
         </div>
-        <Image
-          src={headshotSrc}
-          alt="driver"
-          width={160}
-          height={160}
-          className="z-10"
-        />
+        {findHeadshot(driver.full_name, year) ? (
+          <Image
+            src={findHeadshot(driver.full_name, year)}
+            alt="driver"
+            width={160}
+            height={160}
+            className="z-10"
+          />
+        ) : (
+          <Image
+            src={'/drivers/defaultDriver.svg'}
+            alt="driver"
+            width={160}
+            height={160}
+            className="z-10"
+          />
+        )}
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ export default function ResultStatstics({
   tabs,
   selectedTab,
   setSelectedTabAction,
+  year,
 }: {
   totalLaps: number;
   weather: WeatherSessionSummary;
@@ -36,12 +37,14 @@ export default function ResultStatstics({
   tabs: RaceStatsticsTab[];
   selectedTab: string;
   setSelectedTabAction: (tab: string) => void;
+  year: number;
 }) {
   const renderTabContent = () => {
     switch (selectedTab) {
       case '전체 요약':
         return (
           <Summary
+            year={year}
             pit={pit}
             totalLaps={totalLaps}
             weather={weather}
@@ -52,9 +55,9 @@ export default function ResultStatstics({
           />
         );
       case '포지션':
-        return <Position positionGain={positionGain} />;
+        return <Position year={year} positionGain={positionGain} />;
       case '피트 스탑':
-        return <PitStop pit={pit} />;
+        return <PitStop year={year} pit={pit} />;
       case '이벤트':
         return <Events />;
       default:

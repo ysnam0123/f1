@@ -1,53 +1,57 @@
 'use client';
-
-import SeasonChangeButton from '@/app/components/common/SeasonChangeButton';
-import DriverDetail from '@/app/components/driver/DriverDetail';
 import DriverHero from '@/app/components/driver/DriverHero';
 import { CareerOverview } from '@/app/components/driver/driverInfo/CareerOverview';
 import { HistoricalStats } from '@/app/components/driver/driverInfo/HistoricalStats';
 import { DriverPerformance } from '@/app/components/driver/DriverPerformance';
 import DriverStats from '@/app/components/driver/DriverStats';
 import { careerOverview, historicalStats } from '@/data/DriverDetailDummy';
-import { years } from '@/data/years';
 import { useDriverDetailData } from '@/hooks/detailPage/DriverDetail';
-import { supabase } from '@/supabase/client';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function Page() {
   const params = useParams<{ driverId: string }>();
   const [opened, setOpened] = useState(false);
   const [selectedYear, setSelectedYear] = useState(2026);
   const driverId = Number(params.driverId);
-  const { data: driverDetailData, isLoading } = useDriverDetailData(driverId);
+  const { data: driverDetailData, isLoading: driverDetailLoading } =
+    useDriverDetailData(driverId);
   console.log(driverDetailData);
+  const seasonData = driverDetailData?.seasons.find(
+    (data) => data.year === selectedYear,
+  );
+  console.log(seasonData);
 
+  const seasonYears = useMemo<number[]>(
+    () => driverDetailData?.seasons.map((s) => s.year) ?? [],
+    [driverDetailData?.seasons],
+  );
   return (
     <>
-      {driverDetailData && (
-        <div className="mx-auto max-w-300">
+      {!driverDetailLoading && seasonData && driverDetailData && (
+        <div className="mx-auto w-full px-5 sm:px-30">
           <DriverHero
             data={driverDetailData}
+            seasonData={seasonData}
             opened={opened}
             setOpened={setOpened}
-            years={years}
+            years={seasonYears}
             selectedYear={selectedYear}
             setSelectedYear={setSelectedYear}
           />
-          <DriverStats />
-          {/* <DriverPerformance
-            results={dummySeasonResults}
-            teamColor={result.team.colorFrom}
-          /> */}
-          <CareerOverview
+          <DriverStats data={seasonData} />
+          <DriverPerformance
+            results={seasonData.season_performance}
+            teamColor={seasonData.team.team_colour}
+          />
+          {/* <CareerOverview
             summary={careerOverview.summary}
             milestones={careerOverview.milestones}
           />
-
           <HistoricalStats
             careerStats={historicalStats.careerStats}
             teamHistory={historicalStats.teamHistory}
-          />
+          /> */}
         </div>
       )}
     </>

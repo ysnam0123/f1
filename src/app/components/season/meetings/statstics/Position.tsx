@@ -5,10 +5,13 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import DefaultDriverProfile from '../DefaultDriverProfile';
 import { useState, useMemo } from 'react';
+import { findHeadshot } from '@/utils/findHeadShot';
 
 export default function Position({
   positionGain,
+  year,
 }: {
+  year: number;
   positionGain: DriverPositionGain[];
 }) {
   const router = useRouter();
@@ -116,10 +119,10 @@ export default function Position({
               </td>
               <td className="py-3 font-bold">
                 <div className="group flex min-w-0 cursor-pointer items-center justify-start gap-3 pl-5 text-[16px] sm:text-[18px]">
-                  {position.headshot_url ? (
+                  {findHeadshot(position.driver_name, year) ? (
                     <DriverProfile
                       className="shrink-0 duration-200 group-hover:scale-110"
-                      headshot={position.headshot_url}
+                      headshot={findHeadshot(position.driver_name, year)}
                       teamColor={position.team_colour}
                     />
                   ) : (

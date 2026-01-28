@@ -1,17 +1,28 @@
 import { PitView } from '@/app/api/f1/race/pit';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import Image from 'next/image';
+import DefaultDriverProfile from '../../DefaultDriverProfile';
+import { findHeadshot } from '@/utils/findHeadShot';
+import { useEffect } from 'react';
 
 export default function FastestPitStop({
   pit,
   setSelectedTab,
+  year,
 }: {
   setSelectedTab: (tab: string) => void;
   pit: PitView[];
+  year: number;
 }) {
   const fastest = pit[0];
   const headshot = upgradeHeadshotQuality(fastest.headshot_url);
   console.log('fastest', fastest);
+  useEffect(() => {
+    console.log(findHeadshot(fastest.full_name, year));
+    console.log(fastest.full_name);
+    console.log(fastest.full_name.split(' ').join('').toLowerCase());
+    console.log('4번 year', year);
+  }, [fastest.full_name, year]);
   return (
     <>
       <div className="flex max-w-125 flex-col gap-3 rounded-4xl border border-[#262626] bg-[#161616] px-3 py-2.5 sm:px-7.5 sm:py-5">
@@ -70,20 +81,32 @@ export default function FastestPitStop({
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <Image
-                src={headshot!}
-                alt="teamLogo"
-                width={100}
-                height={70}
-                className="desktop"
-              />
-              <Image
-                src={headshot!}
-                alt="teamLogo"
-                width={70}
-                height={70}
-                className="mobile"
-              />
+              <div className="desktop">
+                {findHeadshot(fastest.full_name, year) ? (
+                  <Image
+                    src={findHeadshot(fastest.full_name, year)}
+                    alt="teamLogo"
+                    width={100}
+                    height={100}
+                  />
+                ) : (
+                  <DefaultDriverProfile />
+                )}
+              </div>
+              <div className="mobile">
+                {findHeadshot(fastest.full_name, year) ? (
+                  <Image
+                    src={findHeadshot(fastest.full_name, year)}
+                    alt="teamLogo"
+                    width={70}
+                    height={70}
+                    className="mobile"
+                  />
+                ) : (
+                  <DefaultDriverProfile />
+                )}
+              </div>
+
               <p className="text-[14px] sm:text-[20px]">{fastest.kr_name}</p>
             </div>
             <span className="text-[22px] sm:text-[32px]">

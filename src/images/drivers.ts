@@ -73,6 +73,30 @@ import jackdoohan2025 from '/public/driversImg/2025/jackdoohan.svg';
 import gabrielbortoleto2025 from '/public/driversImg/2025/gabrielbortoleto.svg';
 import kimiantonelli2025 from '/public/driversImg/2025/kimiantonelli.svg';
 import isackhadjar2025 from '/public/driversImg/2025/isackhadjar.svg';
+import francocolapinto2025 from '/public/driversImg/2025/francocolapinto.svg';
+// =======================
+// 2026
+// =======================
+import maxverstappen2026 from '/public/driversImg/2026/maxverstappen.svg';
+import lewishamilton2026 from '/public/driversImg/2026/lewishamilton.svg';
+import georgerussell2026 from '/public/driversImg/2026/georgerussell.svg';
+import charlesleclerc2026 from '/public/driversImg/2026/charlesleclerc.svg';
+import carlossainz2026 from '/public/driversImg/2026/carlossainz.svg';
+import landonorris2026 from '/public/driversImg/2026/landonorris.svg';
+import oscarpiastri2026 from '/public/driversImg/2026/oscarpiastri.svg';
+import fernandoalonso2026 from '/public/driversImg/2026/fernandoalonso.svg';
+import lancestroll2026 from '/public/driversImg/2026/lancestroll.svg';
+import pierregasly2026 from '/public/driversImg/2026/pierregasly.svg';
+import estebanocon2026 from '/public/driversImg/2026/estebanocon.svg';
+import alexanderalbon2026 from '/public/driversImg/2026/alexanderalbon.svg';
+import liamlawson2026 from '/public/driversImg/2026/liamlawson.svg';
+import oliverbearman2026 from '/public/driversImg/2026/oliverbearman.svg';
+import nicohulkenberg2026 from '/public/driversImg/2026/nicohulkenberg.svg';
+import gabrielbortoleto2026 from '/public/driversImg/2026/gabrielbortoleto.svg';
+import kimiantonelli2026 from '/public/driversImg/2026/kimiantonelli.svg';
+import isackhadjar2026 from '/public/driversImg/2026/isackhadjar.svg';
+import francocolapinto2026 from '/public/driversImg/2026/francocolapinto.svg';
+import arvidlindblad2026 from '/public/driversImg/2026/arvidlindblad.svg';
 import { StaticImageData } from 'next/image';
 
 export const driverHeadshots: Record<string, StaticImageData> = {
@@ -151,4 +175,28 @@ export const driverHeadshots: Record<string, StaticImageData> = {
   gabrielbortoleto2025,
   kimiantonelli2025,
   isackhadjar2025,
+  francocolapinto2025,
+  // =======================
+  // 2026
+  // =======================
+  alexanderalbon2026,
+  maxverstappen2026,
+  lewishamilton2026,
+  georgerussell2026,
+  charlesleclerc2026,
+  carlossainz2026,
+  landonorris2026,
+  oscarpiastri2026,
+  fernandoalonso2026,
+  lancestroll2026,
+  pierregasly2026,
+  estebanocon2026,
+  liamlawson2026,
+  oliverbearman2026,
+  nicohulkenberg2026,
+  gabrielbortoleto2026,
+  kimiantonelli2026,
+  isackhadjar2026,
+  arvidlindblad2026,
+  francocolapinto2026,
 };
