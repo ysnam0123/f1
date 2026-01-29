@@ -1,4 +1,4 @@
-<img width="400" height="400" alt="ㅣㅣㅣㅣ" src="https://github.com/user-attachments/assets/1c73eea7-0539-4ac9-bf61-a62a891d131a" />
+<img width="400" height="400" alt="ㅣㅣㅣㅣ" src="https://github.com/user-attachments/assets/1c73eea7-0539-4ac9-bf61-a62a891d131a" /> \n
 # 🏎️ AfterLap
 
 > 한국 F1 팬들을 위한 결과 기반 분석 & 정보 팬사이트
