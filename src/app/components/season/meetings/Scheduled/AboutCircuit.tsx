@@ -23,7 +23,12 @@ export default function AboutCircuit({ circuitData }: PageProps) {
         </div>
         <div className="flex flex-col gap-1 pt-2">
           <p className="text-[16px] text-[#838383]">난이도 요약</p>
-          <p className="text-[18px]">{circuitData.difficulty_summary}</p>
+          <p className="text-[18px]">
+            {!circuitData.difficulty_summary && (
+              <p>아직 충분히 진행되지 않은 레이스입니다. </p>
+            )}
+            {circuitData.difficulty_summary && circuitData.difficulty_summary}
+          </p>
         </div>
       </div>
     </>

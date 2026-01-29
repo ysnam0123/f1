@@ -1,3 +1,5 @@
+import { teams2026 } from '@/images/team';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function TeamBox({
@@ -17,40 +19,32 @@ export default function TeamBox({
         onMouseLeave={onMouseLeave}
       >
         <div className="mx-auto grid max-w-360 grid-cols-4 gap-x-4 gap-y-6">
-          {/* {teams.map((team) =>
+          {teams2026.map((team) =>
             team.drivers.map((driver) => (
               <div
                 onClick={() => {
                   onClick();
-                  router.push(`/driver/${driver.driverSlug}`);
+                  router.push(`/driver/${driver.driver_id}`);
                 }}
-                key={driver.name}
-                className="flex min-h-8 cursor-pointer items-center gap-5 rounded-xl px-1 py-2"
-                style={{
-                  transition: 'background-color 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = team.logoBg;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '';
-                }}
+                key={driver.driver_id}
+                className="flex min-h-8 cursor-pointer items-center gap-5 rounded-xl border border-(--team-color) bg-(--color-card-bg) px-4 py-2 transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-[#3f3e3e] hover:shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+                style={
+                  { '--team-color': team.team_colour } as React.CSSProperties
+                }
               >
-                <div
-                  className="h-10 w-10 cursor-pointer rounded-full"
-                  style={{
-                    backgroundColor: `${team.logoBg}`,
-                    backgroundImage: `url(${driver.image.src})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                  }}
-                ></div>
+                <Image
+                  src={driver.headshot}
+                  alt="driver"
+                  width={40}
+                  height={40}
+                  priority
+                />
                 <h1 className="text-[18px] font-semibold text-white">
-                  {driver.name}
+                  {driver.kr_name}
                 </h1>
               </div>
             )),
-          )} */}
+          )}
         </div>
       </div>
     </>

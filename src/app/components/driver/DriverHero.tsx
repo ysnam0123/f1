@@ -8,6 +8,8 @@ import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import SeasonChangeButton from '../common/SeasonChangeButton';
 import { findHeadshot } from '@/utils/findHeadShot';
 import { teams2026 } from '@/images/team';
+import DriverCard from './DriverCard';
+import defaultCar from '/public/cars/car.svg';
 
 interface Props {
   data: DriverDetailData;
@@ -28,12 +30,13 @@ export default function DriverHero({
   seasonData,
   setSelectedYear,
 }: Props) {
-  const fullName = data.first_name + data.last_name;
-  const data2025 = data.seasons.find((season) => season.year === 2025);
-  const data2026 = teams2026.find((team) => team);
+  const fullName = data.first_name + ' ' + data.last_name;
+  const data2026 = teams2026.find((team) =>
+    team.drivers.find((driver) => driver.full_name === fullName),
+  );
   return (
     <>
-      <div className="mb-10 flex flex-col gap-5 select-none">
+      <div className="flex flex-col gap-5 select-none">
         <div className="flex items-center justify-between">
           <p
             className="text-[50px]"
@@ -56,57 +59,36 @@ export default function DriverHero({
             <p>{data.country_kr_name}</p>
           </div>
           <p className="border-r border-white px-2.5">
-            {seasonData?.driver_number}
+            {data2026?.team_kr_name}
           </p>
-          <p className="px-2.5">{data.kr_name}</p>
+          <p className="px-2.5">{seasonData?.driver_number}</p>
         </div>
-        {seasonData && (
-          <div
-            className="h-1 w-50"
-            style={{ backgroundColor: seasonData.team.team_colour }}
-          />
-        )}
-        <div className="flex items-center justify-between px-10">
-          <Image
-            src={
-              findHeadshot(fullName, selectedYear)
-                ? findHeadshot(fullName, selectedYear)
-                : defaultDriver
-            }
-            alt="driver"
-            width={250}
-            height={250}
-            className="desktop"
-          />
-          <Image
-            src={
-              findHeadshot(fullName, selectedYear)
-                ? findHeadshot(fullName, selectedYear)
-                : defaultDriver
-            }
-            alt="driver"
-            width={150}
-            height={150}
-            className="mobile"
-          />
-          <div className="flex flex-col items-end">
+        <section className="mx-auto flex w-full items-center justify-between rounded-xl border border-[#4C4C4C] bg-[#111111] px-6 select-none">
+          <div className="flex flex-col items-start gap-5">
             {seasonData?.team.main_logo ? (
-              <Image
-                src={seasonData.team.main_logo}
-                alt="logoImg"
-                width={180}
-                height={150}
-                className="mb-3"
-              />
+              <div
+                style={{ backgroundColor: seasonData.team.team_colour }}
+                className="flex items-center justify-center rounded-2xl px-2 py-2"
+              >
+                <Image
+                  src={seasonData.team.main_logo}
+                  alt="logoImg"
+                  width={120}
+                  height={90}
+                />
+              </div>
             ) : (
-              <div></div>
-              // <Image
-              //   src={data2025.team.main_logo}
-              //   alt="logoImg"
-              //   width={180}
-              //   height={150}
-              //   className="mb-3"
-              // />
+              <div
+                style={{ backgroundColor: data2026?.team_colour }}
+                className="flex items-center justify-center rounded-2xl px-2 py-2"
+              >
+                <Image
+                  src={data2026?.main_logo}
+                  alt="logoImg"
+                  width={120}
+                  height={90}
+                />
+              </div>
             )}
             {seasonData?.team.car_img ? (
               <Image
@@ -114,17 +96,23 @@ export default function DriverHero({
                 alt="carImg"
                 width={500}
                 height={150}
+                className="z-30"
               />
             ) : (
               <Image
-                src={'/cars/car.svg'}
+                src={data2026?.car_img ? data2026.car_img : defaultCar}
                 alt="carImg"
                 width={500}
                 height={150}
+                className="z-30"
               />
             )}
           </div>
-        </div>
+          <DriverCard
+            teamColor={seasonData?.team.team_colour}
+            headshot={findHeadshot(fullName, selectedYear)}
+          />
+        </section>
       </div>
     </>
   );

@@ -1,16 +1,20 @@
 'use client';
 
+import SeasonChangeButton from '@/app/components/common/SeasonChangeButton';
 import { SeasonPerformance } from '@/app/components/team/SeasonPerformance';
 import { StatCard } from '@/app/components/team/StatCard';
 import { TeamDriverCard } from '@/app/components/team/TeamDriverCard';
-import { teams } from '@/data/teams';
+import { years } from '@/data/years';
+import { teams2026 } from '@/images/team';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Page() {
   const params = useParams<{ slug: string }>();
-  const team = teams.find((t) => t.slug === params.slug);
+  const [opened, setOpened] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(2026);
+  const team = teams2026.find((t) => t.team_slug === params.slug);
   const [isHovered, setIsHovered] = useState(false);
 
   const dummyPerformanceData = [
@@ -40,46 +44,54 @@ export default function Page() {
     <>
       {team && (
         <div className="mx-auto max-w-285">
+          <SeasonChangeButton
+            opened={opened}
+            setOpenedAction={setOpened}
+            years={years}
+            selectedYear={selectedYear}
+            setSelectedYearAction={setSelectedYear}
+            className="mb-0 sm:mb-0 sm:w-50"
+          />
           <div className="relative flex items-center justify-between border-b border-neutral-800 pb-8">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
-                <h1 className="text-5xl tracking-tight">{team.krName}</h1>
+                <h1 className="text-5xl tracking-tight">{team.team_kr_name}</h1>
                 <div
                   className="mt-2 h-1 w-16"
-                  style={{ backgroundColor: team.colorFrom }}
+                  style={{ backgroundColor: team.team_colour }}
                 />
               </div>
               <div className="flex items-center gap-2">
                 <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
-                  {team.slug}
+                  {team.team_slug}
                 </p>
                 <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
                   - 2025 시즌
                 </p>
               </div>
             </div>
-            <Image src={team.logo} alt={'logo'} width={120} height={120} />
+            <Image src={team.main_logo} alt={'logo'} width={120} height={120} />
           </div>
           <div className="grid grid-cols-1 gap-4 py-12 md:grid-cols-2 lg:grid-cols-4">
             <StatCard
               label="Constructors' Ranking"
               value={`P 1`}
-              teamColor={team.colorFrom}
+              teamColor={team.team_colour}
             />
             <StatCard
               label="Total Points"
               value={2}
-              teamColor={team.colorFrom}
+              teamColor={team.team_colour}
             />
             <StatCard
               label="Wins / Podiums"
               value={`${2} / ${5}`}
-              teamColor={team.colorFrom}
+              teamColor={team.team_colour}
             />
             <StatCard
               label="Drivers"
               value={team.drivers.join(' • ')}
-              teamColor={team.colorFrom}
+              teamColor={team.team_colour}
             />
           </div>
           <div className="border-t border-neutral-800 py-12">
@@ -89,18 +101,18 @@ export default function Page() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {team.drivers.map((driver) => (
                 <TeamDriverCard
-                  key={driver.number}
-                  name={driver.krName}
-                  number={driver.number}
-                  imageUrl={driver.image}
-                  teamColor={team.colorFrom}
+                  key={driver.driver_number}
+                  name={driver.kr_name}
+                  number={driver.driver_number}
+                  imageUrl={driver.headshot}
+                  teamColor={team.team_colour}
                 />
               ))}
             </div>
           </div>
           <SeasonPerformance
             data={dummyPerformanceData}
-            teamColor={team.colorFrom}
+            teamColor={team.team_colour}
           />
           <section className="min-h-300 w-full rounded-[30px] bg-[#1C1C25] px-10 py-7.5">
             <h1

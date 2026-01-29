@@ -1,4 +1,5 @@
 // import { Team as TeamType } from '@/types/team';
+import { teams2026 } from '@/images/team';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -16,23 +17,27 @@ export default function TeamBox({
       onMouseLeave={onMouseLeave}
     >
       <div className="grid grid-cols-5 gap-8">
-        {/* {teams.map((team) => (
+        {teams2026.map((team) => (
           <div
-            key={team.name}
-            onClick={() => router.push(`/team/${team.slug}`)}
-            className="flex h-40 w-65 cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] bg-gray-300 px-9 py-px"
-            style={{
-              backgroundImage: `linear-gradient(to bottom, ${team.colorFrom}, ${team.colorTo})`,
-            }}
+            key={team.team_slug}
+            onClick={() => router.push(`/team/${team.team_slug}`)}
+            className="group flex h-40 w-65 cursor-pointer flex-col items-center justify-center gap-2 rounded-[6px] border border-(--color-card-border) bg-(--color-card-bg) px-6 pt-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-(--team-color) hover:shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+            style={{ '--team-color': team.team_colour } as React.CSSProperties}
           >
             <Image
-              src={team.logoImg}
+              src={team.main_logo}
               alt="logo"
-              className="h-20 object-contain"
+              className="h-20 object-contain transition-transform duration-200 ease-out group-hover:scale-105"
+              priority
             />
-            <h1 className="mb-3 text-[24px] font-medium">{team.krName}</h1>
+            <h1
+              style={{ fontFamily: 'RiaSans', fontWeight: 500 }}
+              className="mb-3 text-[20px] text-[#b5b5b5] transition-colors duration-200 group-hover:text-white"
+            >
+              {team.team_kr_name}
+            </h1>
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );

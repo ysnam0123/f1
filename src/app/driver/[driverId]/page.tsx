@@ -1,10 +1,7 @@
 'use client';
 import DriverHero from '@/app/components/driver/DriverHero';
-import { CareerOverview } from '@/app/components/driver/driverInfo/CareerOverview';
-import { HistoricalStats } from '@/app/components/driver/driverInfo/HistoricalStats';
 import { DriverPerformance } from '@/app/components/driver/DriverPerformance';
 import DriverStats from '@/app/components/driver/DriverStats';
-import { careerOverview, historicalStats } from '@/data/DriverDetailDummy';
 import { useDriverDetailData } from '@/hooks/detailPage/DriverDetail';
 import { useParams } from 'next/navigation';
 import { useMemo, useState } from 'react';

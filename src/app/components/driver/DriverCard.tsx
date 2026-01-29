@@ -1,36 +1,29 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
+import defaultDriver from '/public/drivers/defaultDriver.svg';
 
-export default function DriverCard() {
+export default function DriverCard({
+  headshot,
+  teamColor,
+}: {
+  headshot: StaticImageData;
+  teamColor?: string;
+}) {
   return (
-    <div className="relative h-[236px] w-[256px] overflow-hidden rounded-br-2xl">
+    <div className="flex items-center justify-center rounded-2xl sm:h-80 sm:w-80">
       <Image
-        src="/cardBg.png"
-        alt="bg"
-        fill
-        className="absolute inset-0 z-0 object-cover"
-      />
-      <Image
-        src="/drivers/MaxVerstappen.png"
+        src={headshot ? headshot : defaultDriver}
         alt="driver"
-        width={160}
-        height={160}
-        className="absolute bottom-[65px] left-1/2 z-10 -translate-x-1/2"
+        width={260}
+        height={260}
+        className="desktop z-30"
       />
-      <div className="absolute bottom-0 z-20 flex w-full justify-between bg-white px-[15px] py-[13px]">
-        <div className="flex flex-col gap-[2px] text-[#373737]">
-          <span className="text-[14px] font-medium">Max</span>
-          <span className="text-[17px] font-bold">VERSTAPPEN</span>
-        </div>
-
-        <div className="relative h-[39px] w-[60px]">
-          <Image
-            src="/team/benz.png"
-            alt="team"
-            fill
-            className="object-contain"
-          />
-        </div>
-      </div>
+      <Image
+        src={headshot ? headshot : defaultDriver}
+        alt="driver"
+        width={150}
+        height={150}
+        className="mobile z-30"
+      />
     </div>
   );
 }

@@ -51,21 +51,13 @@ export default function RaceResultSection({
   const second = podiumResults.find((r) => r.position === 2);
   const third = podiumResults.find((r) => r.position === 3);
   const totalLaps = first?.number_of_laps;
-
-  console.log('2번 year :', year);
-
-  // 레이스 결과 분석
   const { data: sessionStints, isLoading: stintsLoading } =
     useStintsData(sessionKey);
-
-  // race control data
   const { data: sessionRaceControl, isLoading: raceControlLoading } =
     useRaceControlData(sessionKey);
   const deployCount = sessionRaceControl?.filter(
     (e) => e.category === 'SafetyCar' && e.message === 'SAFETY CAR DEPLOYED',
   ).length;
-
-  // pit stop data
   const {
     data: pitData,
     isLoading: pitLoading,
@@ -78,12 +70,8 @@ export default function RaceResultSection({
   //   isLoading: teamPitLoading,
   //   isError: teamPitError,
   // } = useTeamPitData(sessionKey);
-
-  // weather Data
   const { data: weatherSummary, isLoading: weatherLoading } =
     useWeatherSummary(sessionKey);
-
-  // 드라이버 별 포지션 gain
   const { data: driverPositionGain, isLoading: dPositionLoading } =
     usePositionData(sessionKey, !!sessionKey);
   if (driverPositionGain) {

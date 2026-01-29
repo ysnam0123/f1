@@ -97,6 +97,8 @@ import kimiantonelli2026 from '/public/driversImg/2026/kimiantonelli.svg';
 import isackhadjar2026 from '/public/driversImg/2026/isackhadjar.svg';
 import francocolapinto2026 from '/public/driversImg/2026/francocolapinto.svg';
 import arvidlindblad2026 from '/public/driversImg/2026/arvidlindblad.svg';
+import sergioperez2026 from '/public/driversImg/2026/sergioperez.svg';
+import valtteribottas2026 from '/public/driversImg/2026/valtteribottas.svg';
 import { StaticImageData } from 'next/image';
 
 export const driverHeadshots: Record<string, StaticImageData> = {
@@ -199,4 +201,6 @@ export const driverHeadshots: Record<string, StaticImageData> = {
   isackhadjar2026,
   arvidlindblad2026,
   francocolapinto2026,
+  sergioperez2026,
+  valtteribottas2026,
 };

@@ -1,4 +1,4 @@
-import { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useState } from 'react';
 
@@ -23,7 +23,9 @@ export function TeamDriverCard({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="h-80 bg-neutral-900">{/* 이미지 태그 */}</div>
+        <div className="flex h-80 items-center justify-center bg-neutral-900">
+          <Image src={imageUrl} alt="driver" width={300} height={300} />
+        </div>
         <div className="relative border-t border-neutral-800 p-6">
           <div
             className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
