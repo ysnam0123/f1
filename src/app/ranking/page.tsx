@@ -17,13 +17,13 @@ export default function Page() {
 
   return (
     <>
-      <SeasonChangeButton
+      {/* <SeasonChangeButton
         opened={opened}
         setOpened={setOpened}
         years={years}
         selectedYear={selectedYear}
         setSelectedYear={setSelectedYear}
-      />
+      /> */}
       <h1>page Component</h1>
     </>
   );

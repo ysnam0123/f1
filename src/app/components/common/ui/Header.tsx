@@ -18,7 +18,7 @@ export default function Header() {
           <Image
             src={logo}
             alt="logo"
-            className="cursor-pointer"
+            className="h-7.5 w-auto cursor-pointer"
             width={125}
             height={30}
             onClick={() => router.push('/')}
@@ -26,6 +26,7 @@ export default function Header() {
               setOpenDriver(false);
               setOpenTeam(false);
             }}
+            priority
           />
           <div className="desktop">
             <ul className="flex gap-14">

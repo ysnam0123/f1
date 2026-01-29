@@ -29,15 +29,16 @@ export function TeamDriverCard({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="flex h-80 items-center justify-center bg-neutral-900">
+        <div className="flex items-center justify-center bg-neutral-900">
           <Image
             src={imageUrl ? imageUrl : defaultDriver}
             alt="driver"
             width={300}
             height={300}
+            className="w-25 pt-3 sm:w-55 lg:w-75"
           />
         </div>
-        <div className="relative border-t border-neutral-800 p-6">
+        <div className="relative flex items-center justify-center border-t border-neutral-800 px-3 py-2 sm:justify-start sm:px-6 sm:py-6">
           <div
             className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
             style={{
@@ -46,12 +47,12 @@ export function TeamDriverCard({
             }}
           />
           <div className="flex items-baseline gap-3">
-            <span className="text-4xl font-semibold tracking-tight">
+            <span className="text-xl font-semibold tracking-tight sm:text-4xl">
               {number}
             </span>
             <div>
               <p
-                className="text-lg tracking-tight transition-colors duration-300"
+                className="text-[12px] tracking-tight transition-colors duration-300 sm:text-lg"
                 style={{ color: isHovered ? teamColor : 'white' }}
               >
                 {name}

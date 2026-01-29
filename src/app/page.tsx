@@ -12,7 +12,6 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 import { useDriverRankingData } from './api/f1/ranking/driverRanking';
 import { useCircuitViewData } from './api/meeting/Circuit';
-import F1Loading from './components/common/F1Loading';
 import {
   groupTeamSeasonRanking,
   useTeamSeasonRanking,
@@ -56,36 +55,40 @@ export default function Page() {
     return [...circuitData].sort(() => Math.random() - 0.5).slice(0, 6);
   }, [circuitData]);
 
+  const pageLoading =
+    DriverRankingLoading ||
+    teamRankingLoading ||
+    nextMeetingLoading ||
+    circuitLoading;
+
   return (
     <>
-      <section className="relative mx-auto flex max-w-full flex-col gap-5 px-5 select-none sm:gap-12.5 lg:px-30">
-        <div className="desktop">
-          <Image
-            src={'/homeImg.svg'}
-            alt="homeImg"
-            width={839}
-            height={360}
-            className="absolute right-5 -z-30"
-          />
-        </div>
-        <div className="desktop">
-          <HomeLogo />
-        </div>
-        <NextSession data={nextMeeting} loading={nextMeetingLoading} />
-        {DriverRankingLoading && (
-          <div className="flex h-100 items-center justify-center">
-            <F1Loading loadingText="레이스 분석 중..." />
+      {/* {pageLoading && <MobileSplash />} */}
+      {!pageLoading && (
+        <section className="relative mx-auto flex max-w-full flex-col gap-5 px-5 select-none sm:gap-12.5 lg:px-30">
+          <div className="desktop">
+            <Image
+              src={'/homeImg.svg'}
+              alt="homeImg"
+              width={839}
+              height={360}
+              className="absolute right-5 -z-30"
+            />
           </div>
-        )}
-        {!DriverRankingLoading && DriverRanking && teamRanking && CData && (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <ConstructorStandings data={TData!} />
-            <DriverStandings data={DRData!} />
+          <div className="desktop">
+            <HomeLogo />
           </div>
-        )}
-        <CircuitGrid data={CData} />
-        <HighLights />
-      </section>
+          <NextSession data={nextMeeting} />
+          {!DriverRankingLoading && DriverRanking && teamRanking && CData && (
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <ConstructorStandings data={TData!} />
+              <DriverStandings data={DRData!} />
+            </div>
+          )}
+          <CircuitGrid data={CData} />
+          <HighLights />
+        </section>
+      )}
     </>
   );
 }

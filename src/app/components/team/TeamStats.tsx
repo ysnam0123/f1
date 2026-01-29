@@ -4,7 +4,7 @@ import { StatCard } from './StatCard';
 export default function TeamStats({ data }: { data: TeamSeason }) {
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 py-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 py-0 sm:pb-12 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
           label="컨스트럭터 랭킹"
           value={data.rank}

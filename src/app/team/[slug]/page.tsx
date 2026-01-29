@@ -4,6 +4,7 @@ import F1Loading from '@/app/components/common/F1Loading';
 import SeasonChangeButton from '@/app/components/common/SeasonChangeButton';
 import { SeasonPerformance } from '@/app/components/team/SeasonPerformance';
 import TeamDriver from '@/app/components/team/TeamDetail/TeamDriver';
+import TeamPerformanceTable from '@/app/components/team/TeamDetail/TeamPerformanceTable';
 import TeamStats from '@/app/components/team/TeamStats';
 import { useTeamDetailData } from '@/hooks/detailPage/TeamDetail';
 import { teams2026 } from '@/images/team';
@@ -39,9 +40,11 @@ export default function Page() {
       return {
         round: item.round,
         points: item.points,
+        position: item.position,
         cumulativePoints: cumulative,
         race: item.race,
         flag: item.flag,
+        race_kr_name: item.race_kr_name,
       };
     });
   }, [seasonData?.performance]);
@@ -56,14 +59,6 @@ export default function Page() {
       )}
       {!teamDetailLoading && team && teamDetailData && seasonData && (
         <div className="mx-auto w-full px-5 sm:px-10 lg:px-30">
-          <SeasonChangeButton
-            opened={opened}
-            setOpenedAction={setOpened}
-            years={seasonYears}
-            selectedYear={selectedYear}
-            setSelectedYearAction={setSelectedYear}
-            className="mb-0 ml-auto"
-          />
           <div className="relative flex items-center justify-between border-b border-neutral-800">
             <div
               style={{ borderColor: team.team_colour }}
@@ -84,6 +79,7 @@ export default function Page() {
                 </p>
               </div>
             </div>
+
             <Image
               src={seasonData.main_logo}
               alt={'logo'}
@@ -92,16 +88,29 @@ export default function Page() {
               className="z-20 w-33 sm:w-55 sm:pb-3"
             />
           </div>
+          <div className="my-3 ml-auto sm:my-0">
+            <SeasonChangeButton
+              opened={opened}
+              setOpenedAction={setOpened}
+              years={seasonYears}
+              selectedYear={selectedYear}
+              setSelectedYearAction={setSelectedYear}
+              className=""
+            />
+          </div>
           <TeamStats data={seasonData} />
           <TeamDriver
             selectedYear={selectedYear}
             seasonData={seasonData}
             team={team}
           />
-          <SeasonPerformance
-            data={performanceWithCumulative}
-            teamColor={team.team_colour}
-          />
+          <section className="desktop">
+            <SeasonPerformance
+              data={performanceWithCumulative}
+              teamColor={team.team_colour}
+            />
+          </section>
+          <TeamPerformanceTable data={performanceWithCumulative} />
         </div>
       )}
     </>

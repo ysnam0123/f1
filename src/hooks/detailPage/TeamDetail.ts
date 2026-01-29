@@ -15,6 +15,7 @@ export interface Performance {
   points: number;
   position: string | null;
   flag: string | null;
+  race_kr_name: string;
 }
 export interface TeamSeason {
   year: number;

@@ -5,24 +5,24 @@ import { SeasonDriver } from '@/hooks/SeasonDrivers';
 import { upgradeHeadshotQuality } from '@/hooks/UpgradeHeadShotQuality';
 import defaultDriver from '/public/drivers/defaultDriver.svg';
 import { findHeadshot } from '@/utils/findHeadShot';
+import { Team2026, teamDriver } from '@/images/team';
 
 export default function SeasonDriverCard({
   driver,
   year,
+  teamData,
 }: {
-  driver: SeasonDriver;
+  driver: teamDriver;
   year: number;
+  teamData: Team2026;
 }) {
   const router = useRouter();
   const [firstName, lastName] = driver.kr_name.split(' ');
-  const headshotSrc =
-    upgradeHeadshotQuality(driver.headshot_url) ?? defaultDriver;
-
   return (
     <div
-      onClick={() => router.push(`/driver/${driver.driver_profile_id}`)}
-      style={{ borderColor: driver.team_colour }}
-      className={`group relative h-55 w-full cursor-pointer overflow-hidden rounded-[10px] border px-5 py-7.5 select-none`}
+      onClick={() => router.push(`/driver/${driver.driver_id}`)}
+      style={{ borderColor: teamData.team_colour }}
+      className={`group relative h-55 w-full cursor-pointer overflow-hidden rounded-[10px] border px-5 py-5 select-none`}
     >
       <Image
         src="/cardBg.png"
@@ -32,36 +32,37 @@ export default function SeasonDriverCard({
       />
       <div className="pointer-events-none absolute inset-0 z-1 bg-black/0 transition-all duration-100 group-hover:bg-white/10" />
 
-      <div className="z-10 flex justify-between">
-        <div className="z-10 flex flex-col">
-          <p className="text-[20px]">{firstName}</p>
-          <p className="text-[20px]">{lastName}</p>
-          <div className="flex h-full flex-col justify-between">
-            <div className="flex items-center gap-1">
-              <Image src={driver.flag} alt="국기" width={20} height={20} />
-              <p>{driver.driver_number}</p>
+      <div className="relative z-20 flex flex-col gap-1">
+        <p className="text-[20px] font-semibold text-white">{driver.kr_name}</p>
+        <div className="z-10 flex justify-between">
+          <div className="z-10 flex flex-col">
+            <p className="text-[18px]">{teamData.team_kr_name}</p>
+            <div className="flex h-full flex-col justify-between">
+              <div className="flex items-center gap-1">
+                <Image src={driver.flag} alt="국기" width={20} height={20} />
+                <p>{driver.driver_number}</p>
+              </div>
             </div>
-            {/* <p className="text-[10px]">{team.name}</p> */}
-            <Image src={driver.main_logo} alt="logo" width={50} height={50} />
+            <Image src={teamData.main_logo} alt="logo" width={50} height={50} />
           </div>
+          {findHeadshot(driver.full_name, year) ? (
+            <Image
+              src={findHeadshot(driver.full_name, year)}
+              alt="driver"
+              width={140}
+              height={140}
+              className="z-10"
+            />
+          ) : (
+            <Image
+              src={'/drivers/defaultDriver.svg'}
+              alt="driver"
+              width={160}
+              height={160}
+              className="z-10"
+            />
+          )}
         </div>
-        {findHeadshot(driver.full_name, year) ? (
-          <Image
-            src={findHeadshot(driver.full_name, year)}
-            alt="driver"
-            width={160}
-            height={160}
-            className="z-10"
-          />
-        ) : (
-          <Image
-            src={'/drivers/defaultDriver.svg'}
-            alt="driver"
-            width={160}
-            height={160}
-            className="z-10"
-          />
-        )}
       </div>
     </div>
   );

@@ -10,20 +10,20 @@ export default function Footer() {
     <footer className="mt-10 w-full bg-[#100F13] px-4 py-6 select-none sm:mt-20 sm:px-12 sm:py-10">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-start">
         {/* Left */}
-        <div className="flex flex-col gap-4 lg:w-100 lg:border-r lg:border-[#717171] lg:pr-10">
+        <div className="flex flex-col items-start gap-4 lg:w-100 lg:border-r lg:border-[#717171] lg:pr-10">
           <Image
             src="/AfterLapLogo.svg"
             alt="AfterLap Logo"
             width={270}
             height={67}
-            className="hidden sm:block"
+            className="hidden h-16.75 w-auto sm:block"
           />
           <Image
             src="/AfterLapLogo.svg"
             alt="AfterLap Logo"
             width={150}
             height={36}
-            className="block sm:hidden"
+            className="block h-9 w-auto sm:hidden"
           />
 
           <div className="pl-1 text-sm sm:text-base">

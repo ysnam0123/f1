@@ -44,6 +44,37 @@ import francocolapinto2026 from '/public/driversImg/2026/francocolapinto.svg';
 import arvidlindblad2026 from '/public/driversImg/2026/arvidlindblad.svg';
 import sergioperez2026 from '/public/driversImg/2026/sergioperez.svg';
 import valtteribottas2026 from '/public/driversImg/2026/valtteribottas.svg';
+
+// ==== flag ====
+import argentina from '/public/flag/argentina.svg';
+import australia from '/public/flag/australia.svg';
+import austria from '/public/flag/austria.svg';
+import azerbaijan from '/public/flag/azerbaijan.svg';
+import bahrain from '/public/flag/bahrain.svg';
+import belgium from '/public/flag/belgium.svg';
+import brazil from '/public/flag/brazil.svg';
+import canada from '/public/flag/canada.svg';
+import france from '/public/flag/france.svg';
+import germany from '/public/flag/germany.svg';
+import hungary from '/public/flag/hungary.svg';
+import finland from '/public/flag/finland.svg';
+import italy from '/public/flag/italy.svg';
+import japan from '/public/flag/japan.svg';
+import mexico from '/public/flag/mexico.svg';
+import monaco from '/public/flag/monaco.svg';
+import netherlands from '/public/flag/netherlands.svg';
+import qatar from '/public/flag/qatar.svg';
+import saudi from '/public/flag/saudi.svg';
+import singapore from '/public/flag/singapore.svg';
+import spain from '/public/flag/spain.svg';
+import thailand from '/public/flag/thailand.svg';
+import uae from '/public/flag/uae.svg';
+import uk from '/public/flag/uk.svg';
+import usa from '/public/flag/usa.svg';
+import china from '/public/flag/china.svg';
+import newzealand from '/public/flag/newzealand.svg';
+import estonia from '/public/flag/estonia.svg';
+import denmark from '/public/flag/denmark.svg';
 import { StaticImageData } from 'next/image';
 
 export interface teamDriver {
@@ -52,6 +83,7 @@ export interface teamDriver {
   kr_name: string;
   driver_id: number;
   headshot: StaticImageData;
+  flag: string;
 }
 export interface Team2026 {
   team_name: string;
@@ -80,6 +112,7 @@ export const teams2026 = [
         kr_name: '랜도 노리스',
         driver_id: 462,
         headshot: landonorris2026,
+        flag: uk,
       },
       {
         driver_number: 81,
@@ -87,6 +120,7 @@ export const teams2026 = [
         kr_name: '오스카 피아스트리',
         driver_id: 531,
         headshot: oscarpiastri2026,
+        flag: australia,
       },
     ],
   },
@@ -105,6 +139,7 @@ export const teams2026 = [
         kr_name: '막스 베르스타펜',
         driver_id: 469,
         headshot: maxverstappen2026,
+        flag: netherlands,
       },
       {
         driver_number: 6,
@@ -112,6 +147,7 @@ export const teams2026 = [
         kr_name: '아이작 하자르',
         driver_id: 448,
         headshot: isackhadjar2026,
+        flag: france,
       },
     ],
   },
@@ -130,6 +166,7 @@ export const teams2026 = [
         kr_name: '샤를 르클레르',
         driver_id: 454,
         headshot: charlesleclerc2026,
+        flag: monaco,
       },
       {
         driver_number: 44,
@@ -137,6 +174,7 @@ export const teams2026 = [
         kr_name: '루이스 해밀턴',
         driver_id: 453,
         headshot: lewishamilton2026,
+        flag: uk,
       },
     ],
   },
@@ -155,6 +193,7 @@ export const teams2026 = [
         kr_name: '키미 안토넬리',
         driver_id: 507,
         headshot: kimiantonelli2026,
+        flag: italy,
       },
       {
         driver_number: 63,
@@ -162,6 +201,7 @@ export const teams2026 = [
         kr_name: '조지 러셀',
         driver_id: 445,
         headshot: georgerussell2026,
+        flag: uk,
       },
     ],
   },
@@ -180,6 +220,7 @@ export const teams2026 = [
         kr_name: '페르난도 알론소',
         driver_id: 446,
         headshot: fernandoalonso2026,
+        flag: spain,
       },
       {
         driver_number: 18,
@@ -187,6 +228,7 @@ export const teams2026 = [
         kr_name: '랜스 스트롤',
         driver_id: 492,
         headshot: lancestroll2026,
+        flag: canada,
       },
     ],
   },
@@ -205,6 +247,7 @@ export const teams2026 = [
         kr_name: '가브리엘 보르톨레토',
         driver_id: 459,
         headshot: gabrielbortoleto2026,
+        flag: brazil,
       },
       {
         driver_number: 27,
@@ -212,6 +255,7 @@ export const teams2026 = [
         kr_name: '니코 휠켄베르크',
         driver_id: 472,
         headshot: nicohulkenberg2026,
+        flag: germany,
       },
     ],
   },
@@ -230,6 +274,7 @@ export const teams2026 = [
         kr_name: '세르히오 페레스',
         driver_id: 480,
         headshot: sergioperez2026,
+        flag: mexico,
       },
       {
         driver_number: 77,
@@ -237,6 +282,7 @@ export const teams2026 = [
         kr_name: '발테리 보타스',
         driver_id: 447,
         headshot: valtteribottas2026,
+        flag: finland,
       },
     ],
   },
@@ -255,6 +301,7 @@ export const teams2026 = [
         kr_name: '피에르 가슬리',
         driver_id: 461,
         headshot: pierregasly2026,
+        flag: france,
       },
       {
         driver_number: 43,
@@ -262,6 +309,7 @@ export const teams2026 = [
         kr_name: '프랑코 콜라핀토',
         driver_id: 451,
         headshot: francocolapinto2026,
+        flag: argentina,
       },
     ],
   },
@@ -281,6 +329,7 @@ export const teams2026 = [
         kr_name: '에스테반 오콘',
         driver_id: 483,
         headshot: estebanocon2026,
+        flag: france,
       },
       {
         driver_number: 87,
@@ -288,6 +337,7 @@ export const teams2026 = [
         kr_name: '올리버 베어먼',
         driver_id: 484,
         headshot: oliverbearman2026,
+        flag: uk,
       },
     ],
   },
@@ -307,6 +357,7 @@ export const teams2026 = [
         kr_name: '리암 로슨',
         driver_id: 471,
         headshot: liamlawson2026,
+        flag: newzealand,
       },
       {
         driver_number: 41,
@@ -314,6 +365,7 @@ export const teams2026 = [
         kr_name: '아르비드 린드블라드',
         driver_id: 460,
         headshot: arvidlindblad2026,
+        flag: uk,
       },
     ],
   },
@@ -333,6 +385,7 @@ export const teams2026 = [
         kr_name: '알렉산더 알본',
         driver_id: 525,
         headshot: alexanderalbon2026,
+        flag: thailand,
       },
       {
         driver_number: 55,
@@ -340,6 +393,7 @@ export const teams2026 = [
         kr_name: '카를로스 사인츠',
         driver_id: 489,
         headshot: carlossainz2026,
+        flag: spain,
       },
     ],
   },

@@ -22,11 +22,11 @@ export default function TeamDriver({
     seasonData?.drivers.filter((driver) => driver.is_main === false) ?? [];
   return (
     <>
-      <div className="border-t border-neutral-800 py-12">
-        <h2 className="mb-8 text-2xl font-semibold tracking-tight">
+      <div className="border-t border-neutral-800 py-5 sm:py-12">
+        <h2 className="mb-4 text-[18px] font-semibold tracking-tight sm:mb-8 sm:text-2xl">
           시즌 드라이버
         </h2>
-        <div className="mb-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mb-10 grid grid-cols-2 gap-6">
           {seasonMainDrivers.map((driver) => (
             <TeamDriverCard
               key={driver.driver_id}
@@ -42,7 +42,7 @@ export default function TeamDriver({
           <section>
             <button
               onClick={() => setRdOpened(!rdOpened)}
-              className="mb-8 flex cursor-pointer items-center gap-1 border border-(--color-button-border) bg-(--color-button-bg) px-4 py-1 text-[14px] hover:bg-(--color-button-hover) active:bg-(--color-button-active)"
+              className="mb-4 flex cursor-pointer items-center gap-1 border border-(--color-button-border) bg-(--color-button-bg) px-4 py-1 text-[14px] hover:bg-(--color-button-hover) active:bg-(--color-button-active)"
             >
               <p>리저브 드라이버 보기</p>{' '}
               {rdOpened ? (

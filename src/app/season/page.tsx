@@ -38,7 +38,7 @@ export default function Page() {
                 selectedYear={selectedYear}
                 setSelectedYearAction={setSelectedYear}
               />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-7">
                 {meetings.map((meeting) =>
                   meeting.race_podium ? (
                     <GrandPrixCardWithPodium

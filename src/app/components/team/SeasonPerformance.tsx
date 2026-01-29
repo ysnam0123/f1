@@ -9,14 +9,18 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-interface PerformanceData {
+export interface TeamPerformanceData {
+  flag: string | null;
+  race: string;
   round: number;
   points: number;
+  position: string | null;
   cumulativePoints: number;
+  race_kr_name: string;
 }
 
 interface SeasonPerformanceProps {
-  data: PerformanceData[];
+  data: TeamPerformanceData[];
   teamColor: string;
 }
 // interface SeasonPerformanceProps {

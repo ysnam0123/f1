@@ -8,19 +8,11 @@ import SessionBox from './SessionBox';
 
 interface PageProps {
   data?: NextMeeting;
-  loading: boolean;
 }
-export default function NextSession({ data, loading }: PageProps) {
+export default function NextSession({ data }: PageProps) {
   const router = useRouter();
   const meetingKey = data?.meeting_key ?? null;
   const { data: nextSessions = [] } = useSessionData(meetingKey, !!meetingKey);
-  if (loading) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <SimpleLoading />
-      </div>
-    );
-  }
 
   if (!data) {
     return null;
@@ -31,7 +23,7 @@ export default function NextSession({ data, loading }: PageProps) {
     <>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h1 className="text-[14px] font-semibold text-(--color-title) sm:text-[30px]">
+          <h1 className="text-[14px] font-semibold text-[#FED010] sm:text-[30px] sm:text-(--color-title)">
             다음 일정
           </h1>
           <button
@@ -43,15 +35,15 @@ export default function NextSession({ data, loading }: PageProps) {
         </div>
         <section className="flex flex-col gap-2">
           <div className="flex w-full items-center justify-between">
-            <div className="flex w-full flex-col lg:max-w-152.5 lg:shrink-0 lg:pb-0">
-              <h1 className="text-[18px] font-semibold sm:text-[22px] lg:text-[30px]">
+            <div className="flex w-full flex-col gap-1 lg:max-w-152.5 lg:shrink-0 lg:pb-0">
+              <h1 className="text-[20px] font-semibold sm:text-[22px] lg:text-[30px]">
                 {data.meeting_name}
               </h1>
               <h1 className="mt-1 text-[10px] font-medium text-(--color-sub-text) sm:text-[14px] lg:text-[18px]">
                 {data.meeting_official_name}
               </h1>
 
-              <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:mt-3 sm:text-[14px] lg:text-[16px]">
+              <div className="my-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:mt-3 sm:text-[14px] lg:text-[16px]">
                 <p>{data.circuits.circuit_long_name}</p>
                 <div className="hidden h-6 w-px bg-(--color-sub-text) lg:block" />
                 <p>{data.countries.country_kr_name}</p>
@@ -73,7 +65,7 @@ export default function NextSession({ data, loading }: PageProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex grid-cols-3 flex-col gap-5 sm:grid">
             {nextSessions.map((session) => (
               <SessionBox key={session.session_key} data={session} />
             ))}

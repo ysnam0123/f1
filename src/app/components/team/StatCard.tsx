@@ -11,7 +11,7 @@ export function StatCard({ label, value, teamColor }: StatCardProps) {
 
   return (
     <div
-      className="cursor-default border-2 border-neutral-800 bg-[#111] p-6 transition-all duration-200 select-none"
+      className="cursor-default border-2 border-neutral-800 bg-[#111] p-3 transition-all duration-200 select-none sm:p-6"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
@@ -23,7 +23,9 @@ export function StatCard({ label, value, teamColor }: StatCardProps) {
         <p className="text-[14px] tracking-wider text-neutral-500 uppercase">
           {label}
         </p>
-        <p className="text-3xl font-semibold tracking-tight">{value}</p>
+        <p className="text-[20px] font-semibold tracking-tight sm:text-3xl">
+          {value}
+        </p>
       </div>
     </div>
   );

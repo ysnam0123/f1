@@ -36,8 +36,8 @@ export default function Page() {
     () => getSessionKeyByName(sessions, 'Qualifying'),
     [sessions],
   );
-  const { data: sessionResults = [], isLoading: sessionResultLoading } =
-    useSortedResults(selectedSessionKey);
+  // const { data: sessionResults = [], isLoading: sessionResultLoading } =
+  //   useSortedResults(selectedSessionKey);
   const {
     data: startingGridData,
     isLoading: startingGridLoading,
@@ -57,13 +57,13 @@ export default function Page() {
   return (
     <>
       <h1>page Component</h1>
-      {isSelected && (
+      {/* {isSelected && (
         <SessionNav
           sessionTabs={sessions}
           isSelected={isSelected}
           setIsSelectedAction={setIsSelected}
         />
-      )}
+      )} */}
     </>
   );
 }
