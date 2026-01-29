@@ -44,8 +44,202 @@ import francocolapinto2026 from '/public/driversImg/2026/francocolapinto.svg';
 import arvidlindblad2026 from '/public/driversImg/2026/arvidlindblad.svg';
 import sergioperez2026 from '/public/driversImg/2026/sergioperez.svg';
 import valtteribottas2026 from '/public/driversImg/2026/valtteribottas.svg';
+import { StaticImageData } from 'next/image';
+
+export interface teamDriver {
+  driver_number: number;
+  full_name: string;
+  kr_name: string;
+  driver_id: number;
+  headshot: StaticImageData;
+}
+export interface Team2026 {
+  team_name: string;
+  team_kr_name: string;
+  team_slug: string;
+  team_colour: string;
+  year: number;
+  main_logo: StaticImageData;
+  car_img: StaticImageData;
+  drivers: teamDriver[];
+}
 
 export const teams2026 = [
+  {
+    team_name: 'McLaren',
+    team_kr_name: '맥라렌',
+    team_slug: 'mclaren',
+    team_colour: '#F47600',
+    year: 2026,
+    main_logo: mclaren,
+    car_img: mclaren2026,
+    drivers: [
+      {
+        driver_number: 4,
+        full_name: 'Lando Norris',
+        kr_name: '랜도 노리스',
+        driver_id: 462,
+        headshot: landonorris2026,
+      },
+      {
+        driver_number: 81,
+        full_name: 'Oscar Piastri',
+        kr_name: '오스카 피아스트리',
+        driver_id: 531,
+        headshot: oscarpiastri2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Red Bull Racing',
+    team_kr_name: '레드불 레이싱',
+    team_slug: 'red-bull-racing',
+    team_colour: '#3671C6',
+    year: 2026,
+    main_logo: redbullracing,
+    car_img: redbullracing2026,
+    drivers: [
+      {
+        driver_number: 1,
+        full_name: 'Max Verstappen',
+        kr_name: '막스 베르스타펜',
+        driver_id: 469,
+        headshot: maxverstappen2026,
+      },
+      {
+        driver_number: 6,
+        full_name: 'Isack Hadjar',
+        kr_name: '아이작 하자르',
+        driver_id: 448,
+        headshot: isackhadjar2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Ferrari',
+    team_kr_name: '페라리',
+    team_slug: 'ferrari',
+    team_colour: '#ED1131',
+    year: 2026,
+    main_logo: ferrari,
+    car_img: ferrari2026,
+    drivers: [
+      {
+        driver_number: 16,
+        full_name: 'Charles Leclerc',
+        kr_name: '샤를 르클레르',
+        driver_id: 454,
+        headshot: charlesleclerc2026,
+      },
+      {
+        driver_number: 44,
+        full_name: 'Lewis Hamilton',
+        kr_name: '루이스 해밀턴',
+        driver_id: 453,
+        headshot: lewishamilton2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Mercedes',
+    team_kr_name: '메르세데스',
+    team_slug: 'mercedes',
+    team_colour: '#00D7B6',
+    year: 2026,
+    main_logo: mercedes,
+    car_img: mercedes2026,
+    drivers: [
+      {
+        driver_number: 12,
+        full_name: 'Kimi Antonelli',
+        kr_name: '키미 안토넬리',
+        driver_id: 507,
+        headshot: kimiantonelli2026,
+      },
+      {
+        driver_number: 63,
+        full_name: 'George Russell',
+        kr_name: '조지 러셀',
+        driver_id: 445,
+        headshot: georgerussell2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Aston Martin',
+    team_kr_name: '애스턴 마틴',
+    team_slug: 'aston-martin',
+    team_colour: '#229971',
+    year: 2026,
+    main_logo: astonmartin,
+    car_img: astonmartin2026,
+    drivers: [
+      {
+        driver_number: 14,
+        full_name: 'Fernando Alonso',
+        kr_name: '페르난도 알론소',
+        driver_id: 446,
+        headshot: fernandoalonso2026,
+      },
+      {
+        driver_number: 18,
+        full_name: 'Lance Stroll',
+        kr_name: '랜스 스트롤',
+        driver_id: 492,
+        headshot: lancestroll2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Audi',
+    team_kr_name: '아우디',
+    team_slug: 'audi',
+    team_colour: '#9E001C',
+    year: 2026,
+    main_logo: audi,
+    car_img: audi2026,
+    drivers: [
+      {
+        driver_number: 5,
+        full_name: 'Gabriel Bortoleto',
+        kr_name: '가브리엘 보르톨레토',
+        driver_id: 459,
+        headshot: gabrielbortoleto2026,
+      },
+      {
+        driver_number: 27,
+        full_name: 'Nico Hulkenberg',
+        kr_name: '니코 휠켄베르크',
+        driver_id: 472,
+        headshot: nicohulkenberg2026,
+      },
+    ],
+  },
+  {
+    team_name: 'Cadillac',
+    team_kr_name: '캐딜락',
+    team_slug: 'cadillac',
+    team_colour: '#5A5A5A',
+    year: 2026,
+    main_logo: cadillac,
+    car_img: null,
+    drivers: [
+      {
+        driver_number: 11,
+        full_name: 'Sergio Perez',
+        kr_name: '세르히오 페레스',
+        driver_id: 480,
+        headshot: sergioperez2026,
+      },
+      {
+        driver_number: 77,
+        full_name: 'Valtteri Bottas',
+        kr_name: '발테리 보타스',
+        driver_id: 447,
+        headshot: valtteribottas2026,
+      },
+    ],
+  },
   {
     team_name: 'Alpine',
     team_kr_name: '알핀',
@@ -99,84 +293,6 @@ export const teams2026 = [
   },
 
   {
-    team_name: 'Red Bull Racing',
-    team_kr_name: '레드불 레이싱',
-    team_slug: 'red-bull-racing',
-    team_colour: '#3671C6',
-    year: 2026,
-    main_logo: redbullracing,
-    car_img: redbullracing2026,
-    drivers: [
-      {
-        driver_number: 1,
-        full_name: 'Max Verstappen',
-        kr_name: '막스 베르스타펜',
-        driver_id: 469,
-        headshot: maxverstappen2026,
-      },
-      {
-        driver_number: 6,
-        full_name: 'Isack Hadjar',
-        kr_name: '아이작 하자르',
-        driver_id: 448,
-        headshot: isackhadjar2026,
-      },
-    ],
-  },
-
-  {
-    team_name: 'McLaren',
-    team_kr_name: '맥라렌',
-    team_slug: 'mclaren',
-    team_colour: '#F47600',
-    year: 2026,
-    main_logo: mclaren,
-    car_img: mclaren2026,
-    drivers: [
-      {
-        driver_number: 4,
-        full_name: 'Lando Norris',
-        kr_name: '랜도 노리스',
-        driver_id: 462,
-        headshot: landonorris2026,
-      },
-      {
-        driver_number: 81,
-        full_name: 'Oscar Piastri',
-        kr_name: '오스카 피아스트리',
-        driver_id: 531,
-        headshot: oscarpiastri2026,
-      },
-    ],
-  },
-
-  {
-    team_name: 'Audi',
-    team_kr_name: '아우디',
-    team_slug: 'audi',
-    team_colour: '#9E001C',
-    year: 2026,
-    main_logo: audi,
-    car_img: audi2026,
-    drivers: [
-      {
-        driver_number: 5,
-        full_name: 'Gabriel Bortoleto',
-        kr_name: '가브리엘 보르톨레토',
-        driver_id: 459,
-        headshot: gabrielbortoleto2026,
-      },
-      {
-        driver_number: 27,
-        full_name: 'Nico Hulkenberg',
-        kr_name: '니코 휠켄베르크',
-        driver_id: 472,
-        headshot: nicohulkenberg2026,
-      },
-    ],
-  },
-
-  {
     team_name: 'Racing Bulls',
     team_kr_name: '레이싱 불스',
     team_slug: 'racing-bulls',
@@ -203,84 +319,6 @@ export const teams2026 = [
   },
 
   {
-    team_name: 'Mercedes',
-    team_kr_name: '메르세데스',
-    team_slug: 'mercedes',
-    team_colour: '#00D7B6',
-    year: 2026,
-    main_logo: mercedes,
-    car_img: mercedes2026,
-    drivers: [
-      {
-        driver_number: 12,
-        full_name: 'Kimi Antonelli',
-        kr_name: '키미 안토넬리',
-        driver_id: 507,
-        headshot: kimiantonelli2026,
-      },
-      {
-        driver_number: 63,
-        full_name: 'George Russell',
-        kr_name: '조지 러셀',
-        driver_id: 445,
-        headshot: georgerussell2026,
-      },
-    ],
-  },
-
-  {
-    team_name: 'Ferrari',
-    team_kr_name: '페라리',
-    team_slug: 'ferrari',
-    team_colour: '#ED1131',
-    year: 2026,
-    main_logo: ferrari,
-    car_img: ferrari2026,
-    drivers: [
-      {
-        driver_number: 16,
-        full_name: 'Charles Leclerc',
-        kr_name: '샤를 르클레르',
-        driver_id: 454,
-        headshot: charlesleclerc2026,
-      },
-      {
-        driver_number: 44,
-        full_name: 'Lewis Hamilton',
-        kr_name: '루이스 해밀턴',
-        driver_id: 453,
-        headshot: lewishamilton2026,
-      },
-    ],
-  },
-
-  {
-    team_name: 'Aston Martin',
-    team_kr_name: '애스턴 마틴',
-    team_slug: 'aston-martin',
-    team_colour: '#229971',
-    year: 2026,
-    main_logo: astonmartin,
-    car_img: astonmartin2026,
-    drivers: [
-      {
-        driver_number: 14,
-        full_name: 'Fernando Alonso',
-        kr_name: '페르난도 알론소',
-        driver_id: 446,
-        headshot: fernandoalonso2026,
-      },
-      {
-        driver_number: 18,
-        full_name: 'Lance Stroll',
-        kr_name: '랜스 스트롤',
-        driver_id: 492,
-        headshot: lancestroll2026,
-      },
-    ],
-  },
-
-  {
     team_name: 'Williams',
     team_kr_name: '윌리엄스',
     team_slug: 'williams',
@@ -302,32 +340,6 @@ export const teams2026 = [
         kr_name: '카를로스 사인츠',
         driver_id: 489,
         headshot: carlossainz2026,
-      },
-    ],
-  },
-
-  {
-    team_name: 'Cadillac',
-    team_kr_name: '캐딜락',
-    team_slug: 'cadillac',
-    team_colour: '#5A5A5A',
-    year: 2026,
-    main_logo: cadillac,
-    car_img: null,
-    drivers: [
-      {
-        driver_number: 11,
-        full_name: 'Sergio Perez',
-        kr_name: '세르히오 페레스',
-        driver_id: 480,
-        headshot: sergioperez2026,
-      },
-      {
-        driver_number: 77,
-        full_name: 'Valtteri Bottas',
-        kr_name: '발테리 보타스',
-        driver_id: 447,
-        headshot: valtteribottas2026,
       },
     ],
   },

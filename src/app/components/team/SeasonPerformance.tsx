@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   LineChart,
   Line,
@@ -18,6 +19,10 @@ interface SeasonPerformanceProps {
   data: PerformanceData[];
   teamColor: string;
 }
+// interface SeasonPerformanceProps {
+//   data: Performance[];
+//   teamColor: string;
+// }
 
 export function SeasonPerformance({ data, teamColor }: SeasonPerformanceProps) {
   return (

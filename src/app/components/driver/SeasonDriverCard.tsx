@@ -22,7 +22,7 @@ export default function SeasonDriverCard({
     <div
       onClick={() => router.push(`/driver/${driver.driver_profile_id}`)}
       style={{ borderColor: driver.team_colour }}
-      className={`group relative h-55 w-75 cursor-pointer overflow-hidden rounded-[10px] border px-5 py-7.5 select-none`}
+      className={`group relative h-55 w-full cursor-pointer overflow-hidden rounded-[10px] border px-5 py-7.5 select-none`}
     >
       <Image
         src="/cardBg.png"

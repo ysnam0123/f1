@@ -16,12 +16,12 @@ export default function TeamBox({
       className="absolute top-22 left-0 z-100 flex min-h-120 w-screen justify-center bg-[#1a1a1a] px-12.5 py-12.5 select-none"
       onMouseLeave={onMouseLeave}
     >
-      <div className="grid grid-cols-5 gap-8">
+      <div className="grid max-w-400 grid-cols-5 gap-8">
         {teams2026.map((team) => (
           <div
             key={team.team_slug}
             onClick={() => router.push(`/team/${team.team_slug}`)}
-            className="group flex h-40 w-65 cursor-pointer flex-col items-center justify-center gap-2 rounded-[6px] border border-(--color-card-border) bg-(--color-card-bg) px-6 pt-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-(--team-color) hover:shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+            className="group flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-[6px] border border-(--color-card-border) bg-(--color-card-bg) px-4 pt-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-(--team-color) hover:shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
             style={{ '--team-color': team.team_colour } as React.CSSProperties}
           >
             <Image

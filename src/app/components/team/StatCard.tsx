@@ -11,7 +11,7 @@ export function StatCard({ label, value, teamColor }: StatCardProps) {
 
   return (
     <div
-      className="cursor-default border border-neutral-800 bg-[#111] p-6 transition-all duration-200 select-none"
+      className="cursor-default border-2 border-neutral-800 bg-[#111] p-6 transition-all duration-200 select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{

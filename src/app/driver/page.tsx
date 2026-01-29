@@ -1,8 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import AnimatedContent from '@/components/AnimatedContent';
 import { useSeasonDrivers } from '@/hooks/SeasonDrivers';
 import SeasonDriverCard from '../components/driver/SeasonDriverCard';
 import SeasonChangeButton from '../components/common/SeasonChangeButton';
@@ -11,12 +9,10 @@ export default function Page() {
   const [opened, setOpened] = useState(false);
   const years = [2023, 2024, 2025, 2026];
   const [selectedYear, setSelectedYear] = useState(2026);
-
-  const router = useRouter();
   const { data, isPending, isError } = useSeasonDrivers(selectedYear);
   return (
     <>
-      <div className="mx-auto max-w-315 px-5 sm:px-0">
+      <div className="mx-auto w-full px-5 sm:px-30">
         <SeasonChangeButton
           opened={opened}
           setOpenedAction={setOpened}

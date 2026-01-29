@@ -14,6 +14,7 @@ export default function Page() {
   const { data: driverDetailData, isLoading: driverDetailLoading } =
     useDriverDetailData(driverId);
   console.log(driverDetailData);
+
   const seasonData = driverDetailData?.seasons.find(
     (data) => data.year === selectedYear,
   );

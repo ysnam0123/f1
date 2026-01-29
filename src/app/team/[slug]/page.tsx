@@ -4,18 +4,39 @@ import SeasonChangeButton from '@/app/components/common/SeasonChangeButton';
 import { SeasonPerformance } from '@/app/components/team/SeasonPerformance';
 import { StatCard } from '@/app/components/team/StatCard';
 import { TeamDriverCard } from '@/app/components/team/TeamDriverCard';
-import { years } from '@/data/years';
+import TeamStats from '@/app/components/team/TeamStats';
+import { useTeamDetailData } from '@/hooks/detailPage/TeamDetail';
 import { teams2026 } from '@/images/team';
+import { findHeadshot } from '@/utils/findHeadShot';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function Page() {
   const params = useParams<{ slug: string }>();
+  const teamSlug = params.slug;
+  const { data: teamDetailData, isLoading: teamDetailLoading } =
+    useTeamDetailData(teamSlug);
+
+  const seasonYears = useMemo<number[]>(
+    () => teamDetailData?.seasons.map((s) => s.year) ?? [],
+    [teamDetailData?.seasons],
+  );
   const [opened, setOpened] = useState(false);
+  const [rdOpened, setRdOpened] = useState(false);
   const [selectedYear, setSelectedYear] = useState(2026);
+  useEffect(() => {
+    console.log(seasonYears[seasonYears.length - 1]);
+  }, [seasonYears]);
   const team = teams2026.find((t) => t.team_slug === params.slug);
-  const [isHovered, setIsHovered] = useState(false);
+  const seasonData = teamDetailData?.seasons.find(
+    (data) => data.year === selectedYear,
+  );
+  const seasonMainDrivers =
+    seasonData?.drivers.filter((driver) => driver.is_main) ?? [];
+  const seasonReserveDrivers =
+    seasonData?.drivers.filter((driver) => driver.is_main === false) ?? [];
 
   const dummyPerformanceData = [
     { round: 1, points: 43, cumulativePoints: 43 },
@@ -39,79 +60,102 @@ export default function Page() {
     { round: 19, points: 50, cumulativePoints: 808 },
     { round: 20, points: 52, cumulativePoints: 860 },
   ];
+  const performanceWithCumulative = useMemo(() => {
+    if (!seasonData?.performance) return [];
 
+    let cumulative = 0;
+
+    return seasonData.performance.map((item) => {
+      cumulative += item.points;
+
+      return {
+        round: item.round,
+        points: item.points,
+        cumulativePoints: cumulative,
+        race: item.race,
+        flag: item.flag,
+      };
+    });
+  }, [seasonData?.performance]);
+
+  console.log(teamDetailData);
   return (
     <>
-      {team && (
-        <div className="mx-auto max-w-285">
+      {team && teamDetailData && seasonData && (
+        <div className="mx-auto px-30">
           <SeasonChangeButton
             opened={opened}
             setOpenedAction={setOpened}
-            years={years}
+            years={seasonYears}
             selectedYear={selectedYear}
             setSelectedYearAction={setSelectedYear}
-            className="mb-0 sm:mb-0 sm:w-50"
+            className="mb-0 sm:mb-0"
           />
-          <div className="relative flex items-center justify-between border-b border-neutral-800 pb-8">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3">
-                <h1 className="text-5xl tracking-tight">{team.team_kr_name}</h1>
-                <div
-                  className="mt-2 h-1 w-16"
-                  style={{ backgroundColor: team.team_colour }}
-                />
-              </div>
+          <div className="relative flex items-center justify-between border-b border-neutral-800">
+            <div
+              style={{ borderColor: team.team_colour }}
+              className="flex flex-col gap-2 border-l-8 pl-4 select-none"
+            >
+              <h1 className="text-5xl tracking-tight">{team.team_kr_name}</h1>
               <div className="flex items-center gap-2">
                 <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
                   {team.team_slug}
                 </p>
                 <p className="text-[20px] tracking-wide text-[#5f5f5f] uppercase">
-                  - 2025 시즌
+                  - <span>{selectedYear}</span> 시즌
                 </p>
               </div>
             </div>
-            <Image src={team.main_logo} alt={'logo'} width={120} height={120} />
+            <Image src={team.main_logo} alt={'logo'} width={240} height={240} />
           </div>
-          <div className="grid grid-cols-1 gap-4 py-12 md:grid-cols-2 lg:grid-cols-4">
-            <StatCard
-              label="Constructors' Ranking"
-              value={`P 1`}
-              teamColor={team.team_colour}
-            />
-            <StatCard
-              label="Total Points"
-              value={2}
-              teamColor={team.team_colour}
-            />
-            <StatCard
-              label="Wins / Podiums"
-              value={`${2} / ${5}`}
-              teamColor={team.team_colour}
-            />
-            <StatCard
-              label="Drivers"
-              value={team.drivers.join(' • ')}
-              teamColor={team.team_colour}
-            />
-          </div>
+          <TeamStats data={seasonData} />
           <div className="border-t border-neutral-800 py-12">
             <h2 className="mb-8 text-2xl font-semibold tracking-tight">
-              Drivers
+              시즌 드라이버
             </h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {team.drivers.map((driver) => (
+            <div className="mb-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {seasonMainDrivers.map((driver) => (
                 <TeamDriverCard
-                  key={driver.driver_number}
+                  key={driver.driver_id}
+                  driverId={driver.driver_id}
                   name={driver.kr_name}
                   number={driver.driver_number}
-                  imageUrl={driver.headshot}
+                  imageUrl={findHeadshot(driver.full_name, selectedYear)}
                   teamColor={team.team_colour}
                 />
               ))}
             </div>
+            {seasonReserveDrivers.length > 0 && (
+              <section>
+                <button
+                  onClick={() => setRdOpened(!rdOpened)}
+                  className="mb-8 flex cursor-pointer items-center gap-1 border border-(--color-button-border) bg-(--color-button-bg) px-4 py-1 text-[14px] hover:bg-(--color-button-hover) active:bg-(--color-button-active)"
+                >
+                  <p>리저브 드라이버 보기</p>{' '}
+                  {rdOpened ? (
+                    <ChevronUp className="h-5 w-5" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5" />
+                  )}
+                </button>
+                <div className="grid grid-cols-4 gap-10">
+                  {rdOpened &&
+                    seasonReserveDrivers.map((driver) => (
+                      <TeamDriverCard
+                        driverId={driver.driver_id}
+                        key={driver.driver_id}
+                        name={driver.kr_name}
+                        number={driver.driver_number}
+                        imageUrl={findHeadshot(driver.full_name, selectedYear)}
+                        teamColor={team.team_colour}
+                      />
+                    ))}
+                </div>
+              </section>
+            )}
           </div>
           <SeasonPerformance
-            data={dummyPerformanceData}
+            data={performanceWithCumulative}
             teamColor={team.team_colour}
           />
           <section className="min-h-300 w-full rounded-[30px] bg-[#1C1C25] px-10 py-7.5">
