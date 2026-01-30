@@ -125,7 +125,7 @@ export default function SessionResultSection({
                 <td className="hidden py-3 text-center text-[22px] md:table-cell">
                   {result.number_of_laps}
                 </td>
-                <td className="py-3 text-center text-[20px]">
+                <td className="py-3 text-center text-[18px] sm:text-[20px]">
                   + {result.gap_to_leader}
                 </td>
               </tr>

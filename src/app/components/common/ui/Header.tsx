@@ -13,7 +13,7 @@ export default function Header() {
   const router = useRouter();
   return (
     <>
-      <div className="mb-4 flex h-12.5 flex-col px-2.5 py-2.5 lg:h-23.5">
+      <div className="fixed top-0 z-50 mb-4 flex h-12.5 w-full flex-col bg-(--color-bg-primary) px-2.5 py-2.5 lg:h-23.5">
         <div className="flex items-center gap-17.5 select-none lg:px-17.5">
           <Image
             src={logo}

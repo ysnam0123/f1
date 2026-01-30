@@ -122,13 +122,12 @@ export default function RaceResultSection({
 
   return (
     <>
-      {/* {isPending && <></>} */}
-      <div className="my-0 flex items-end justify-center gap-7.5 sm:my-5">
+      <div className="my-0 flex items-end justify-center gap-7.5 sm:my-5 sm:px-5 md:px-0">
         {second && <PodiumCard year={year} result={second} rank={2} />}
         {first && <PodiumCard year={year} result={first} rank={1} />}
         {third && <PodiumCard year={year} result={third} rank={3} />}
       </div>
-      <div className="mobile mt-3">
+      <div className="mobile mt-3 sm:px-5 md:px-0">
         <RaceTabs
           selectedTab={mobileSelectedTab}
           setSelectedTabAction={mobileSetSelectedTab}
@@ -157,7 +156,7 @@ export default function RaceResultSection({
             경기 분석 보기
           </button>
         </div>
-        <div className="mb-5 min-h-50 w-full rounded-[10px] sm:mb-12.5 sm:max-w-285">
+        <div className="mb-5 min-h-50 w-full rounded-[10px] sm:mb-12.5">
           {!isShow ? (
             <>
               <RaceResultTable year={year} results={sessionResults} />

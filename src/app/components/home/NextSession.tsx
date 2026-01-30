@@ -21,7 +21,7 @@ export default function NextSession({ data }: PageProps) {
   console.log('nextSessions:', nextSessions);
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-1.5 sm:gap-3">
         <div className="flex items-center justify-between">
           <h1 className="text-[14px] font-semibold text-[#FED010] sm:text-[30px] sm:text-(--color-title)">
             다음 일정
@@ -39,11 +39,11 @@ export default function NextSession({ data }: PageProps) {
               <h1 className="text-[20px] font-semibold sm:text-[22px] lg:text-[30px]">
                 {data.meeting_name}
               </h1>
-              <h1 className="mt-1 text-[10px] font-medium text-(--color-sub-text) sm:text-[14px] lg:text-[18px]">
+              <h1 className="mt-0 text-[10px] font-medium text-(--color-sub-text) sm:mt-1 sm:text-[14px] lg:text-[18px]">
                 {data.meeting_official_name}
               </h1>
 
-              <div className="my-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:mt-3 sm:text-[14px] lg:text-[16px]">
+              <div className="my-0.5 flex flex-wrap items-center gap-2 text-[12px] sm:my-1.5 sm:mt-3 sm:text-[14px] lg:text-[16px]">
                 <p>{data.circuits.circuit_long_name}</p>
                 <div className="hidden h-6 w-px bg-(--color-sub-text) lg:block" />
                 <p>{data.countries.country_kr_name}</p>
@@ -65,7 +65,7 @@ export default function NextSession({ data }: PageProps) {
             </div>
           </div>
 
-          <div className="flex grid-cols-3 flex-col gap-5 sm:grid">
+          <div className="flex grid-cols-3 flex-col gap-2 sm:grid sm:gap-5">
             {nextSessions.map((session) => (
               <SessionBox key={session.session_key} data={session} />
             ))}

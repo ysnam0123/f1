@@ -9,20 +9,13 @@ export default function DriverCard({
   teamColor?: string;
 }) {
   return (
-    <div className="flex items-center justify-center rounded-2xl sm:h-80 sm:w-80">
+    <div className="flex items-center justify-center rounded-2xl md:h-50 md:w-50 lg:h-70 lg:w-70">
       <Image
         src={headshot ? headshot : defaultDriver}
         alt="driver"
         width={260}
         height={260}
-        className="desktop z-30"
-      />
-      <Image
-        src={headshot ? headshot : defaultDriver}
-        alt="driver"
-        width={150}
-        height={150}
-        className="mobile z-30"
+        className="z-30"
       />
     </div>
   );

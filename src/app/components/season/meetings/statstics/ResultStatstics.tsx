@@ -79,11 +79,11 @@ export default function ResultStatstics({
         >
           STATSTICS
         </h1>
-        <div className="min-h-100 rounded-4xl bg-[#1A1A1A]">
+        <div className="min-h-100 w-full rounded-4xl bg-[#1A1A1A]">
           <ul className="flex items-center">
             {tabs.map((tab) => (
               <li
-                className={`${selectedTab === tab.label ? 'border-b-2 border-[#BFBFBF]' : ''} flex h-13 w-full max-w-71.25 cursor-pointer items-center justify-center gap-1 hover:bg-[#393939]`}
+                className={`${selectedTab === tab.label ? 'border-b-2 border-[#BFBFBF]' : ''} flex h-13 w-full cursor-pointer items-center justify-center gap-1 hover:bg-[#393939]`}
                 key={tab.label}
                 onClick={() => setSelectedTabAction(tab.label)}
               >
@@ -103,7 +103,7 @@ export default function ResultStatstics({
               </li>
             ))}
           </ul>
-          <div className="p-4">{renderTabContent()}</div>
+          <div className="w-full p-4">{renderTabContent()}</div>
         </div>
       </section>
     </>

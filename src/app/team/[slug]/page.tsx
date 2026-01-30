@@ -88,7 +88,7 @@ export default function Page() {
               className="z-20 w-33 sm:w-55 sm:pb-3"
             />
           </div>
-          <div className="my-3 ml-auto sm:my-0">
+          <div className="my-3">
             <SeasonChangeButton
               opened={opened}
               setOpenedAction={setOpened}

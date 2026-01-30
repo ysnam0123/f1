@@ -8,8 +8,10 @@ export default function TeamPerformanceTable({
 }) {
   return (
     <>
-      <div className="space-y-4">
-        <h3 className="text-muted-foreground text-[18px]">레이스 별 결과</h3>
+      <div className="sm:space-y-4">
+        <h3 className="text-muted-foreground text-[14px] sm:text-[18px]">
+          레이스 별 결과
+        </h3>
         <div className="overflow-x-auto">
           <table className="text-[18 w-full select-none">
             <thead>

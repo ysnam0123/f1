@@ -29,19 +29,25 @@ export default function Summary({
   console.log('3번 year :', year);
   return (
     <>
-      <div className="grid gap-5 rounded-xl bg-none pt-4 sm:grid-cols-2 sm:gap-10 sm:bg-[#1A1A1A] sm:px-10">
-        <WeatherSummary weather={weather} />
-        <Top3Position
-          setSelectedTab={setSelectedTab}
-          positionGain={positionGain}
-        />
-        <FastestPitStop year={year} pit={pit} setSelectedTab={setSelectedTab} />
-        <SafetyCarSummary
-          SafetyCarNumber={SafetyCarNumber}
-          raceControl={raceControl}
-          totalLaps={totalLaps}
-          setSelectedTab={setSelectedTab}
-        />
+      <div className="px-5 md:px-0">
+        <div className="grid w-full gap-5 rounded-xl bg-none py-4 sm:gap-5 sm:bg-[#1A1A1A] sm:px-10 lg:grid-cols-2">
+          <WeatherSummary weather={weather} />
+          <Top3Position
+            setSelectedTab={setSelectedTab}
+            positionGain={positionGain}
+          />
+          <FastestPitStop
+            year={year}
+            pit={pit}
+            setSelectedTab={setSelectedTab}
+          />
+          <SafetyCarSummary
+            SafetyCarNumber={SafetyCarNumber}
+            raceControl={raceControl}
+            totalLaps={totalLaps}
+            setSelectedTab={setSelectedTab}
+          />
+        </div>
       </div>
     </>
   );

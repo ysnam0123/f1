@@ -45,7 +45,7 @@ export default function SeasonChangeButton({
             scale={1.1}
             threshold={0}
             delay={0}
-            className="absolute top-full"
+            className="absolute top-full z-800"
           >
             <ul className="w-21 rounded-[10px] border border-(--color-box-border) bg-(--color-box-bg) text-center text-[20px] font-bold sm:w-36">
               {years.map((year) => (

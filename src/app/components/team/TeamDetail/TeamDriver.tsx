@@ -51,7 +51,7 @@ export default function TeamDriver({
                 <ChevronDown className="h-5 w-5" />
               )}
             </button>
-            <div className="grid grid-cols-4 gap-10">
+            <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
               {rdOpened &&
                 seasonReserveDrivers.map((driver) => (
                   <TeamDriverCard

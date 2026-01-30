@@ -16,24 +16,24 @@ export default function SeasonHeroBox({
   }
   const flagSrc = country_code_flags[meetingInfo!.country_code];
   const circuitSrc = circuitInfo.circuit_detail_img;
-  // if (circuitInfo) {
-  //   console.log('서킷 정보 테스트:', circuitInfo);
-  // }
+  if (circuitInfo) {
+    console.log('서킷 정보 테스트:', circuitInfo);
+  }
   return (
     <>
-      <section className="relative mb-1 h-30 select-none sm:mb-12.5 sm:h-100">
-        <div className="absolute inset-0 z-0 h-30 w-screen sm:h-100">
+      <section className="relative mb-1 pt-30 select-none sm:mb-12.5 sm:pt-60 md:pt-80 lg:pt-100">
+        <div className="absolute inset-0 z-0 h-30 w-screen sm:h-60 md:h-80 lg:h-100">
           <Image
-            src="/circuit/zandvoort2.svg"
+            src={circuitInfo.circuit_bg}
             alt="bg"
             width={1440}
             height={567}
-            className="desktop h-full w-full object-cover"
+            className="h-full w-full object-cover"
           />
-          <div className="mobile h-30 w-full bg-red-400" />
-          <div className="absolute inset-0 bg-black opacity-60"></div>
+
+          <div className="absolute inset-0 bg-black opacity-60" />
         </div>
-        <div className="absolute left-1/2 mx-auto flex w-full max-w-325 -translate-x-1/2 justify-between py-3.75 sm:top-5 sm:px-10">
+        <div className="absolute top-3 left-1/2 mx-auto flex w-full max-w-325 -translate-x-1/2 justify-between py-3.75 pl-5 sm:px-10">
           <div className="flex flex-col gap-2">
             {!meetingInfo ? (
               <div className="desktop flex flex-col gap-2">
@@ -63,7 +63,7 @@ export default function SeasonHeroBox({
                   </h2>
                 </div>
                 <div className="mb-3 flex items-center gap-2">
-                  <h1 className="text-[13px] font-bold sm:text-[26px]">
+                  <h1 className="text-[13px] font-bold md:text-[18px] lg:text-[22px] xl:text-[26px]">
                     {meetingInfo?.meeting_official_name}
                   </h1>
                 </div>
@@ -74,12 +74,12 @@ export default function SeasonHeroBox({
               </>
             )}
           </div>
-          <div className="desktop">
-            <div className="flex h-90 min-w-130 flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]/80">
+          <div className="hidden sm:block">
+            <div className="flex flex-col items-center justify-center gap-1 rounded-[30px] bg-[#000000]/90 px-4 py-2 md:h-60 lg:h-80 xl:h-90">
               {!circuitSrc && <SimpleLoading />}
               {circuitSrc && (
                 <>
-                  <h1 className="text-[22px] font-semibold">
+                  <h1 className="text-[18px] font-semibold md:text-[22px]">
                     {circuitInfo.circuit_short_name}
                   </h1>
                   <Image
@@ -87,6 +87,7 @@ export default function SeasonHeroBox({
                     alt="circuit"
                     width={500}
                     height={270}
+                    className="w-auto sm:h-33 md:h-40 lg:h-50 xl:h-56.25"
                   />
                 </>
               )}

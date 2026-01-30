@@ -44,15 +44,15 @@ interface DS {
 export default function DriverStandings({ data }: DS) {
   return (
     <section className="w-full">
-      <div className="mb-5 flex items-center justify-between pr-3">
-        <h2 className="text-[18px] font-semibold text-(--color-title)">
+      <div className="mb-3 flex items-center justify-between pr-3 sm:mb-5">
+        <h2 className="text-[14px] font-semibold text-(--color-title) sm:text-[18px]">
           드라이버 랭킹
         </h2>
-        <button className="cursor-pointer text-[16px] text-(--color-title) hover:text-[#F8F8F8]">
+        <button className="cursor-pointer text-[12px] text-(--color-title) hover:text-[#F8F8F8] sm:text-[16px]">
           전체보기
         </button>
       </div>
-      <div className="min-h-91 w-full rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
+      <div className="w-full rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
         {/* Header */}
         <div className="mb-3 border-b border-white/10 pb-2">
           <div className="grid grid-cols-[60px_1fr_1fr_80px] pr-3 text-xs text-white/60 sm:text-sm">
@@ -69,7 +69,7 @@ export default function DriverStandings({ data }: DS) {
           {data.map((item) => (
             <div
               key={item.rank}
-              className="grid h-16 cursor-pointer grid-cols-[6px_50px_1fr_1fr] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_1fr_80px]"
+              className="grid h-14 cursor-pointer grid-cols-[6px_50px_1fr_1fr] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:h-16 sm:grid-cols-[6px_60px_1fr_1fr_80px]"
             >
               {/* Team Color Bar */}
               <div
@@ -84,7 +84,7 @@ export default function DriverStandings({ data }: DS) {
 
               {/* Driver */}
               <div className="flex items-center gap-3 py-2">
-                <div className="flex h-11.5 w-11.5 items-center justify-center overflow-hidden rounded-full bg-[#2C2C2C]">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#2C2C2C] sm:h-11.5 sm:w-11.5">
                   <Image
                     src={item.headshot_url}
                     width={46}

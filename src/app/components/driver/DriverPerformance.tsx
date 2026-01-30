@@ -84,6 +84,7 @@ export function DriverPerformance({
                       alt="flag"
                       width={24}
                       height={15}
+                      className="h-auto w-auto"
                     />
                     {result.race}
                   </td>

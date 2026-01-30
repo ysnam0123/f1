@@ -22,7 +22,7 @@ export default function Page() {
           2026 Season
         </h1>
         <div className="">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:gap-10 md:grid-cols-2">
             {teams2026.map((team) => (
               <Team key={team.team_slug} team={team} />
             ))}

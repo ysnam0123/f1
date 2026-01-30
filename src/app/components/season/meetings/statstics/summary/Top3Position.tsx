@@ -11,7 +11,7 @@ export default function Top3Position({
 }) {
   return (
     <>
-      <div className="flex max-w-125 flex-col gap-3 rounded-[5px] border border-[#262626] bg-[#161616] px-3 py-2.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
+      <div className="flex flex-col gap-3 rounded-[5px] border border-[#262626] bg-[#161616] px-3 py-2.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
         <div className="mb-4 flex items-center justify-between text-gray-400">
           <h1 className="text-gray-420 flex items-center gap-1">
             <Image

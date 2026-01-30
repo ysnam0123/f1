@@ -17,14 +17,16 @@ export default function Page() {
 
   return (
     <>
-      {/* <SeasonChangeButton
-        opened={opened}
-        setOpened={setOpened}
-        years={years}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      /> */}
-      <h1>page Component</h1>
+      <section className="w-full sm:px-10 lg:px-15">
+        <SeasonChangeButton
+          opened={opened}
+          setOpenedAction={setOpened}
+          years={years}
+          selectedYear={selectedYear}
+          setSelectedYearAction={setSelectedYear}
+        />
+        <h1>page Component</h1>
+      </section>
     </>
   );
 }

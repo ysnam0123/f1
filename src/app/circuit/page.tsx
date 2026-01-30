@@ -12,7 +12,7 @@ export default function Page() {
   }
   return (
     <>
-      <section className="mx-auto grid max-w-300 gap-7.5 sm:grid-cols-3">
+      <section className="mx-auto grid w-full gap-7.5 px-5 sm:px-10 md:grid-cols-2 lg:grid-cols-3 lg:px-15">
         {circuitData?.map((c) => (
           <CircuitCard key={c.circuit_key} data={c} />
         ))}

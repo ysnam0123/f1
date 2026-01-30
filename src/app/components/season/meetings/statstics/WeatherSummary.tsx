@@ -8,7 +8,7 @@ export default function WeatherSummary({
 }) {
   return (
     <>
-      <div className="flex max-w-125 flex-col gap-3 rounded-[5px] border border-[#262626] bg-[#161616] px-3 py-3.75 pl-5 sm:rounded-4xl sm:py-5">
+      <div className="flex flex-col gap-3 rounded-[5px] border border-[#262626] bg-[#161616] px-3 py-3.75 pl-5 sm:rounded-4xl sm:py-5">
         <h1 className="flex items-center gap-1 text-gray-400">
           <Image
             src="/icons/weather.svg"

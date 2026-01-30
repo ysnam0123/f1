@@ -27,7 +27,7 @@ export default function ConstructorStandings({ data }: TS) {
             전체보기
           </button>
         </div>
-        <div className="min-h-91 rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
+        <div className="rounded-xl bg-(--color-table-bg) p-4 sm:p-5">
           {/* Header */}
           <div className="mb-3 border-b border-white/10 pb-2">
             <div className="grid grid-cols-[60px_1fr_80px] text-xs text-white/60 sm:text-sm">
@@ -42,7 +42,7 @@ export default function ConstructorStandings({ data }: TS) {
             {data.map((item) => (
               <div
                 key={item.rank}
-                className="grid h-16 cursor-pointer grid-cols-[6px_40px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:grid-cols-[6px_60px_1fr_80px]"
+                className="grid h-10 cursor-pointer grid-cols-[6px_40px_1fr_80px] items-center border-y border-r border-(--color-table-border) bg-(--color-table-bg) transition hover:bg-(--color-table-hover) sm:h-16 sm:grid-cols-[6px_60px_1fr_80px]"
               >
                 {/* Team Color Bar */}
                 <div
@@ -62,7 +62,7 @@ export default function ConstructorStandings({ data }: TS) {
                     width={70}
                     height={40}
                     alt="team logo"
-                    className="h-9 w-auto"
+                    className="h-6 w-auto sm:h-9"
                   />
                   <span className="truncate text-sm font-medium text-white sm:text-base">
                     {item.team_kr_name}

@@ -65,7 +65,7 @@ export default function Page() {
     <>
       {/* {pageLoading && <MobileSplash />} */}
       {!pageLoading && (
-        <section className="relative mx-auto flex max-w-full flex-col gap-5 px-5 select-none sm:gap-12.5 lg:px-30">
+        <section className="relative mx-auto flex max-w-full flex-col gap-5 px-5 pt-5 select-none sm:gap-12.5 lg:px-30">
           <div className="desktop">
             <Image
               src={'/homeImg.svg'}
@@ -74,9 +74,6 @@ export default function Page() {
               height={360}
               className="absolute right-5 -z-30"
             />
-          </div>
-          <div className="desktop">
-            <HomeLogo />
           </div>
           <NextSession data={nextMeeting} />
           {!DriverRankingLoading && DriverRanking && teamRanking && CData && (

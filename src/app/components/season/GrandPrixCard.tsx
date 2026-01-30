@@ -14,7 +14,7 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
     <>
       <div
         onClick={() => router.push(`/season/${meetingInfo.meeting_key}`)}
-        className="flex min-h-45.5 w-full cursor-pointer flex-col rounded-[10px] bg-[#1A1A1A] p-4.5 font-semibold hover:bg-[#313131]"
+        className="flex w-full cursor-pointer flex-col rounded-[10px] bg-[#1A1A1A] p-4.5 font-semibold hover:bg-[#313131]"
       >
         <p className="mb-2 text-[10px] text-[#8B8B8B] sm:text-[12px]">
           {meetingInfo.meeting_official_name}
@@ -30,11 +30,11 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
                   height={24}
                   className="rounded-full object-contain"
                 />
-                <p className="text-[20px] text-white">
+                <p className="text-[16px] text-white sm:text-[20px]">
                   {meetingInfo.country_kr_name}
                 </p>
               </div>
-              <p className="text-[14px]">
+              <p className="text-[12px] sm:text-[14px]">
                 {meetingInfo.date_start.split('T')[0]}
               </p>
             </div>
@@ -49,6 +49,7 @@ export default function GrandPrixCard({ meetingInfo }: CardProps) {
               alt="img"
               width={120}
               height={120}
+              className="h-20 w-20 sm:h-30 sm:w-30"
             />
           </div>
         </div>

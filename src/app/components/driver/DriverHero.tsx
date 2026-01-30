@@ -36,84 +36,107 @@ export default function DriverHero({
   );
   return (
     <>
-      <div className="flex flex-col gap-5 select-none">
-        <div className="flex items-center justify-between">
-          <p
-            className="text-[50px]"
-            style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
-          >
-            {data.kr_name}
-          </p>
-          <SeasonChangeButton
-            opened={opened}
-            setOpenedAction={setOpened}
-            years={years}
-            selectedYear={selectedYear}
-            setSelectedYearAction={setSelectedYear}
-            className="mb-0 sm:mb-0 sm:w-50"
-          />
-        </div>
-        <div className="flex text-[20px]">
-          <div className="flex gap-2 border-r border-white pr-2.5">
-            <Image src={data.flag} alt="flag" width={36} height={26} />
-            <p>{data.country_kr_name}</p>
-          </div>
-          <p className="border-r border-white px-2.5">
-            {data2026?.team_kr_name}
-          </p>
-          <p className="px-2.5">{seasonData?.driver_number}</p>
-        </div>
-        <section className="mx-auto flex w-full items-center justify-between rounded-xl border border-[#4C4C4C] bg-[#111111] px-6 select-none">
-          <div className="flex flex-col items-start gap-5">
-            {seasonData?.team.main_logo ? (
-              <div
-                style={{ backgroundColor: seasonData.team.team_colour }}
-                className="flex items-center justify-center rounded-2xl px-2 py-2"
-              >
-                <Image
-                  src={seasonData.team.main_logo}
-                  alt="logoImg"
-                  width={120}
-                  height={90}
-                />
-              </div>
-            ) : (
-              <div
-                style={{ backgroundColor: data2026?.team_colour }}
-                className="flex items-center justify-center rounded-2xl px-2 py-2"
-              >
-                <Image
-                  src={data2026?.main_logo}
-                  alt="logoImg"
-                  width={120}
-                  height={90}
-                />
-              </div>
-            )}
-            {seasonData?.team.car_img ? (
-              <Image
-                src={seasonData.team.car_img}
-                alt="carImg"
-                width={500}
-                height={150}
-                className="z-30"
-              />
-            ) : (
-              <Image
-                src={data2026?.car_img ? data2026.car_img : defaultCar}
-                alt="carImg"
-                width={500}
-                height={150}
-                className="z-30"
-              />
-            )}
-          </div>
-          <DriverCard
-            teamColor={seasonData?.team.team_colour}
-            headshot={findHeadshot(fullName, selectedYear)}
-          />
-        </section>
+      <div className="z-100">
+        <SeasonChangeButton
+          opened={opened}
+          setOpenedAction={setOpened}
+          years={years}
+          selectedYear={selectedYear}
+          setSelectedYearAction={setSelectedYear}
+          className="mb-0 sm:mb-0"
+        />
       </div>
+      {/*
+      <p className="px-1 sm:px-2.5">{seasonData?.driver_number}</p> */}
+      <div className="mb-5 flex w-full items-center justify-between">
+        <div className="flex flex-col gap-1 select-none">
+          <div className="flex items-center justify-between">
+            <p
+              className="text-[20px] sm:text-[30px] md:text-[50px]"
+              style={{ fontFamily: 'RiaSans', fontWeight: 700 }}
+            >
+              {data.kr_name}
+            </p>
+          </div>
+          <div className="flex text-[14px] sm:text-[20px]">
+            <div className="flex items-center gap-1 sm:gap-2 sm:pr-2.5">
+              <Image
+                src={data.flag}
+                alt="flag"
+                width={36}
+                height={26}
+                className="h-4 w-auto sm:h-6"
+                priority
+              />
+              <p>{data.country_kr_name}</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <p
+            style={{ fontFamily: 'Paperlolgy', fontWeight: 600 }}
+            className="text-[18px] sm:text-[30px] md:text-[40px]"
+          >
+            {seasonData?.team.team_kr_name
+              ? seasonData?.team.team_kr_name
+              : data2026?.team_kr_name}
+          </p>
+          {seasonData?.team.main_logo ? (
+            <Image
+              src={seasonData.team.main_logo}
+              alt="logoImg"
+              width={100}
+              height={100}
+              className="z-30 h-auto w-15 sm:w-16 md:w-18 lg:w-25"
+              priority
+            />
+          ) : (
+            <Image
+              src={data2026?.main_logo}
+              alt="logoImg"
+              width={100}
+              height={100}
+              className="z-30 h-auto sm:w-13 md:w-18 lg:w-25"
+              priority
+            />
+          )}
+        </div>
+      </div>
+      <section
+        style={{
+          backgroundColor: seasonData?.team.team_colour
+            ? seasonData.team.team_colour
+            : data2026?.team_colour,
+        }}
+        className="relative flex w-full flex-col items-center gap-6 rounded-xl border border-[#4C4C4C] px-4 py-6 select-none sm:flex-row sm:gap-20 sm:px-10"
+      >
+        <div className="absolute z-20 h-full w-full bg-black/50" />
+        <DriverCard
+          teamColor={seasonData?.team.team_colour}
+          headshot={findHeadshot(fullName, selectedYear)}
+        />
+        <div className="flex flex-col items-center">
+          {seasonData?.team.car_img ? (
+            <Image
+              src={seasonData.team.car_img}
+              alt="carImg"
+              width={450}
+              height={150}
+              className="z-30"
+              priority
+            />
+          ) : (
+            <Image
+              src={data2026?.car_img ? data2026.car_img : defaultCar}
+              alt="carImg"
+              width={450}
+              height={150}
+              className="z-30 h-auto max-w-[260px] sm:max-w-[450px] md:max-w-[520px]"
+              priority
+            />
+          )}
+        </div>
+      </section>
     </>
   );
 }

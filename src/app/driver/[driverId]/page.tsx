@@ -27,7 +27,7 @@ export default function Page() {
   return (
     <>
       {!driverDetailLoading && seasonData && driverDetailData && (
-        <div className="mx-auto w-full px-5 sm:px-30">
+        <div className="mx-auto w-full px-5 pt-5 sm:px-15 md:px-20 lg:px-40">
           <DriverHero
             data={driverDetailData}
             seasonData={seasonData}
@@ -42,14 +42,6 @@ export default function Page() {
             results={seasonData.season_performance}
             teamColor={seasonData.team.team_colour}
           />
-          {/* <CareerOverview
-            summary={careerOverview.summary}
-            milestones={careerOverview.milestones}
-          />
-          <HistoricalStats
-            careerStats={historicalStats.careerStats}
-            teamHistory={historicalStats.teamHistory}
-          /> */}
         </div>
       )}
     </>
